@@ -58,6 +58,12 @@ namespace StarterAssets
         {
             SightInput(value.isPressed);
         }
+
+        public void OnSightOff(InputValue value)
+        {
+            SightOffInput(value.isPressed);
+        }
+
         public void OnReload(InputValue value)
         {
             ReloadInput(value.isPressed);
@@ -96,12 +102,18 @@ namespace StarterAssets
 
         public void SightInput(bool newSightState)
         {
-            sight = newSightState;
+            sight = true;
         }
+        public void SightOffInput(bool newSightState)
+        {
+            sight = false;
+        }
+
         public void ReloadInput(bool newReloadState)
         {
             reload = newReloadState;
         }
+
         public void DamageInput(bool newReloadState)
         {
             damage = newReloadState;

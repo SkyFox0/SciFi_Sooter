@@ -1,3 +1,4 @@
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,7 +8,8 @@ namespace StarterAssets
     {
         public Animator Animator;
         private float LastShoot;
-        public Camera Camera;
+        //public Camera Camera;
+        public CinemachineVirtualCamera Camera;
 
         [Header("Shoot")]
         public ShootComponent ShootComponent;
@@ -43,6 +45,12 @@ namespace StarterAssets
             }
         }
 
+        private void Update()
+        {
+            CameraSightOn();
+            CameraSightOff();
+        }
+
 
         public void OnShoot(InputValue value)
         {
@@ -67,7 +75,7 @@ namespace StarterAssets
                 { 
                     if (!Animator.GetBool("isReloading"))
                     {
-                        PlaySound.clip = Empty;
+                        PlaySound.clip = Empty; //патроны закончились
                         PlaySound.Play();
                     }
                     
@@ -78,10 +86,15 @@ namespace StarterAssets
 
         public void OnReload(InputValue value)
         {
-            if (Animator.GetBool("isNeedToReload") && !Animator.GetBool("isReloading") && !Animator.GetBool("isMove") && Animator.GetBool("isGround") && (!Animator.GetBool("isDead")))
-            {
+            if (Animator.GetBool("isNeedToReload") && !Animator.GetBool("isReloading") && Animator.GetBool("isGround") && (!Animator.GetBool("isDead")))
+            {                
+
                 Debug.Log("Перезарядка");
                 Animator.SetTrigger("Reload");
+                //------
+                //&& !Animator.GetBool("isMove") 
+                Animator.SetBool("isMove", false);
+                Animator.SetBool("isReloading", true);
                 PlaySound.clip = Reload;
                 PlaySound.Play();
                 //Animator.SetBool("isReloading", true);
@@ -99,14 +112,47 @@ namespace StarterAssets
         {
             _currentAmmo = _maxAmmo;
             _ammoText.text = _currentAmmo.ToString();
+            //-----
+            Animator.SetBool("isReloading", false);
+            Animator.SetBool("isNeedToReload", false);
         }
 
         public void OnSight(InputValue value)
         {
-            //if (!Animator.GetBool("isReloading") && Animator.GetBool("isGround") && (!Animator.GetBool("isDead"))) 
-            //      Animator.SetBool("isSight", true);
-            //Camera.fieldOfView = 40;
-
+            if (!Animator.GetBool("isReloading") && Animator.GetBool("isGround") && (!Animator.GetBool("isDead")))
+            {
+                Animator.SetBool("isSight", true);
+            }                        
         }
+
+        public void CameraSightOn()
+        {
+            if (Animator.GetBool("isSight"))
+            {
+                if (Camera.m_Lens.FieldOfView > 40)
+                {
+                    Camera.m_Lens.FieldOfView -= 1.5f;
+                }
+            }
+        }
+
+        public void CameraSightOff()
+        {
+            if (!Animator.GetBool("isSight"))
+            {
+                if (Camera.m_Lens.FieldOfView < 65)
+                {
+                    Camera.m_Lens.FieldOfView += 1.5f;
+                }
+            }
+        }
+
+        public void OnSightOff(InputValue value)
+        {
+            Animator.SetBool("isSight", false);
+            //Camera.m_Lens.FieldOfView = 60f;
+            //Debug.Log("Выключить прицеливание");
+        }
+
     }
 }

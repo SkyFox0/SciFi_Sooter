@@ -188,7 +188,7 @@ public class EnemyMovement : MonoBehaviour
         EnemyAnimator.SetTrigger("Reload");
         EnemyAnimator.SetBool("isReloading", true);
         _ammo = _maxAmmo;
-        Invoke("Move", _moveTime);
+        Invoke("Move", 2.5f); // _moveTime);
         
         
     }

@@ -61,7 +61,7 @@
                 },
                 {
                     "name": "Sight",
-                    "type": "PassThrough",
+                    "type": "Button",
                     "id": "765fa4b5-8092-4055-bc84-c51c0a0bc193",
                     "expectedControlType": "",
                     "processors": "",

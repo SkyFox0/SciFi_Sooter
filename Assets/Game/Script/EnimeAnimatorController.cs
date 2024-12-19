@@ -64,6 +64,7 @@ namespace StarterAssets
            // My_Weapon_Controller.EndReload();
             Animator.SetBool("isReloading", false);
             Animator.SetBool("isNeedToReload", false);
+            //Animator.SetBool("isMove", true);
             Debug.Log("Перезарядка закончена!");
         }
 
