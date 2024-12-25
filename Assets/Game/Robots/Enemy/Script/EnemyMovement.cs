@@ -32,6 +32,8 @@ public class EnemyMovement : MonoBehaviour
     public float _enemyRotationSpeed = 2.0f; // Скорость поворота врага
     public bool _isMove;
     public bool _isRotate;
+    public bool _isRotate_L;
+    public bool _isRotate_R;
     public bool _isShoot;
     public bool _isReloading;
     public bool _isDamage;
@@ -74,6 +76,7 @@ public class EnemyMovement : MonoBehaviour
         EnemyAnimator = GetComponentInChildren<Animator>();
         SoundController = GetComponentInChildren<SoundController>();
         EnemyAnimator.SetFloat("y", 1);
+        EnemyAnimator.SetFloat("x", 0);
         _enemyChange = 15f;  // время до смены характеристик врага        
         _fireDistans = 30;  //максимальная дистанция стрельбы
         _ammo = Random.Range(1, _maxAmmo);
@@ -207,6 +210,8 @@ public class EnemyMovement : MonoBehaviour
     {
         NavMeshAgent.speed = 0f;
         EnemyAnimator.SetFloat("y", 0);
+        EnemyAnimator.SetFloat("x", 0);
+        EnemyAnimator.SetBool("isMove", false);
         _isMove = false;
         //Debug.Log("Остановился для стрельбы");
     }
@@ -214,7 +219,8 @@ public class EnemyMovement : MonoBehaviour
     public void Rotate()
     {
         //Поворот в сторону игрока
-        EnemyAnimator.SetFloat("y", 1);
+        EnemyAnimator.SetFloat("y", 0);
+        EnemyAnimator.SetFloat("x", 1);
         // Вычисляем направление на игрока
         _rotateDirection = Player.transform.position - Enemy.transform.position;
         _rotateDirection.y = 0; // Если хотите игнорировать вертикальную ось
@@ -316,6 +322,7 @@ public class EnemyMovement : MonoBehaviour
 
         NavMeshAgent.speed = _enemySpeed;
         EnemyAnimator.SetFloat("y", 1);
+        EnemyAnimator.SetFloat("x", 0);
         _timer = 0f;
         _isShoot = false;
 
