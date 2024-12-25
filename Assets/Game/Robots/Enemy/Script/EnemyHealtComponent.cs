@@ -16,9 +16,16 @@ namespace StarterAssets
         public EnemySpawnSystem EnemySpawnSystem;
         public GameObject SpawnSystem;
         public Animator EnemyAnimator;
+        public Animator SFX_Animator;
         //public EnimeAnimatorController EnimeAnimatorController;
         public EnemyMovement EnemyMovement;
         public Collider EnemyCollider;
+        public ParticleSystem WhiteSmoke;
+        public ParticleSystem BlackSmoke;
+        public ParticleSystem Sparks_1;
+        public ParticleSystem Sparks_2;
+
+
 
 
         void Start()
@@ -45,7 +52,19 @@ namespace StarterAssets
             //HitSound.Play();
 
             Health = Health - damage;
-            Debug.Log("Take Damag! Health = " + Health);
+            if (Health > 19 && Health < 30)
+            {
+                if (!WhiteSmoke.isPlaying) { WhiteSmoke.Play(); }
+            }
+
+            if (Health > 9 && Health < 20)
+            {
+                if (WhiteSmoke.isPlaying) { WhiteSmoke.Stop(); }
+                if (!BlackSmoke.isPlaying) { BlackSmoke.Play(); }
+            }
+
+
+            //Debug.Log("Take Damag! Health = " + Health);
             if (Health <= 0)
             {
                 DeadSound.Play();
@@ -64,8 +83,14 @@ namespace StarterAssets
                 //EnemyMovement.NavMeshAgent.Stop(); // ”старело!
                 EnemyMovement.NavMeshAgent.isStopped = true;
                 EnemyMovement._isDead = true;
-                EnemyMovement._isMove = false;               
-                
+                EnemyMovement._isMove = false;
+
+                //запускаем анимацию падени€ дыма и искры
+                SFX_Animator.SetBool("isDead",true);
+                Sparks_1.Play();
+                Sparks_2.Play();
+
+
                 EnemySpawnSystem.Spawn();
                 
 
