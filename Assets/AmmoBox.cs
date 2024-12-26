@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class Ammo_Box : MonoBehaviour
+public class AmmoBox : MonoBehaviour
 {
-    public int _Ammo = 20;
+    public int Ammo = 50;
     public AmmoSpawnSystem AmmoSpawnSystem;
 
 

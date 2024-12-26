@@ -21,10 +21,10 @@ namespace StarterAssets
 
         private void OnTriggerEnter(Collider other)
         {
-            Debug.Log("Аптечка задета");
+            //Debug.Log("Поднята аптечка");
             if (other.gameObject.tag == "Player")
             {
-                Debug.Log("Игрок поднял аптечку");                
+                //Debug.Log("Игрок поднял аптечку");                
                 other.GetComponent<PlayerHealthComponentNew>().AddHealth(Health);
                 other.GetComponent<PlayerHealthComponentNew>().Healing.Play();
 

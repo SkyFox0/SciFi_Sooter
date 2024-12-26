@@ -85,11 +85,16 @@ public class OldSpeakerSoundController : MonoBehaviour
         //Source[current].Stop();
         last = current;
         current = next;
-        next += 5;
-        if (next >= Source.Length) 
-        { 
-            next -= 14; 
+        next = Random.Range(0, Source.Length);
+        while ((next == current) | (next == last))
+        {
+            next = Random.Range(0, Source.Length);
         }
+        //next += 3;
+        //if (next >= Source.Length) 
+        //{ 
+        //    next -= 14; 
+        //}
         Source[current].Play();
         isPlaying = true;
         Source[last].Stop();

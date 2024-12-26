@@ -10,12 +10,20 @@ namespace StarterAssets
     {
         //public Destroy2 TargetSystem;
         public int Health = 100;
+        public TextMesh Live_Score_Text;
         //public AudioSource HitSound;
         //public AudioSource Dead;
         public Animator Animator;
         public SoundController SoumdController;
         public DeadController DeadController;
         public AudioSource Healing;
+
+        void Start()
+        {   
+           Live_Score_Text.text = Health.ToString();
+
+
+        }
 
         void Update()
         {
@@ -41,6 +49,7 @@ namespace StarterAssets
             if (Health > 0f)
             {
                 Health = Health - damage;
+                Live_Score_Text.text = Health.ToString();
                 SoumdController.Damage();
 
 
@@ -71,6 +80,7 @@ namespace StarterAssets
         public void AddHealth(int _health)
         {
             Health = Health + _health;
+            Live_Score_Text.text = Health.ToString();
         }
 
 

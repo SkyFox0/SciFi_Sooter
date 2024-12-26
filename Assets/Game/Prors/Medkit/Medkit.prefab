@@ -697,7 +697,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2747521433306197897}
-  - component: {fileID: 3513851915665626789}
+  - component: {fileID: 3542453785907810836}
   m_Layer: 0
   m_Name: Medkit
   m_TagString: Untagged
@@ -721,7 +721,7 @@ Transform:
   - {fileID: 7565828866638087029}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3513851915665626789
+--- !u!114 &3542453785907810836
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -730,7 +730,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4777798087034618257}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 883bffea0079f2743a943a8015515eb2, type: 3}
+  m_Script: {fileID: 11500000, guid: a960a69280988394aa18b0f8deda22e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Health: 50
@@ -1080,7 +1080,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.34, z: 0}
 --- !u!114 &7028837451234692462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1094,4 +1094,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Health: 50
-  Medkit: {fileID: 0}
+  Medkit: {fileID: 3542453785907810836}

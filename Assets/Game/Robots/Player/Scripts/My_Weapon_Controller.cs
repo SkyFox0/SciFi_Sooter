@@ -22,13 +22,15 @@ namespace StarterAssets
         public AudioClip Reload;
         public AudioClip Empty;
         public AudioClip Hit;
-        
+        public AudioClip GetAmmo;
 
 
         [Header("Ammo")]
-        public int _maxAmmo = 10;
-        public int _currentAmmo = 5;
+        public int _totalAmmo;
+        public int _maxWeaponAmmo = 10;
+        public int _currentWeaponAmmo = 5;
         public TextMesh _ammoText;
+        public TextMesh Total_Ammo_Text;
 
         public FirstPersonController FirstPersonController;
         public Ui_Control Ui_Control;
@@ -36,12 +38,13 @@ namespace StarterAssets
 
         private void Start()
         {
-            _ammoText.text = _currentAmmo.ToString();
+            _ammoText.text = _currentWeaponAmmo.ToString();
+            Total_Ammo_Text.text = _totalAmmo.ToString();
             LastShoot = Time.time;
             //Animator = GetComponentInChildren<Animator>();
             _shootSpeed = 0.5f;
             Animator.SetBool("isReloading", false);
-            if (_currentAmmo < _maxAmmo)
+            if (_currentWeaponAmmo < _maxWeaponAmmo)
             {
                 Animator.SetBool("isNeedToReload", true);
             }
@@ -49,7 +52,7 @@ namespace StarterAssets
         }
 
         private void Update()
-        {
+        {   //прицеливание
             CameraSightOn();
             CameraSightOff();
         }
@@ -59,7 +62,7 @@ namespace StarterAssets
         {
             if (!Animator.GetBool("isDead"))
             {
-                if ((Time.time - LastShoot > _shootSpeed) && (_currentAmmo > 0) && (!Animator.GetBool("isReloading")))  //_shootSpeed = 0.5f;
+                if ((Time.time - LastShoot > _shootSpeed) && (_currentWeaponAmmo > 0) && (!Animator.GetBool("isReloading")))  //_shootSpeed = 0.5f;
                 {
                     Animator.SetTrigger("Shoot");
                     ShootComponent.Shoot();
@@ -69,8 +72,8 @@ namespace StarterAssets
                     PlaySound.Play();
                     
                     LastShoot = Time.time;
-                    _currentAmmo -= 1;
-                    _ammoText.text = _currentAmmo.ToString();
+                    _currentWeaponAmmo -= 1;
+                    _ammoText.text = _currentWeaponAmmo.ToString();
                     Animator.SetBool("isNeedToReload", true);
                     Debug.Log("Shoot!");
                 }
@@ -89,10 +92,11 @@ namespace StarterAssets
 
         public void OnReload(InputValue value)
         {
-            if (Animator.GetBool("isNeedToReload") && !Animator.GetBool("isReloading") && Animator.GetBool("isGround") && (!Animator.GetBool("isDead")))
-            {                
+            if ((_totalAmmo > 0) && Animator.GetBool("isNeedToReload") && !Animator.GetBool("isReloading") && Animator.GetBool("isGround") && (!Animator.GetBool("isDead")))
+            {
 
-                Debug.Log("Перезарядка");
+                //Debug.Log("Перезарядка");
+                Ui_Control.Scope_Off();
                 Animator.SetTrigger("Reload");
                 //------
                 //&& !Animator.GetBool("isMove") 
@@ -100,8 +104,16 @@ namespace StarterAssets
                 Animator.SetBool("isReloading", true);
                 PlaySound.clip = Reload;
                 PlaySound.Play();
-                //Animator.SetBool("isReloading", true);
-                Ui_Control.Scope_Off();
+                //Animator.SetBool("isReloading", true);                
+            }
+            else
+            {
+                if (_totalAmmo == 0)
+                {
+                    //Звук отсутствия патронов
+                    PlaySound.clip = Empty; //патроны закончились
+                    PlaySound.Play();
+                }
             }
         }
 
@@ -111,11 +123,39 @@ namespace StarterAssets
         }
 
 
-
-        public void EndReload()
+        public void AddAmmo(int _ammo)
         {
-            _currentAmmo = _maxAmmo;
-            _ammoText.text = _currentAmmo.ToString();
+            // игрок поднял патроны
+            //PlaySound.clip = GetAmmo;
+            PlaySound.PlayOneShot(GetAmmo);
+            _totalAmmo += _ammo;
+            Total_Ammo_Text.text = _totalAmmo.ToString();
+
+        }
+
+
+
+
+
+            public void EndReload()
+        {
+            int _needToReload = _maxWeaponAmmo - _currentWeaponAmmo; // сколько надо для перезарядки
+            //Уменьшение общего количества патронов
+            
+            if (_totalAmmo > _needToReload)   // патронов больше чем нужно
+            {
+                _totalAmmo = _totalAmmo - _needToReload;
+                _currentWeaponAmmo = _maxWeaponAmmo;
+            }
+            else  // если патронов меньше чем нужно но больше 0 - частичная перезарядка
+            {                
+                _currentWeaponAmmo += _totalAmmo;
+                _totalAmmo = 0; // _totalAmmo - (_maxWeaponAmmo - _currentWeaponAmmo);
+            }
+            
+            
+            _ammoText.text = _currentWeaponAmmo.ToString();
+            Total_Ammo_Text.text = _totalAmmo.ToString();
             //-----
             Animator.SetBool("isReloading", false);
             Animator.SetBool("isNeedToReload", false);

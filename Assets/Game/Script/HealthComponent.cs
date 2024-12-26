@@ -30,6 +30,11 @@ namespace StarterAssets
             {
                 //запустить звук разрушения
                 DestroySound.Play();
+                if (Explosive != null)
+                {
+                    Explosive.Play();
+                    Debug.Log("Взрыв колонки!");
+                }
                 //вызов метода разрушения с задержкой 0,2с
                 TargetSystem.DestroyTarget2();
 
@@ -42,10 +47,7 @@ namespace StarterAssets
 
         public void DestroyTarget()
         {
-            if (Explosive != null)
-            {  
-                Explosive.Play(); 
-            }
+            
                 
             _ExplodeTarget.StartExplosion();
             
