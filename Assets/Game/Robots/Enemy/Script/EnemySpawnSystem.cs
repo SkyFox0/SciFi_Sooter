@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class EnemySpawnSystem : MonoBehaviour
 {
+    public bool _isAutoSpawnOn;
+    public int _autoSpawnCount;
     public GameObject Enemy;
     private GameObject Instance;
     private EnemyMovement EnemyMovement;
@@ -11,27 +13,62 @@ public class EnemySpawnSystem : MonoBehaviour
     //public GameObject SpawnPoint_2;
     //public GameObject SpawnPoint_3;
     private GameObject SpawnPoint;
-    
+    public float _timer;
+    public int _spawnNumber;
+    public int _spawnPoint;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    
+
     void Start()
     {
+        //Player = GameObject.Find("Player");
         Player = GameObject.FindGameObjectWithTag("Player");
-        AvtoSpavn();
+        if (_isAutoSpawnOn && _autoSpawnCount > 0) 
+        {
+            _spawnNumber = 0;
+            _spawnPoint = 0;
+            _timer = 0f;
+            Destroy(Instance);
+            //AvtoSpavn(_autoSpawnCount); 
+        }
         
         //
     }
 
+    private void Update()
+    {
+        if (_isAutoSpawnOn && (_spawnNumber < _autoSpawnCount))
+        {
+            _timer = _timer + Time.deltaTime;
+            if (_timer > 1)
+            {
+                _timer = 0;
+                _spawnNumber += 1;
+                AvtoSpavn();
+            }
+        }
+       
+
+    }
+
     // Update is called once per frame
     public void AvtoSpavn()
-    {
-        Destroy(Instance);
-        Player = GameObject.Find("Player");
-
-        for (int i = 0; i < SpawnPoints.Length; i++)
-        {
-            SpawnPoint = SpawnPoints[i];
+    {   
+        //for (int i = 0; i < _autoSpawnCount; i++)
+        //for (int i = 0; i < SpawnPoints.Length; i++)
+        //{
+            if (_spawnPoint < SpawnPoints.Length)
+            {
+                SpawnPoint = SpawnPoints[_spawnPoint];
+                _spawnPoint += 1;
+            }
+            else
+            {
+                _spawnPoint = _spawnPoint - SpawnPoints.Length;
+                SpawnPoint = SpawnPoints[_spawnPoint];
+                _spawnPoint += 1;
+            }
+            
 
             Instance = Instantiate(Enemy, SpawnPoint.transform.position, transform.rotation);
             // помещаем клон врага с систему спавна
@@ -40,6 +77,11 @@ public class EnemySpawnSystem : MonoBehaviour
 
             EnemyMovement = Instance.GetComponent<EnemyMovement>();
             EnemyMovement.Player = Player;//.transform;
+        //}
+        if (_spawnNumber == _autoSpawnCount)
+        {
+            _isAutoSpawnOn = false;
+            _spawnNumber = 0;
         }
     }
 

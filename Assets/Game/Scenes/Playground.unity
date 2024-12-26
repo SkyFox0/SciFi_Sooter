@@ -209,11 +209,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe3473037d579494aa972417924ca303, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isAutoSpawnOn: 1
+  _autoSpawnCount: 2
   Enemy: {fileID: 5341923219988903007, guid: 8e4c40a6f68913b41aad804867c850dd, type: 3}
   SpawnPoints:
   - {fileID: 302420839}
   - {fileID: 1468998890}
   - {fileID: 973696417}
+  _timer: 0
+  _spawnNumber: 0
+  _spawnPoint: 0
 --- !u!4 &97464133
 Transform:
   m_ObjectHideFlags: 0
