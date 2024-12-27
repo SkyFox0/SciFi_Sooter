@@ -715,8 +715,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -29.38, y: -9.364976, z: 9.5301695}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7565828866638087029}
   m_Father: {fileID: 0}
@@ -1093,5 +1093,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58361838132baf844b64a5297a5899ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 50
+  Health: 0
   Medkit: {fileID: 3542453785907810836}

@@ -24,13 +24,13 @@ namespace StarterAssets
             //Debug.Log("Поднята аптечка");
             if (other.gameObject.tag == "Player")
             {
-                //Debug.Log("Игрок поднял аптечку");                
-                other.GetComponent<PlayerHealthComponentNew>().AddHealth(Health);
-                other.GetComponent<PlayerHealthComponentNew>().Healing.Play();
-
-                //MedkitSpawnSystem.Spawn();
-
-                Medkit.Destroy();  
+                //Debug.Log("Игрок поднял аптечку");
+                if (other.GetComponent<PlayerHealthComponentNew>().Health < other.GetComponent<PlayerHealthComponentNew>()._maxHealth)
+                {
+                    other.GetComponent<PlayerHealthComponentNew>().AddHealth(Health);
+                    other.GetComponent<PlayerHealthComponentNew>().Healing.Play();
+                    Medkit.Destroy();
+                }
             }
         }
     }

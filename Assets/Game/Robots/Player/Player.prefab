@@ -3074,6 +3074,7 @@ MonoBehaviour:
   _totalAmmo: 5
   _maxWeaponAmmo: 10
   _currentWeaponAmmo: 5
+  _maxAmmo: 100
   _ammoText: {fileID: 5856742602133169863}
   Total_Ammo_Text: {fileID: 1467066670101506265}
   FirstPersonController: {fileID: 1166103537391085774}
@@ -3238,6 +3239,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Health: 100
+  _maxHealth: 200
   Live_Score_Text: {fileID: 9077661345124923646}
   Animator: {fileID: 2020987907817452834}
   SoumdController: {fileID: 2263921411724143625}

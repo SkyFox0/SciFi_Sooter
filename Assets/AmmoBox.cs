@@ -1,14 +1,17 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AmmoBox : MonoBehaviour
 {
     public int Ammo = 50;
+    public Text _text;
     public AmmoSpawnSystem AmmoSpawnSystem;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        _text.text = Ammo.ToString();   
         AmmoSpawnSystem = GetComponentInParent<AmmoSpawnSystem>();
     }
 

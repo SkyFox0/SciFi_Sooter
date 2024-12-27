@@ -29,6 +29,7 @@ namespace StarterAssets
         public int _totalAmmo;
         public int _maxWeaponAmmo = 10;
         public int _currentWeaponAmmo = 5;
+        public int _maxAmmo = 300;
         public TextMesh _ammoText;
         public TextMesh Total_Ammo_Text;
 
@@ -129,6 +130,11 @@ namespace StarterAssets
             //PlaySound.clip = GetAmmo;
             PlaySound.PlayOneShot(GetAmmo);
             _totalAmmo += _ammo;
+            if (_totalAmmo > _maxAmmo)
+            {
+                _totalAmmo = _maxAmmo;               
+            }
+            
             Total_Ammo_Text.text = _totalAmmo.ToString();
 
         }

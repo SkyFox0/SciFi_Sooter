@@ -18,14 +18,14 @@ using UnityEngine;
         {
             //Debug.Log("Подняты патроны");
             if (other.gameObject.tag == "Player")
-            {
-                Debug.Log("Игрок поднял патроны +" + _addAmmo.ToString() + "шт!");
-                other.GetComponent<My_Weapon_Controller>().AddAmmo(_addAmmo);
-                //other.GetComponent<My_Weapon_Controller>().Healing.Play();    
-
-                AmmoBox.Destroy();
+            {   
+                if (other.GetComponent<My_Weapon_Controller>()._totalAmmo < other.GetComponent<My_Weapon_Controller>()._maxAmmo)
+                {
+                    Debug.Log("Игрок поднял патроны +" + _addAmmo.ToString() + "шт!");
+                    other.GetComponent<My_Weapon_Controller>().AddAmmo(_addAmmo);
+                    AmmoBox.Destroy();
+                }                  
             }
         }
-
     }
 

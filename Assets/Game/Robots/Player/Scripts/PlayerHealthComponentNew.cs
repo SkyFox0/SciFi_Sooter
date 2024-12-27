@@ -10,6 +10,7 @@ namespace StarterAssets
     {
         //public Destroy2 TargetSystem;
         public int Health = 100;
+        public int _maxHealth = 130;
         public TextMesh Live_Score_Text;
         //public AudioSource HitSound;
         //public AudioSource Dead;
@@ -80,6 +81,10 @@ namespace StarterAssets
         public void AddHealth(int _health)
         {
             Health = Health + _health;
+            if (Health > _maxHealth)
+            {
+                Health = _maxHealth;
+            }
             Live_Score_Text.text = Health.ToString();
         }
 
