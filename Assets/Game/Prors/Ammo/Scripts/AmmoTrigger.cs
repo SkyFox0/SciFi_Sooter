@@ -9,7 +9,7 @@ using UnityEngine;
 
         void Start()
         {
-            AmmoBox = GetComponentInParent<AmmoBox>();
+            //AmmoBox = GetComponentInParent<AmmoBox>();
             _addAmmo = AmmoBox.Ammo;
         }
 

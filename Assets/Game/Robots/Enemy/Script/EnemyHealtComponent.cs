@@ -1,14 +1,18 @@
+//using DestroyIt;
+//using Unity.VisualScripting;
 using DestroyIt;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.AI;
-using System.Collections;
+//using UnityEngine.AI;
+//using System.Collections;
+//using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
+using UnityEngine.InputSystem;
 
 namespace StarterAssets
 {
 
     public class EnemyHealthComponent : MonoBehaviour
     {
+        public GameObject Enemy;
         //public Destroy2 TargetSystem;
         public int Health = 100;
         public AudioSource HitSound;
@@ -31,6 +35,14 @@ namespace StarterAssets
         public ParticleSystem HeadSparks;
         public ParticleSystem HeadDestroy;
         public GameObject Head;
+        public GameObject RoboHead;
+        public GameObject RoboHeadPosition;
+        public Rigidbody RoboHeadRB;
+
+        [Header("AmmoDrop")]
+        public GameObject Ammo_Box_Enemy_Drop;
+        public Rigidbody AmmoBoxRB;
+
 
 
         void Start()
@@ -41,12 +53,14 @@ namespace StarterAssets
             //EnimeAnimatorController = GetComponent<EnimeAnimatorController>();
             EnemyMovement = GetComponent<EnemyMovement>();
             EnemyCollider = GetComponent<Collider>();
+           
+
         }
 
         public void HeadShot (int damage)
         {
             HitSound.Play();
-            Debug.Log("ХЕДШОТ4!!!");
+            //Debug.Log("ХЕДШОТ4!!!");
             Health = Health - damage;
             if (Health > 19 && Health < 30)
             {
@@ -74,7 +88,7 @@ namespace StarterAssets
                 //вызов метода разрушения с задержкой 0,2с
                 //TargetSystem.DestroyTarget2();
 
-                Debug.Log("==\\Смерть врага//==");
+                //Debug.Log("==\\Смерть врага//==");
                 EnemyMovement.NavMeshAgent.speed = 0f;
                 //EnemyMovement.NavMeshAgent.Stop(); // Устарело!
                 EnemyMovement.NavMeshAgent.isStopped = true;
@@ -88,22 +102,26 @@ namespace StarterAssets
                 Sparks_1.Play();
                 Sparks_2.Play();
 
-                //Взрыв головы
-                
+                //Взрыв головы                 
                 HeadDestroy.Play();
                 HeadSparks.Play();
-
+                //голову выключаем
                 Head.gameObject.SetActive(false);
+                // вторую голову включаем и запускаем в воздух
+                //RoboHead.gameObject.SetActive(true);
+                RoboHead = Instantiate(RoboHead, RoboHeadPosition.transform.position, RoboHeadPosition.transform.rotation);
+                RoboHeadRB = RoboHead.GetComponent<Rigidbody>();
+                //RoboHeadRB.AddForce(HeadDirection * _force);
+                // отстрел башки
+                RoboHeadRB.AddForce(-1f, 3, 1, ForceMode.VelocityChange); // ForceMode.Force // ForceMode.Acceleration // ForceMode.Impulse 
 
-
-
-
-                Debug.Log("ХЕДШОТ5!!!");
+                //Debug.Log("ХЕДШОТ5!!!");
                 EnemySpawnSystem.Spawn();
 
 
                 //уничтожение тела через 30 сек
                 Invoke("Dead", 30f);
+                Invoke("DropAmmo", 1f);
 
                 //_ExplodeTarget.StartExplosion();
                 //Destroy(gameObject);
@@ -158,7 +176,7 @@ namespace StarterAssets
                 //вызов метода разрушения с задержкой 0,2с
                 //TargetSystem.DestroyTarget2();
 
-                Debug.Log("==\\Смерть врага//==");
+                //Debug.Log("==\\Смерть врага//==");
                 EnemyMovement.NavMeshAgent.speed = 0f;
                 //EnemyMovement.NavMeshAgent.Stop(); // Устарело!
                 EnemyMovement.NavMeshAgent.isStopped = true;
@@ -176,6 +194,7 @@ namespace StarterAssets
 
                 //уничтожение тела через 30 сек
                 Invoke("Dead", 30f);
+                Invoke("DropAmmo", 1f);
 
                 //_ExplodeTarget.StartExplosion();
                 //Destroy(gameObject);
@@ -202,6 +221,21 @@ namespace StarterAssets
             DamageSound.Play();
             
 
+        }
+
+ 
+        public void DropAmmo()
+        {
+            //Vector3 DropPosition = new Vector3(Random.Range(-1, 1), 0.5f, Random.Range(-1, 1));
+            Vector3 DropPosition = Enemy.transform.position;// + DropPosition;
+            DropPosition.y = 0.5f;
+            Ammo_Box_Enemy_Drop = Instantiate(Ammo_Box_Enemy_Drop, DropPosition, Ammo_Box_Enemy_Drop.transform.rotation);
+            //Ammo_Box_Enemy_Drop = Instantiate(Ammo_Box_Enemy_Drop, RoboHeadPosition.transform.position, RoboHeadPosition.transform.rotation);
+
+            AmmoBoxRB = Ammo_Box_Enemy_Drop.GetComponent<Rigidbody>();
+            //RoboHeadRB.AddForce(HeadDirection * _force);
+            // отстрел башки
+            AmmoBoxRB.AddForce(Random.Range(-1, 1), 3, Random.Range(-1, 1), ForceMode.VelocityChange); // ForceMode.Force // ForceMode.Acceleration // ForceMode.Impulse 
         }
 
     }

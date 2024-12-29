@@ -39,4 +39,7 @@ public class AmmoSpawnSystem : MonoBehaviour
         //EnemyMovement = Instance.GetComponent<EnemyMovement>();
         //EnemyMovement.Player = Player.transform;
     }
+
+    
+
 }

@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class AmmoBox : MonoBehaviour
 {
-    public int Ammo = 50;
+    public int Ammo = 20;
     public Text _text;
     public AmmoSpawnSystem AmmoSpawnSystem;
 

@@ -3078,7 +3078,7 @@ MonoBehaviour:
   GetAmmo: {fileID: 8300000, guid: cb491a0f6adb55644bc9dbea81fd165d, type: 3}
   _totalAmmo: 5
   _maxWeaponAmmo: 10
-  _currentWeaponAmmo: 5
+  _currentWeaponAmmo: 10
   _maxAmmo: 100
   _ammoText: {fileID: 5856742602133169863}
   Total_Ammo_Text: {fileID: 1467066670101506265}

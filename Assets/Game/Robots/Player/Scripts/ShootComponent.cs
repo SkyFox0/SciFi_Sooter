@@ -16,7 +16,7 @@ namespace StarterAssets
 
         private void Update()
         {
-            Debug.DrawRay(ShootPoint.position, ShootDirection.forward * 30, Color.red);
+            //Debug.DrawRay(ShootPoint.position, ShootDirection.forward * 30, Color.red);
         }
 
 
@@ -29,18 +29,18 @@ namespace StarterAssets
             if (Physics.Raycast(shootPosition, direction, out var hitInfo))
             {
                 //Debug.DrawRay(SearchPoint, _targetDirection * _fireDistans, Color.red);
-                Debug.Log("Hit! Object = " + hitInfo.collider.name);
+                //Debug.Log("Hit! Object = " + hitInfo.collider.name);
 
                 if (hitInfo.collider.name == "Head")
                 { 
-                    Debug.Log("张呢我1!!!");
+                    //Debug.Log("张呢我1!!!");
                     //HeadShoot = true;
                     if (hitInfo.collider.TryGetComponent(out HeadShoot HeadShoot))
                     {
 
                         try
                         {
-                            Debug.Log("张呢我2!!!");
+                            //Debug.Log("张呢我2!!!");
                             HeadShoot.TakeHeadShoot(Damage*3);
                         }
                         catch { }

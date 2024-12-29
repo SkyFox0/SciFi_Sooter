@@ -12,7 +12,7 @@ namespace StarterAssets
         public void TakeHeadShoot(int _damage)
         {
             EnemyHealthComponent.HeadShot(_damage);
-            Debug.Log("张呢我3!!!");            
+            //Debug.Log("张呢我3!!!");            
         }
     }
 }
