@@ -225,7 +225,7 @@ public class EnemyMovement : MonoBehaviour
         // Вычисляем направление на игрока
         _rotateDirection = Player.transform.position - Enemy.transform.position;
         _rotateDirection.y = 0; // Если хотите игнорировать вертикальную ось
-        Debug.Log(_rotateDirection.normalized.ToString());  
+//        Debug.Log(_rotateDirection.normalized.ToString());  
         // Проверяем, есть ли ненулевое направление
         if (_rotateDirection.magnitude > 0.01f)
         {
@@ -283,7 +283,7 @@ public class EnemyMovement : MonoBehaviour
             if (hitInfo.collider.gameObject.name == "Player")
             {
                 // попал по игроку
-                Debug.Log("Попал по игроку!");
+//                Debug.Log("Попал по игроку!");
                 if (hitInfo.collider.TryGetComponent(out PlayerHealthComponentNew healthComponent))
                 {
                     try
@@ -298,7 +298,7 @@ public class EnemyMovement : MonoBehaviour
             else
             {
                 // промазал по игроку
-                //Debug.Log("Промазал по игроку!");
+//                Debug.Log("Промазал по игроку!");
             }
         }
         if (!_isDead)

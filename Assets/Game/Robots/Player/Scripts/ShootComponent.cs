@@ -11,6 +11,13 @@ namespace StarterAssets
         public Transform ShootPoint;
         public Transform ShootDirection;
         public int Damage;
+        //public bool HeadShoot;
+        //public EnemyHealthComponent EnemyHealthComponent;
+
+        private void Update()
+        {
+            Debug.DrawRay(ShootPoint.position, ShootDirection.forward * 30, Color.red);
+        }
 
 
         public void Shoot()
@@ -21,30 +28,49 @@ namespace StarterAssets
 
             if (Physics.Raycast(shootPosition, direction, out var hitInfo))
             {
+                //Debug.DrawRay(SearchPoint, _targetDirection * _fireDistans, Color.red);
                 Debug.Log("Hit! Object = " + hitInfo.collider.name);
-                Debug.Log(direction.ToString());
+
+                if (hitInfo.collider.name == "Head")
+                { 
+                    Debug.Log("’≈ƒÿŒ“1!!!");
+                    //HeadShoot = true;
+                    if (hitInfo.collider.TryGetComponent(out HeadShoot HeadShoot))
+                    {
+
+                        try
+                        {
+                            Debug.Log("’≈ƒÿŒ“2!!!");
+                            HeadShoot.TakeHeadShoot(Damage*3);
+                        }
+                        catch { }
+                    }
+                }
+
+                
                 if (hitInfo.collider.TryGetComponent(out HealthComponent healthComponent))
                 {
 
                     try
-                    {
-                        //healthComponent.HitSound.Play();
+                    {                        
                         healthComponent.TakeDamage(Damage);
                     }
                     catch { }
                 }
+                
 
                 if (hitInfo.collider.TryGetComponent(out EnemyHealthComponent enemyHealthComponent))
                 {
 
                     try
                     {
-                        //healthComponent.HitSound.Play();
-                        enemyHealthComponent.TakeDamage(Damage);
+                            enemyHealthComponent.TakeDamage(Damage);
                     }
                     catch { }
 
                 }
+                //—¡–¿—€¬¿≈Ã »Õƒ» ¿“Œ– ’≈ƒÿŒ“¿
+                //HeadShoot = false;
 
                 if (hitInfo.rigidbody != null)
                 {

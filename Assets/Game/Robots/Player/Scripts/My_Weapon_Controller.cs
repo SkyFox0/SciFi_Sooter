@@ -9,6 +9,12 @@ namespace StarterAssets
         public Animator Animator;
         private float LastShoot;
         //public Camera Camera;
+
+        [Header("Cinemachine")]
+        [Tooltip("The follow target set in the Cinemachine Virtual Camera that the camera will follow")]
+        public GameObject CinemachineCameraTarget;
+        public Transform CameraPoint;
+        public Transform SightPoint;
         public CinemachineVirtualCamera Camera;
 
         [Header("Shoot")]
@@ -76,7 +82,7 @@ namespace StarterAssets
                     _currentWeaponAmmo -= 1;
                     _ammoText.text = _currentWeaponAmmo.ToString();
                     Animator.SetBool("isNeedToReload", true);
-                    Debug.Log("Shoot!");
+                    //Debug.Log("Shoot!");
                 }
                 else
                 { 
@@ -174,6 +180,7 @@ namespace StarterAssets
                 Animator.SetBool("isSight", true);
                 FirstPersonController.isSight = true;
                 Ui_Control.Scope_On();
+                CinemachineCameraTarget.transform.localPosition = SightPoint.localPosition;
             }                        
         }
 
@@ -216,6 +223,7 @@ namespace StarterAssets
             Ui_Control.Scope_Off();
             //Camera.m_Lens.FieldOfView = 60f;
             //Debug.Log("Выключить прицеливание");
+            CinemachineCameraTarget.transform.localPosition = CameraPoint.localPosition;
         }
 
     }

@@ -87,6 +87,7 @@ public class EnemySpawnSystem : MonoBehaviour
 
     public void Spawn()
     {
+        Debug.Log("Спавн нового врага");
         //Destroy(Instance);
         SpawnPoint = SpawnPoints[Random.Range(0, SpawnPoints.Length)];
         Instance = Instantiate(Enemy, SpawnPoint.transform.position, transform.rotation);
