@@ -113,8 +113,8 @@ namespace StarterAssets
                 RoboHeadRB = RoboHead.GetComponent<Rigidbody>();
                 //RoboHeadRB.AddForce(HeadDirection * _force);
                 // отстрел башки
-                RoboHeadRB.AddForce(-1f, 3, 1, ForceMode.VelocityChange); // ForceMode.Force // ForceMode.Acceleration // ForceMode.Impulse 
-
+                RoboHeadRB.AddForce(Random.Range(-2f, 0f), Random.Range(3f, 5f), Random.Range(0f, 1f), ForceMode.VelocityChange); // ForceMode.Force // ForceMode.Acceleration // ForceMode.Impulse 
+                RoboHeadRB.AddTorque(Random.Range(-3f, 3f), Random.Range(-3f, 3f), Random.Range(-3f, 3f), ForceMode.VelocityChange);
                 //Debug.Log("ХЕДШОТ5!!!");
                 EnemySpawnSystem.Spawn();
 

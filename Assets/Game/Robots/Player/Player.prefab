@@ -3079,7 +3079,7 @@ MonoBehaviour:
   _totalAmmo: 5
   _maxWeaponAmmo: 10
   _currentWeaponAmmo: 10
-  _maxAmmo: 100
+  _maxAmmo: 200
   _ammoText: {fileID: 5856742602133169863}
   Total_Ammo_Text: {fileID: 1467066670101506265}
   FirstPersonController: {fileID: 1166103537391085774}

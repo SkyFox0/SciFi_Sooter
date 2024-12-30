@@ -15278,6 +15278,7 @@ MonoBehaviour:
   LaserScript: {fileID: 0}
   _enemySpeed: 2
   _enemyRotationSpeed: 2
+  _stopDistans: 0
   _isMove: 0
   _isRotate: 0
   _isRotate_L: 0
@@ -15374,6 +15375,7 @@ MonoBehaviour:
   RoboHeadPosition: {fileID: 3137620563090962466}
   RoboHeadRB: {fileID: 0}
   Ammo_Box_Enemy_Drop: {fileID: 3457076081277750512, guid: c3d1904b0357ee14dba03a453573f78c, type: 3}
+  AmmoBoxRB: {fileID: 0}
 --- !u!136 &4825542973745848144
 CapsuleCollider:
   m_ObjectHideFlags: 0

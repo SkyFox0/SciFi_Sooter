@@ -2,6 +2,8 @@ using StarterAssets;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections;
+using UnityEngine.UIElements;
 
 
 public class EnemyMovement : MonoBehaviour
@@ -30,6 +32,7 @@ public class EnemyMovement : MonoBehaviour
     [Header("Move")]
     public float _enemySpeed = 2f;  // Cкорость врага
     public float _enemyRotationSpeed = 2.0f; // —корость поворота врага
+    public float _stopDistans; // минимальное рассто€ние до игрока
     public bool _isMove;
     public bool _isRotate;
     public bool _isRotate_L;
@@ -41,12 +44,15 @@ public class EnemyMovement : MonoBehaviour
     public Vector3 _rotateDirection;
     public Quaternion targetRotation;
 
+
     [Header("Search")]
     public float _timer;
     //public Transform SearchPoint;
     //public Transform SearchDirection;
     public Vector3 _direction;
     public Quaternion Direction;
+    public Plane PlaneDirection;
+    public Plane goalLine1;
 
     [Header("Fire")]
     public float _fireDistans;
@@ -65,7 +71,8 @@ public class EnemyMovement : MonoBehaviour
     void Start()
     {   // ќ игроке узнаем из системы спавна
         //Player = GameObject.FindGameObjectWithTag("Player").transform;
-        NavMeshAgent.speed = _enemySpeed;
+        //NavMeshAgent.speed = _enemySpeed;
+        //NavMeshAgent.stoppingDistance = _stopDistans;
         _isMove = true;
         _isDead = false;
         _isReloading = false;
@@ -75,32 +82,40 @@ public class EnemyMovement : MonoBehaviour
         EGA_EnemyLasers = GetComponent<EGA_EnemyLasers>();
         EnemyAnimator = GetComponentInChildren<Animator>();
         SoundController = GetComponentInChildren<SoundController>();
-        EnemyAnimator.SetFloat("y", 1);
-        EnemyAnimator.SetFloat("x", 0);
-        _enemyChange = 15f;  // врем€ до смены характеристик врага        
-        _fireDistans = 30;  //максимальна€ дистанци€ стрельбы
+        
+        //_enemyChange = 15f;  // врем€ до смены характеристик врага        
+        //_fireDistans = 30f;  //максимальна€ дистанци€ стрельбы
         _ammo = Random.Range(1, _maxAmmo);
         EnemyChange();
+        NavMeshAgent.speed = _enemySpeed;
+        EnemyAnimator.SetFloat("y", 1f);
+        EnemyAnimator.SetFloat("x", 0f);
     }
 
     public void EnemyChange()
     {
-        _moveTime = Random.Range(0.5f, 1f);
-        _searchTime = Random.Range(0.5f, 1f);
-        _shootTime = Random.Range(0.5f, 3f);
+        _moveTime = Random.Range(0.5f, 1f);    // врем€ через которое враг начинает движение
+        _searchTime = Random.Range(0.5f, 1f);  // врем€ через которое враг обновл€ет позицию игрока и начинает визуальный поиск
+        _shootTime = Random.Range(1.5f, 2.5f);    // врем€ через которое враг стрел€ет по игроку
         _enemySpeed = Random.Range(2f, 4f);
-        _enemyRotationSpeed = Random.Range(1f, 3f);
+        _enemyRotationSpeed = Random.Range(2f, 3f);
+        _stopDistans = Random.Range(4f, 8f);
+        //NavMeshAgent.speed = _enemySpeed;
+        NavMeshAgent.stoppingDistance = _stopDistans;
         // –азброс стрельбы должен быть от 0,5 до 1,5
-        _bulletSpread = 2f / ((_shootTime + 1f) * (_shootTime + 1f));  //разлЄт пуль
+        //_bulletSpread = 2f / ((_shootTime + 1f) * (_shootTime + 1f));  //разлЄт пуль
         _bulletSpread = _maxBulletSpread.Evaluate(_shootTime / 3f);
+        _enemyChange = Random.Range(10f, 15f);  // врем€ до смены характеристик врага        
+        _fireDistans = Random.Range(25f, 35f);  //максимальна€ дистанци€ стрельбы
     }
 
     // Update is called once per frame
     void Update()
     {
+        _timer = _timer + Time.deltaTime;
         if (!_isDead && !_isDamage)
         {
-            _timer = _timer + Time.deltaTime;
+            //_timer = _timer + Time.deltaTime;
             if ((_timer > _searchTime) && _isMove)
             {
                 NavMeshAgent.SetDestination(Player.transform.position);
@@ -194,23 +209,34 @@ public class EnemyMovement : MonoBehaviour
 
     public void Reloading()
     {
-        _isMove = false;
+        //Stop();
+        //_isMove = false;
         _isReloading = true;
         SoundController.Reload();
 
-        EnemyAnimator.SetBool("isMove", false);
+        //EnemyAnimator.SetBool("isMove", false);
         EnemyAnimator.SetTrigger("Reload");
         EnemyAnimator.SetBool("isReloading", true);
-        _ammo = _maxAmmo;
-        Invoke("Move", 2.5f); // _moveTime);  
+        //_ammo = _maxAmmo;
+        //Invoke("Move", _moveTime); // _moveTime);  
+        Invoke("EndReloading", 1f); // _moveTime);  
+    }
+
+    public void EndReloading()
+    {
+        if (!_isDamage)
+        {
+                _ammo = _maxAmmo;
+                Invoke("Move", _moveTime); // _moveTime);  
+        }
 
     }
 
-    public void Stop()
+        public void Stop()
     {
         NavMeshAgent.speed = 0f;
-        EnemyAnimator.SetFloat("y", 0);
-        EnemyAnimator.SetFloat("x", 0);
+        EnemyAnimator.SetFloat("y", 0f);
+        EnemyAnimator.SetFloat("x", 0f);
         EnemyAnimator.SetBool("isMove", false);
         _isMove = false;
         //Debug.Log("ќстановилс€ дл€ стрельбы");
@@ -219,23 +245,53 @@ public class EnemyMovement : MonoBehaviour
     public void Rotate()
     {
         //ѕоворот в сторону игрока
-        EnemyAnimator.SetFloat("y", 0);
+        EnemyAnimator.SetFloat("y", 0f);
         //¬ключить поворот 
-        EnemyAnimator.SetFloat("x", 1);
+        //EnemyAnimator.SetFloat("x", -1);
         // ¬ычисл€ем направление на игрока
         _rotateDirection = Player.transform.position - Enemy.transform.position;
+        float Angle = Vector3.Angle(_rotateDirection, Enemy.transform.forward);
         _rotateDirection.y = 0; // ≈сли хотите игнорировать вертикальную ось
-//        Debug.Log(_rotateDirection.normalized.ToString());  
+        // ¬ычисл€ем поворот к цели
+        targetRotation = Quaternion.LookRotation(_rotateDirection);
+        //        Debug.Log(_rotateDirection.normalized.ToString());  
         // ѕровер€ем, есть ли ненулевое направление
-        if (_rotateDirection.magnitude > 0.01f)
+
+        PlaneDirection = new Plane(transform.right, transform.position);
+        
+        if (Quaternion.Angle(targetRotation, transform.rotation) > 0.1f)
         {
-            //Debug.Log("поворачиваю в сторону игрока на вектор  " + _rotateDirection.ToString());
-            // ¬ычисл€ем поворот к цели
-            targetRotation = Quaternion.LookRotation(_rotateDirection);
+            if (Quaternion.Angle(targetRotation, transform.rotation) > 2f)  // включить анимацию поворота
+            {
+                if (PlaneDirection.GetSide(Player.transform.position))  // игрок находитс€ справа или слева от плоскости?
+                {
+                    EnemyAnimator.SetFloat("x", 1f);
+                    Debug.Log("ѕоворот направо");
+                }
+                else
+                {
+                    EnemyAnimator.SetFloat("x", -1f);
+                    Debug.Log("ѕоворот налево");
+                }
+            }
+            else
+            {
+                EnemyAnimator.SetFloat("x", 0f);
+            }
+
+
+            //Debug.Log("”гол поворота > 0f:  " + Angle.ToString());
+            //Debug.Log("»грок находитс€ на векторе:  " + _rotateDirection.ToString());
+
+            //Quaternion RotateVector = targetRotation - transform.rotation;
+            //Debug.Log("поворачиваю в сторону игрока на вектор:  " + targetRotation.ToString());
 
             // ѕлавно поворачиваем врага в сторону игрока
             Enemy.transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * _enemyRotationSpeed);
+            
+            Debug.Log("”гол до игрока:  " + Quaternion.Angle(targetRotation, transform.rotation).ToString());
         }
+        
     }
 
     public void Shoot()
@@ -243,7 +299,7 @@ public class EnemyMovement : MonoBehaviour
         _isRotate = false;
         //_shoot = true;
         //Debug.Log("¬ыстрел!");
-        _ammo -= 1;
+        //_ammo -= 1;
         _targetDirection = Player.transform.position - Enemy.transform.position;
 
         // задаЄм отклонение вызова
@@ -254,7 +310,7 @@ public class EnemyMovement : MonoBehaviour
         _targetDirection.y += _spreadVector.y;  // отклонение по вертикали
         _targetDirection.z += _spreadVector.z;  // отклонение по горизонтали               
 
-        // проверка не сдох ли враг :)
+        // проверка не сбит ли прицел :)
         if (_isDead | _isDamage)
         {
             // стрельба по направлению ствола оружи€
@@ -265,6 +321,7 @@ public class EnemyMovement : MonoBehaviour
         _shootDerection = Quaternion.LookRotation(_targetDirection);
         //Direction = _shootDerection;   //Quaternion.LookRotation(FirePoint.forward);        
         EnemyAnimator.SetTrigger("Shoot");
+        _ammo -= 1;
         EGA_EnemyLasers.ShootEnemy(Prefab, SearchPoint, _shootDerection);
         ShootSound.Play();
         //EGA_EnemyLasers.ShootEnemy(Prefab, SearchPoint, Direction);
@@ -303,8 +360,15 @@ public class EnemyMovement : MonoBehaviour
         }
         if (!_isDead)
         {
+            if (_ammo <= 0)
+            {
+                Stop();
+                Reloading();
+            }
             Invoke("Move", _moveTime);
         }
+
+        
 
     }
 
@@ -315,34 +379,41 @@ public class EnemyMovement : MonoBehaviour
 
     public void Move()
     {
+        _isMove = true; 
         _isReloading = false;
-        _isMove = true;
+        _isShoot = false;
 
         EnemyAnimator.SetBool("isReloading", false);
         EnemyAnimator.SetBool("isMove", true);
+        EnemyAnimator.SetFloat("x", 0f); // ѕоворот на месте отключен
+        if (_distance > _stopDistans)   
+        {
+            EnemyAnimator.SetFloat("y", 1f);  // включен шаг, если надо идти
+            NavMeshAgent.SetDestination(Player.transform.position);
+            NavMeshAgent.speed = _enemySpeed;
+        }        
 
-        NavMeshAgent.speed = _enemySpeed;
-        EnemyAnimator.SetFloat("y", 1);
-        EnemyAnimator.SetFloat("x", 0);
-        _timer = 0f;
-        _isShoot = false;
+        _timer = 0f;        
 
     }
 
     public void Damage()
     {
+        Stop();
+
         _isDamage = true;
         _isMove = false;
         _isRotate = false;
         _isShoot = false;
         _isReloading = false;
-        Stop();
-        Invoke("DamageOff", 0.3f);
+        
+        Invoke("DamageOff", 1f);
     }
 
     public void DamageOff()
     {
         _isDamage = false;
+        Invoke("Move", _moveTime);
     }
 
 }
