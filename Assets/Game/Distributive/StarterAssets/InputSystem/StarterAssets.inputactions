@@ -96,7 +96,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Damage",
+                    "name": "Grenade",
                     "type": "Button",
                     "id": "c0d123a4-feee-4dfc-b3ab-869aa7a1cf3e",
                     "expectedControlType": "",
@@ -421,7 +421,7 @@
                     "interactions": "Press",
                     "processors": "",
                     "groups": ";KeyboardMouse",
-                    "action": "Damage",
+                    "action": "Grenade",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

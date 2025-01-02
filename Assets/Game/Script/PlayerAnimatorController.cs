@@ -83,5 +83,15 @@ namespace StarterAssets
         {
             SoundController.StepSound_2();
         }
+
+        public void ShootingOn(string s)
+        {
+            Animator.SetBool("isShooting", true);
+        }
+
+        public void ShootingOff(string s)
+        {
+            Animator.SetBool("isShooting", false);
+        }
     }
 }

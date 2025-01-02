@@ -16,7 +16,7 @@ namespace StarterAssets
 		public bool shoot;
 		public bool sight;
         public bool reload;
-        public bool damage;
+        public bool grenade;
 
 
         [Header("Movement Settings")]
@@ -79,12 +79,12 @@ namespace StarterAssets
 			}			    
         }
 
-        public void OnDamage(InputValue value)
+        public void OnGrenade(InputValue value)
         {
-			if (!damage)
+			if (!grenade)
 			{
-				damage = true;
-				Invoke("DamageOff", 0.1f);
+                grenade = true;
+				Invoke("GrenadeOff", 0.1f);
 			}
         }
 #endif
@@ -143,9 +143,9 @@ namespace StarterAssets
             reload = false;
         }
 
-        public void DamageOff()
+        public void HrensdeOff()
         {
-            damage = false;
+            grenade = false;
         }
 
         

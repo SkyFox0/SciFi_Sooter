@@ -109,10 +109,12 @@ namespace StarterAssets
 
 		private void Start()
 		{
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
 
-			//_animator = GetComponent<Animator>();
-			//Animator = GetComponentInChildren<Animator>();
-			_controller = GetComponent<CharacterController>();
+            //_animator = GetComponent<Animator>();
+            //Animator = GetComponentInChildren<Animator>();
+            _controller = GetComponent<CharacterController>();
 			_input = GetComponent<StarterAssetsInputs>();
             //SoundController = GetComponentInChildren<SoundController>();
 
@@ -152,10 +154,16 @@ namespace StarterAssets
 			// set sphere position, with offset
 			Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z);
 			Grounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers, QueryTriggerInteraction.Ignore);
+			//if (!Grounded)
+			//{
+            //    Animator.SetBool("isGround", false);
+            //}
+
 			if ((!Grounded) && (!_isFalling))
             {
                 // падаем
-				_isFalling = true;
+                
+                _isFalling = true;
 				My_Weapon_Controller.OnSightOff(null);
 
                 //Ui_Control.Scope_Off();
@@ -168,10 +176,11 @@ namespace StarterAssets
                     // упали
                     _isFalling = false;
                     //Запуск звука приземления
-                    Debug.Log("Прыжок закончен!");
+                    //Debug.Log("Прыжок закончен!");
                     Animator.SetBool("isJump", false);
                     Animator.SetBool("isGround", true);
                     SoundController.LandingSound();
+
 					if (_input.sight)
 					{
                         My_Weapon_Controller.OnSight(null);
@@ -188,13 +197,27 @@ namespace StarterAssets
 			if (!Animator.GetBool("isDead"))
 				{
                 // if there is an input
-                if (_input.look.sqrMagnitude >= _threshold)
-                {
+                if (_input.look.sqrMagnitude >= _threshold)  // _input.look- последнее перемещение мыши
+                                                             //_input.look.sqrMagnitude - длина вектора перемещения
+                {                    
                     //Don't multiply mouse input by Time.deltaTime
                     float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
 
-                    _cinemachineTargetPitch += _input.look.y * RotationSpeed * deltaTimeMultiplier;
+                    _cinemachineTargetPitch += _input.look.y * RotationSpeed * deltaTimeMultiplier; // требуемый угол наклона камеры
                     _rotationVelocity = _input.look.x * RotationSpeed * deltaTimeMultiplier;
+
+                    Animator.SetFloat("z", _cinemachineTargetPitch / -50f);
+                    //if (_cinemachineTargetPitch <= 0)
+				 	//{
+                    //    Animator.SetFloat("z", _cinemachineTargetPitch / TopClamp);
+                    //}
+					//else
+					//{
+                    //    Animator.SetFloat("z", _cinemachineTargetPitch / (-1 * BottomClamp));
+                    //}
+					
+
+                    //Debug.Log(_cinemachineTargetPitch.ToString());
 
                     // clamp our pitch rotation
                     _cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, TopClamp, BottomClamp);
@@ -203,7 +226,12 @@ namespace StarterAssets
                     CinemachineCameraTarget.transform.localRotation = Quaternion.Euler(_cinemachineTargetPitch, 0.0f, 0.0f);
 
                     // rotate the player left and right
-                    transform.Rotate(Vector3.up * _rotationVelocity);
+                    transform.Rotate(Vector3.up * _rotationVelocity);  // поворот вправо-влево
+                    if (isSight && !Animator.GetBool("isShooting"))
+					{
+                        My_Weapon_Controller.Sighting();
+                        //My_Weapon_Controller.CinemachineCameraTarget.transform.position = My_Weapon_Controller.SightPoint.position;
+                    }
                 }
             }
 			
@@ -322,6 +350,7 @@ namespace StarterAssets
 			}
 			else
 			{
+                Animator.SetBool("isGround", false);
                 // reset the jump timeout timer               
                 _jumpTimeoutDelta = JumpTimeout;
                 _input.jump = false;

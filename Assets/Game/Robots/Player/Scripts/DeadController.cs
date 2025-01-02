@@ -9,7 +9,7 @@ public class DeadController : MonoBehaviour
     public Animator DeadCameraAnimator;
     public Canvas ImageX;
     public Canvas Dead;
-
+    public Canvas Score;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void PlayerIsDead()
@@ -19,5 +19,6 @@ public class DeadController : MonoBehaviour
         DeadCameraAnimator.SetBool("isDead", true);
         ImageX.enabled = false;
         Dead.enabled = true;
+        Score.worldCamera = DeadCamera;        
     }
 }

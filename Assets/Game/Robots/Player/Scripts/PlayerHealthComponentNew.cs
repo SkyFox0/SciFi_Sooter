@@ -35,11 +35,7 @@ namespace StarterAssets
 
             //TakeDamage(105);
         }
-        public void OnDamage(InputValue value)
-        {
-            TakeDamage(10);
-
-        }
+        
 
 
         public void TakeDamage(int damage)

@@ -56,7 +56,7 @@ public class EnemyMovement : MonoBehaviour
 
     [Header("Fire")]
     public float _fireDistans;
-    public float _distance;
+    public float _distance;  // расстояние до игрока
     public AnimationCurve _maxBulletSpread;
     public float _bulletSpread;
     public Vector3 _spreadVector;
@@ -99,7 +99,7 @@ public class EnemyMovement : MonoBehaviour
         _shootTime = Random.Range(1.5f, 2.5f);    // время через которое враг стреляет по игроку
         _enemySpeed = Random.Range(2f, 4f);
         _enemyRotationSpeed = Random.Range(2f, 3f);
-        _stopDistans = Random.Range(4f, 8f);
+        _stopDistans = Random.Range(3f, 5f);
         //NavMeshAgent.speed = _enemySpeed;
         NavMeshAgent.stoppingDistance = _stopDistans;
         // Разброс стрельбы должен быть от 0,5 до 1,5
@@ -113,6 +113,12 @@ public class EnemyMovement : MonoBehaviour
     void Update()
     {
         _timer = _timer + Time.deltaTime;
+
+        if (_isReloading)
+        {
+            Stop();
+        }
+
         if (!_isDead && !_isDamage)
         {
             //_timer = _timer + Time.deltaTime;
@@ -171,8 +177,8 @@ public class EnemyMovement : MonoBehaviour
             //Debug.Log(_direction.ToString());
             if (hitInfo.collider.gameObject.name == "Player")  //if (hitInfo.collider.name == "Player")
             {
-                //Debug.Log("Вижу игрока!");
-
+                Debug.Log("Вижу игрока!");
+                
                 if (_distance < _fireDistans)
                 {
                     Stop();
@@ -196,12 +202,22 @@ public class EnemyMovement : MonoBehaviour
                     }
                     else
                     {
+                        Stop();
                         Reloading();
                     }
                 }
             }
             else
             {
+                // если не видит игрока
+                Debug.Log("Не вижу игрока!");
+                if (_distance < _stopDistans)  // если игрок слишком близко
+                {
+                    _isRotate = true;
+                }
+                else
+                { Move();}
+                
                 _timer = 0f;
             }
         }
@@ -209,6 +225,7 @@ public class EnemyMovement : MonoBehaviour
 
     public void Reloading()
     {
+
         //Stop();
         //_isMove = false;
         _isReloading = true;
@@ -219,7 +236,7 @@ public class EnemyMovement : MonoBehaviour
         EnemyAnimator.SetBool("isReloading", true);
         //_ammo = _maxAmmo;
         //Invoke("Move", _moveTime); // _moveTime);  
-        Invoke("EndReloading", 1f); // _moveTime);  
+        Invoke("EndReloading", 3f); // _moveTime);  
     }
 
     public void EndReloading()
@@ -234,11 +251,12 @@ public class EnemyMovement : MonoBehaviour
 
         public void Stop()
     {
+        _isMove = false;
         NavMeshAgent.speed = 0f;
         EnemyAnimator.SetFloat("y", 0f);
         EnemyAnimator.SetFloat("x", 0f);
         EnemyAnimator.SetBool("isMove", false);
-        _isMove = false;
+        
         //Debug.Log("Остановился для стрельбы");
     }
 
@@ -266,12 +284,12 @@ public class EnemyMovement : MonoBehaviour
                 if (PlaneDirection.GetSide(Player.transform.position))  // игрок находится справа или слева от плоскости?
                 {
                     EnemyAnimator.SetFloat("x", 1f);
-                    Debug.Log("Поворот направо");
+                    //Debug.Log("Поворот направо");
                 }
                 else
                 {
                     EnemyAnimator.SetFloat("x", -1f);
-                    Debug.Log("Поворот налево");
+                    //Debug.Log("Поворот налево");
                 }
             }
             else
@@ -289,7 +307,7 @@ public class EnemyMovement : MonoBehaviour
             // Плавно поворачиваем врага в сторону игрока
             Enemy.transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * _enemyRotationSpeed);
             
-            Debug.Log("Угол до игрока:  " + Quaternion.Angle(targetRotation, transform.rotation).ToString());
+            //Debug.Log("Угол до игрока:  " + Quaternion.Angle(targetRotation, transform.rotation).ToString());
         }
         
     }
@@ -365,7 +383,10 @@ public class EnemyMovement : MonoBehaviour
                 Stop();
                 Reloading();
             }
-            Invoke("Move", _moveTime);
+            else
+            {
+                Invoke("Move", _moveTime);
+            }
         }
 
         

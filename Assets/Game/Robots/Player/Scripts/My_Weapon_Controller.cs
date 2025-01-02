@@ -6,16 +6,20 @@ namespace StarterAssets
 {
     public class My_Weapon_Controller : MonoBehaviour
     {
-        public Animator Animator;
-        private float LastShoot;
-        //public Camera Camera;
+        public Animator Animator;      
+        public FirstPersonController FirstPersonController;
+        public Ui_Control Ui_Control;
+        private float LastShoot;        
 
         [Header("Cinemachine")]
         [Tooltip("The follow target set in the Cinemachine Virtual Camera that the camera will follow")]
         public GameObject CinemachineCameraTarget;
         public Transform CameraPoint;
         public Transform SightPoint;
+        public Transform SightPointShoot;
         public CinemachineVirtualCamera Camera;
+        public float _sigthFocus = 30;
+        public float _normalFocus = 65;
 
         [Header("Shoot")]
         public ShootComponent ShootComponent;
@@ -29,7 +33,11 @@ namespace StarterAssets
         public AudioClip Empty;
         public AudioClip Hit;
         public AudioClip GetAmmo;
+        public AudioClip GetGrenades;
 
+        [Header("Switch Weapon")]
+        public bool isRifle;
+        public bool isGrenade;
 
         [Header("Ammo")]
         public int _totalAmmo;
@@ -39,12 +47,19 @@ namespace StarterAssets
         public TextMesh _ammoText;
         public TextMesh Total_Ammo_Text;
 
-        public FirstPersonController FirstPersonController;
-        public Ui_Control Ui_Control;
+        [Header("Grenades")]
+        public int _totalGrenades = 0;
+        public int _maxGrenades = 5;
+        public GameObject Grenade;
+
+
 
 
         private void Start()
         {
+            isRifle = true;
+            isGrenade = false;
+
             _ammoText.text = _currentWeaponAmmo.ToString();
             Total_Ammo_Text.text = _totalAmmo.ToString();
             LastShoot = Time.time;
@@ -58,12 +73,12 @@ namespace StarterAssets
             FirstPersonController = GetComponent<FirstPersonController>();
         }
 
-        private void Update()
+        private void FixedUpdate()
         {   //прицеливание
             CameraSightOn();
             CameraSightOff();
+            Camerashooting();
         }
-
 
         public void OnShoot(InputValue value)
         {
@@ -142,14 +157,34 @@ namespace StarterAssets
             }
             
             Total_Ammo_Text.text = _totalAmmo.ToString();
+        }
 
+        //  -----------гранаты-------------
+        public void AddGrenades(int _grenades)
+        {
+            // игрок поднял гранаты
+            PlaySound.PlayOneShot(GetGrenades);
+            _totalGrenades += _grenades;
+        }
+
+        public void OnGrenade(InputValue value)
+        {
+            if (_totalGrenades > 0)   // если гранаты есть
+            //if (isRifle && _totalGrenades > 0)
+            {
+                // Приготовить гранату к броску - анимация...
+                //isRifle = false;  // убрали винтовку
+                //isGrenade = true;  // достали гранату
+
+                // бросок гранаты
+
+
+            }
         }
 
 
 
-
-
-            public void EndReload()
+        public void EndReload()
         {
             int _needToReload = _maxWeaponAmmo - _currentWeaponAmmo; // сколько надо для перезарядки
             //Уменьшение общего количества патронов
@@ -180,15 +215,43 @@ namespace StarterAssets
                 Animator.SetBool("isSight", true);
                 FirstPersonController.isSight = true;
                 Ui_Control.Scope_On();
-                CinemachineCameraTarget.transform.localPosition = SightPoint.localPosition;
+                //CinemachineCameraTarget.transform.localPosition = SightPoint.localPosition;
+                CinemachineCameraTarget.transform.position = SightPoint.position;
             }                        
         }
 
+        public void Sighting()
+        {
+            CinemachineCameraTarget.transform.position = SightPoint.position;
+        }
+
+        public void Shooting()
+        {
+            CinemachineCameraTarget.transform.position = SightPointShoot.position;
+
+            Invoke("Sighting", 0.3f);
+            
+        }
+
+        public void Camerashooting()
+        {
+            if (Animator.GetBool("isSight") && Animator.GetBool("isShooting"))
+            {
+                if (Camera.m_Lens.FieldOfView < _sigthFocus + 10)
+                {
+                    Camera.m_Lens.FieldOfView += 11f;
+                    Ui_Control.Scope_On();
+                }                
+            }
+        }
+
+
+
         public void CameraSightOn()
         {
-            if (Animator.GetBool("isSight"))
+            if (Animator.GetBool("isSight") && !Animator.GetBool("isShooting"))
             {
-                if (Camera.m_Lens.FieldOfView > 30)
+                if (Camera.m_Lens.FieldOfView > _sigthFocus)
                 {
                     Camera.m_Lens.FieldOfView -= 3f;
                     Ui_Control.Scope_On();
@@ -205,7 +268,7 @@ namespace StarterAssets
         {
             if (!Animator.GetBool("isSight"))
             {
-                if (Camera.m_Lens.FieldOfView < 65)
+                if (Camera.m_Lens.FieldOfView < _normalFocus)
                 {
                     Camera.m_Lens.FieldOfView += 3f;
                 }
@@ -223,7 +286,8 @@ namespace StarterAssets
             Ui_Control.Scope_Off();
             //Camera.m_Lens.FieldOfView = 60f;
             //Debug.Log("Выключить прицеливание");
-            CinemachineCameraTarget.transform.localPosition = CameraPoint.localPosition;
+            //CinemachineCameraTarget.transform.localPosition = CameraPoint.localPosition;
+            CinemachineCameraTarget.transform.position = CameraPoint.position;
         }
 
     }

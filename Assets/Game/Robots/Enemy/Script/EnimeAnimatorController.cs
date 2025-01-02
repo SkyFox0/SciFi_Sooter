@@ -16,6 +16,7 @@ namespace StarterAssets
         {
             Animator.SetBool("isMove", true);
             Animator.SetBool("isGround", true);
+            Animator.SetBool("isDamage", false);
             //My_Weapon_Controller = GetComponent<My_Weapon_Controller>();
             //FirstPersonController = GetComponent<FirstPersonController>();
             //Animator = GetComponent<Animator>();
@@ -35,7 +36,7 @@ namespace StarterAssets
 
         public void JumpBegin(string s)
         {
-            Debug.Log("Подготовка к прыжку закончена!");
+            //Debug.Log("Подготовка к прыжку закончена!");
             Animator.SetBool("isJump", true);
             Animator.SetBool("isGround", false);            
             //FirstPersonController.Jump();
@@ -43,7 +44,7 @@ namespace StarterAssets
         }
         public void JumpEnd(string s)
         {
-            Debug.Log("Прыжок закончен!");
+            //Debug.Log("Прыжок закончен!");
             Animator.SetBool("isJump", false);
             Animator.SetBool("isGround", true);
             SoundController.LandingSound();
@@ -53,7 +54,7 @@ namespace StarterAssets
         {
             Animator.SetBool("isReloading", true);
 
-            Debug.Log("Перезарядка начата!");
+            //Debug.Log("Перезарядка начата!");
         }
 
         public void EndReload(string s)
@@ -62,19 +63,19 @@ namespace StarterAssets
             Animator.SetBool("isReloading", false);
             Animator.SetBool("isNeedToReload", false);
             //Animator.SetBool("isMove", true);
-            Debug.Log("Перезарядка закончена!");
+            //Debug.Log("Перезарядка закончена!");
         }        
 
         public void DamageBegin(string s)
         {            
             Animator.SetBool("isDamage", true);
-            Debug.Log("начало урона");
+            //Debug.Log("начало урона");
         }
 
         public void DamageEnd(string s)
         {
             Animator.SetBool("isDamage", false);
-            Debug.Log("конец урона");
+            //Debug.Log("конец урона");
         }
 
         public void Step_1(string s)
@@ -85,6 +86,15 @@ namespace StarterAssets
         public void Step_2(string s)
         {
             SoundController.StepSound_2();
+        }
+        public void ShootingOn(string s)
+        {
+            Animator.SetBool("isShooting", true);
+        }
+
+        public void ShootingOff(string s)
+        {
+            Animator.SetBool("isShooting", false);
         }
     }
 }
