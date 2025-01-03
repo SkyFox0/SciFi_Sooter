@@ -43,7 +43,8 @@ namespace StarterAssets
 		public void OnJump(InputValue value)
 		{
 			if (!jump)
-			{ 
+			{
+				//Debug.Log("Прыжок!");
 				jump = true;
 				Invoke("JumpOff", 0.1f);
 			}
@@ -87,7 +88,12 @@ namespace StarterAssets
 				Invoke("GrenadeOff", 0.1f);
 			}
         }
+
+
 #endif
+
+
+
 
         public void MoveInput(Vector2 newMoveDirection)
 		{
@@ -143,7 +149,7 @@ namespace StarterAssets
             reload = false;
         }
 
-        public void HrensdeOff()
+        public void GrenadeOff()
         {
             grenade = false;
         }

@@ -134,14 +134,17 @@ namespace StarterAssets
 			if (!Animator.GetBool("isDead"))
 			{
                 JumpAndGravity();
-                GroundedCheck();
-				//if (!Animator.GetBool("isReloading"))
-				//{
-                Move();
-                //}                
+                GroundedCheck();				
+                Move();                
             }
-
-
+            else
+            {
+				Animator.SetBool("isRun", false);
+                Animator.SetBool("isMove", false);
+                Animator.SetBool("isJump", false);
+                Animator.SetBool("isReloading", false);                
+                Animator.SetBool("isSight", false);
+            }
 		}
 
 		private void LateUpdate()
@@ -242,7 +245,7 @@ namespace StarterAssets
 			if (_input.move.magnitude > 0f)
 			{
                 Animator.SetBool("isMove", true);
-                if (_input.sprint && !isReloading && !isSight)
+                if (_input.sprint && !isReloading && !isSight && Grounded)
                 {
                     Animator.SetBool("isRun", true);
                 }

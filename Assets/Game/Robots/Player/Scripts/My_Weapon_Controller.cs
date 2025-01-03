@@ -1,12 +1,14 @@
 using Cinemachine;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 namespace StarterAssets
 {
     public class My_Weapon_Controller : MonoBehaviour
     {
-        public Animator Animator;      
+        public Animator Animator;         
         public FirstPersonController FirstPersonController;
         public Ui_Control Ui_Control;
         private float LastShoot;        
@@ -47,12 +49,33 @@ namespace StarterAssets
         public TextMesh _ammoText;
         public TextMesh Total_Ammo_Text;
 
+        
+
         [Header("Grenades")]
-        public int _totalGrenades = 0;
+        public float _throwForce;
+        public float _forceTimer;
+        public bool _isThrowing;
+        public enum TypeGrenade
+        {
+            EMP,
+            Explosive,
+            Smoke,
+            Flame,
+            Bomb
+        };
+        public TypeGrenade _typeGrenade = TypeGrenade.EMP;
+        public int _totalEMPGrenades = 0;
+        public int _totalEXPLGrenades = 0;
         public int _maxGrenades = 5;
-        public GameObject Grenade;
+        
+        public GameObject EMPGrenade;
+        public GameObject EXPLGrenade;
 
-
+        private GameObject Instante;
+        public Transform ThrowPoint;
+        public GameObject CameraDirection;
+        public TMP_Text GrenadeText;
+        public Image GrenadeBar;
 
 
         private void Start()
@@ -82,7 +105,7 @@ namespace StarterAssets
 
         public void OnShoot(InputValue value)
         {
-            if (!Animator.GetBool("isDead"))
+            if (!Animator.GetBool("isDead")&&!Animator.GetBool("isRun"))
             {
                 if ((Time.time - LastShoot > _shootSpeed) && (_currentWeaponAmmo > 0) && (!Animator.GetBool("isReloading")))  //_shootSpeed = 0.5f;
                 {
@@ -114,7 +137,8 @@ namespace StarterAssets
 
         public void OnReload(InputValue value)
         {
-            if ((_totalAmmo > 0) && Animator.GetBool("isNeedToReload") && !Animator.GetBool("isReloading") && Animator.GetBool("isGround") && (!Animator.GetBool("isDead")))
+            if ((_totalAmmo > 0) && Animator.GetBool("isNeedToReload") && !Animator.GetBool("isReloading") 
+                && Animator.GetBool("isGround") && (!Animator.GetBool("isDead") && !Animator.GetBool("isRun")))
             {
 
                 //Debug.Log("Перезарядка");
@@ -160,26 +184,100 @@ namespace StarterAssets
         }
 
         //  -----------гранаты-------------
-        public void AddGrenades(int _grenades)
+        public void AddEMPGrenades(int _grenades)
         {
             // игрок поднял гранаты
             PlaySound.PlayOneShot(GetGrenades);
-            _totalGrenades += _grenades;
+            _totalEMPGrenades += _grenades;
+            GrenadeText.text = _totalEMPGrenades.ToString();
         }
+
+        /*public void AddEXPLGrenades(int _grenades)
+        {
+            // игрок поднял гранаты
+            PlaySound.PlayOneShot(GetGrenades);
+            _totalEXPLGrenades += _grenades;
+        }*/
 
         public void OnGrenade(InputValue value)
         {
-            if (_totalGrenades > 0)   // если гранаты есть
-            //if (isRifle && _totalGrenades > 0)
+            if (!_isThrowing)
+            {
+                //Запуск таймера нажатия кнопки метания гранаты
+                _forceTimer = Time.time;
+                _isThrowing = true;
+            }
+            else
+            {
+                if (Animator.GetBool("isDead"))
+                {
+                    _forceTimer = 0.1f;
+                    Debug.Log("Бросок не удался");                    
+                }
+                else
+                {
+                    //остановка таймера нажатия кнопки метания гранаты
+                    _forceTimer = Time.time - _forceTimer;
+                    Debug.Log("Время нажатия броска" + _forceTimer.ToString());
+                }
+                if (_forceTimer > 2f)
+                {
+                    _forceTimer = 2f;
+                }
+                if (!Animator.GetBool("isDead") && _forceTimer < 0.5f)
+                {
+                    _forceTimer = 0.5f;
+                }
+                _throwForce = 15 * _forceTimer;
+                ThrowGrenade();
+            }            
+        }
+
+        private void Update()
+        {
+            if (_isThrowing)
+            {
+                GrenadeBar.fillAmount = (Time.time - _forceTimer) / 2f;
+            }
+            else
+            {
+                GrenadeBar.fillAmount = 0f;
+
+            }
+            
+        }
+
+        public void ThrowGrenade()
+        {
+            if (!Animator.GetBool("isMove") && Animator.GetBool("isGround") && !Animator.GetBool("isDead") && !Animator.GetBool("isRun")) 
             {
                 // Приготовить гранату к броску - анимация...
                 //isRifle = false;  // убрали винтовку
                 //isGrenade = true;  // достали гранату
+                if (_totalEMPGrenades > 0 && !Animator.GetBool("isThrowing"))   // если гранаты есть
+                {
+                    // бросок гранаты
+                    Animator.SetBool("isThrowing", true);
+                    Instante = Instantiate(EMPGrenade, ThrowPoint.position, ThrowPoint.transform.rotation);
+                    Instante.GetComponent<Rigidbody>().AddForce(CameraDirection.transform.forward * _throwForce, ForceMode.VelocityChange); // ForceMode.Force // ForceMode.Acceleration // ForceMode.Impulse 
+                    Instante.GetComponent<Rigidbody>().AddForce(CameraDirection.transform.up * 3f, ForceMode.VelocityChange); // ForceMode.Force // ForceMode.Acceleration // ForceMode.Impulse 
+                    Instante.GetComponent<Rigidbody>().AddTorque(Random.Range(-5f, 5f), Random.Range(-5f, 5f), Random.Range(-5f, 5f), ForceMode.VelocityChange);
+                    //Instante.GetComponent<Rigidbody>().AddForce(ThrowPoint.transform.up * 5, ForceMode.VelocityChange);
+                    //Instante.GetComponent<Rigidbody>().AddForce(ThrowPoint.transform.right * 4, ForceMode.VelocityChange);
+                    //Grenade.GetComponent<Rigidbody>().AddForce(Random.Range(-1, 1), 3, Random.Range(-1, 1), ForceMode.VelocityChange); // ForceMode.Force // ForceMode.Acceleration // ForceMode.Impulse 
 
-                // бросок гранаты
+                    _totalEMPGrenades -= 1;
+                    GrenadeText.text = _totalEMPGrenades.ToString();
 
-
-            }
+                }
+                else
+                {
+                    // Звук неудачи
+                    PlaySound.clip = Empty; //нет гранат
+                    PlaySound.Play();
+                }
+            }            
+            _isThrowing = false;
         }
 
 
@@ -210,7 +308,7 @@ namespace StarterAssets
 
         public void OnSight(InputValue value)
         {
-            if (!Animator.GetBool("isReloading") && Animator.GetBool("isGround") && (!Animator.GetBool("isDead")))
+            if (!Animator.GetBool("isReloading") && Animator.GetBool("isGround") && (!Animator.GetBool("isDead") && !Animator.GetBool("isRun")))
             {
                 Animator.SetBool("isSight", true);
                 FirstPersonController.isSight = true;
@@ -249,7 +347,7 @@ namespace StarterAssets
 
         public void CameraSightOn()
         {
-            if (Animator.GetBool("isSight") && !Animator.GetBool("isShooting"))
+            if (Animator.GetBool("isSight") && !Animator.GetBool("isShooting") && !Animator.GetBool("isRun"))
             {
                 if (Camera.m_Lens.FieldOfView > _sigthFocus)
                 {

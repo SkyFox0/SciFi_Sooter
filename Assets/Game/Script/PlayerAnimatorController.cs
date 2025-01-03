@@ -93,5 +93,11 @@ namespace StarterAssets
         {
             Animator.SetBool("isShooting", false);
         }
+
+        public void ThrowingOff(string s)
+        {
+            Animator.SetBool("isThrowing", false);
+        }
+
     }
 }

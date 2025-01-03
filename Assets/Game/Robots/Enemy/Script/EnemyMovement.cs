@@ -177,7 +177,7 @@ public class EnemyMovement : MonoBehaviour
             //Debug.Log(_direction.ToString());
             if (hitInfo.collider.gameObject.name == "Player")  //if (hitInfo.collider.name == "Player")
             {
-                Debug.Log("Вижу игрока!");
+                //Debug.Log("Вижу игрока!");
                 
                 if (_distance < _fireDistans)
                 {
@@ -210,7 +210,7 @@ public class EnemyMovement : MonoBehaviour
             else
             {
                 // если не видит игрока
-                Debug.Log("Не вижу игрока!");
+                //Debug.Log("Не вижу игрока!");
                 if (_distance < _stopDistans)  // если игрок слишком близко
                 {
                     _isRotate = true;

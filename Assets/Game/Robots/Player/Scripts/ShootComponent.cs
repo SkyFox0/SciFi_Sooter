@@ -122,7 +122,7 @@ namespace StarterAssets
                 }
                 //—¡–¿—€¬¿≈Ã »Õƒ» ¿“Œ– ’≈ƒÿŒ“¿
                 //HeadShoot = false;
-
+                
                 if (hitInfo.rigidbody != null)
                 {
                     hitInfo.rigidbody.AddForceAtPosition(direction * _shoottForse, hitInfo.point, ForceMode.Impulse);

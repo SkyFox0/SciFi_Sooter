@@ -418,7 +418,7 @@
                     "name": "",
                     "id": "eee77e70-99fe-48f2-adaf-743d2e8a3fd1",
                     "path": "<Keyboard>/g",
-                    "interactions": "Press",
+                    "interactions": "Press(pressPoint=0.2,behavior=2)",
                     "processors": "",
                     "groups": ";KeyboardMouse",
                     "action": "Grenade",

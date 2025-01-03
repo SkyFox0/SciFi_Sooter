@@ -9,6 +9,7 @@ TagManager:
   - ClingPoint
   - Head
   - FxTemporaire
+  - Enemy
   layers:
   - Default
   - TransparentFX
