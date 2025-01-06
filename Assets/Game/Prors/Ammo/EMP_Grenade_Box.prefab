@@ -480,7 +480,7 @@ GameObject:
   - component: {fileID: 5695459236403759114}
   - component: {fileID: 7103937772675869667}
   - component: {fileID: 858816901203359748}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Box_final:polySurface53
   m_TagString: Untagged
   m_Icon: {fileID: 0}

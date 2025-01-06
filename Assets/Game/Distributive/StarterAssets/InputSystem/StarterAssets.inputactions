@@ -51,6 +51,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "ShootOff",
+                    "type": "Button",
+                    "id": "374f4cfa-d2b9-48f8-94d4-9763e3d90dfd",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Exit",
                     "type": "Button",
                     "id": "d5acd8f9-b920-43c0-bdd6-bad3a07b2fe6",
@@ -99,6 +108,15 @@
                     "name": "Grenade",
                     "type": "Button",
                     "id": "c0d123a4-feee-4dfc-b3ab-869aa7a1cf3e",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "GrenadeOff",
+                    "type": "Button",
+                    "id": "6c799b03-79b1-472e-9222-abf9e546276c",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -273,6 +291,17 @@
                 },
                 {
                     "name": "",
+                    "id": "c4d3e2d6-8569-463d-8639-e68a33cee6ca",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "Press(behavior=1)",
+                    "processors": "",
+                    "groups": ";KeyboardMouse",
+                    "action": "ShootOff",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "d2e1fe14-1de3-491f-9df9-95839ba21231",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
@@ -418,10 +447,21 @@
                     "name": "",
                     "id": "eee77e70-99fe-48f2-adaf-743d2e8a3fd1",
                     "path": "<Keyboard>/g",
-                    "interactions": "Press(pressPoint=0.2,behavior=2)",
+                    "interactions": "Press(pressPoint=0.2)",
                     "processors": "",
                     "groups": ";KeyboardMouse",
                     "action": "Grenade",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "34147b49-d641-4770-bbbc-4605b38bd5d0",
+                    "path": "<Keyboard>/g",
+                    "interactions": "Press(pressPoint=0.2,behavior=1)",
+                    "processors": "",
+                    "groups": ";KeyboardMouse",
+                    "action": "GrenadeOff",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

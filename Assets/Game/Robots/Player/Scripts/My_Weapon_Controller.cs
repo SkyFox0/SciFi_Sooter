@@ -36,6 +36,15 @@ namespace StarterAssets
         public AudioClip Hit;
         public AudioClip GetAmmo;
         public AudioClip GetGrenades;
+        public AudioClip NoAmmo1;
+        public AudioClip NoAmmo2;
+        public AudioClip NoGrenades1;
+        public AudioClip NoGrenades2;
+        public AudioClip MaxAmmo;
+        public AudioClip MaxGrenades;
+        public AudioClip NeedToReload;
+        private bool NoAmmo;
+        private bool NoGrenade;
 
         [Header("Switch Weapon")]
         public bool isRifle;
@@ -103,39 +112,49 @@ namespace StarterAssets
             Camerashooting();
         }
 
-        public void OnShoot(InputValue value)
+        public void OnShoot(InputValue value)  // нажата кнопка стрельбы
         {
+            //Debug.Log("Нажата кнопка стрельбы");
             if (!Animator.GetBool("isDead")&&!Animator.GetBool("isRun"))
             {
-                if ((Time.time - LastShoot > _shootSpeed) && (_currentWeaponAmmo > 0) && (!Animator.GetBool("isReloading")))  //_shootSpeed = 0.5f;
+                if (_currentWeaponAmmo > 0)
                 {
-                    Animator.SetTrigger("Shoot");
-                    ShootComponent.Shoot();
-                    EGA_DemoLasers.Shoot();
-
-                    PlaySound.clip = Shoot;
-                    PlaySound.Play();
-                    
-                    LastShoot = Time.time;
-                    _currentWeaponAmmo -= 1;
-                    _ammoText.text = _currentWeaponAmmo.ToString();
-                    Animator.SetBool("isNeedToReload", true);
-                    //Debug.Log("Shoot!");
-                }
-                else
-                { 
-                    if (!Animator.GetBool("isReloading"))
+                    if ((Time.time - LastShoot > _shootSpeed) && (!Animator.GetBool("isReloading")))  //_shootSpeed = 0.5f; && (_currentWeaponAmmo > 0) 
                     {
-                        PlaySound.clip = Empty; //патроны закончились
+                        Animator.SetTrigger("Shoot");
+                        ShootComponent.Shoot();
+                        EGA_DemoLasers.Shoot();
+
+                        PlaySound.clip = Shoot;
                         PlaySound.Play();
+
+                        LastShoot = Time.time;
+                        _currentWeaponAmmo -= 1;
+                        _ammoText.text = _currentWeaponAmmo.ToString();
+                        Animator.SetBool("isNeedToReload", true);                        
                     }
-                    
+                    else
+                    {
+                        if (!Animator.GetBool("isReloading"))
+                        {
+                            PlaySound.clip = Empty; //оружие не готово к стрельбе
+                            PlaySound.Play();
+                        }
+                    }
                 }
-            }
-                
+                else                
+                {
+                    PlaySound.PlayOneShot(NeedToReload);
+                }
+            }                
         }
 
-        public void OnReload(InputValue value)
+        public void OnShootOff(InputValue value)  // отпущена кнопка стрельбы
+        {
+            //Debug.Log("Отпущена кнопка стрельбы");
+        }
+
+            public void OnReload(InputValue value)
         {
             if ((_totalAmmo > 0) && Animator.GetBool("isNeedToReload") && !Animator.GetBool("isReloading") 
                 && Animator.GetBool("isGround") && (!Animator.GetBool("isDead") && !Animator.GetBool("isRun")))
@@ -157,8 +176,18 @@ namespace StarterAssets
                 if (_totalAmmo == 0)
                 {
                     //Звук отсутствия патронов
-                    PlaySound.clip = Empty; //патроны закончились
-                    PlaySound.Play();
+                    //PlaySound.clip = Empty; //патроны закончились
+                    //PlaySound.Play();
+                    NoAmmo = !NoAmmo;
+                    if (NoAmmo)
+                    {
+                        PlaySound.PlayOneShot(NoAmmo1);  //патроны закончились
+                    }
+                    else
+                    {
+                        PlaySound.PlayOneShot(NoAmmo2);  //патроны закончились
+                    }
+                    
                 }
             }
         }
@@ -201,39 +230,62 @@ namespace StarterAssets
 
         public void OnGrenade(InputValue value)
         {
-            if (!_isThrowing)
-            {
-                //Запуск таймера нажатия кнопки метания гранаты
-                _forceTimer = Time.time;
-                _isThrowing = true;
+            if (_totalEMPGrenades > 0)
+            {            
+                if (!_isThrowing)
+                {
+                    //Запуск таймера нажатия кнопки метания гранаты
+                    _forceTimer = Time.time;
+                    _isThrowing = true;
+                }                
             }
             else
-            {
-                if (Animator.GetBool("isDead"))
+            {                
+                 NoGrenade = !NoGrenade;
+                if (NoGrenade)
                 {
-                    _forceTimer = 0.1f;
-                    Debug.Log("Бросок не удался");                    
+                    PlaySound.PlayOneShot(NoGrenades1);  // гранаты закончились
                 }
                 else
                 {
-                    //остановка таймера нажатия кнопки метания гранаты
-                    _forceTimer = Time.time - _forceTimer;
-                    Debug.Log("Время нажатия броска" + _forceTimer.ToString());
-                }
-                if (_forceTimer > 2f)
-                {
-                    _forceTimer = 2f;
-                }
-                if (!Animator.GetBool("isDead") && _forceTimer < 0.5f)
-                {
-                    _forceTimer = 0.5f;
-                }
-                _throwForce = 15 * _forceTimer;
-                ThrowGrenade();
-            }            
+                    PlaySound.PlayOneShot(NoGrenades2);  // гранаты закончились
+                }                   
+            }
         }
 
-        private void Update()
+        public void OnGrenadeOff(InputValue value)
+        {
+            if (_totalEMPGrenades > 0)
+            {
+                if (_isThrowing)
+                {
+
+                    if (Animator.GetBool("isDead"))
+                    {
+                        _forceTimer = 0.1f;
+                        Debug.Log("Бросок не удался");
+                    }
+                    else
+                    {
+                        //остановка таймера нажатия кнопки метания гранаты
+                        _forceTimer = Time.time - _forceTimer;
+                        Debug.Log("Время нажатия броска" + _forceTimer.ToString());
+                    }
+                    if (_forceTimer > 2f)
+                    {
+                        _forceTimer = 2f;
+                    }
+                    if (!Animator.GetBool("isDead") && _forceTimer < 0.5f)
+                    {
+                        _forceTimer = 0.5f;
+                    }
+                    _throwForce = 15 * _forceTimer;
+                    ThrowGrenade();
+                }
+            }
+        }
+
+            private void Update()
         {
             if (_isThrowing)
             {
@@ -249,7 +301,7 @@ namespace StarterAssets
 
         public void ThrowGrenade()
         {
-            if (!Animator.GetBool("isMove") && Animator.GetBool("isGround") && !Animator.GetBool("isDead") && !Animator.GetBool("isRun")) 
+            if (Animator.GetBool("isGround") && !Animator.GetBool("isDead") && !Animator.GetBool("isRun")) // !Animator.GetBool("isMove") && 
             {
                 // Приготовить гранату к броску - анимация...
                 //isRifle = false;  // убрали винтовку
@@ -273,8 +325,9 @@ namespace StarterAssets
                 else
                 {
                     // Звук неудачи
-                    PlaySound.clip = Empty; //нет гранат
+                    PlaySound.clip = Empty; // неудача
                     PlaySound.Play();
+                    
                 }
             }            
             _isThrowing = false;

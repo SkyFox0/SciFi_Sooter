@@ -86,6 +86,7 @@ namespace StarterAssets
                 //Debug.Log("Take Damag! Health = " + Health);
                 if (Health <= 0)
                 {
+                    
                     isDead = true;
                     DeadSound.Play();
                     EnemyAnimator.SetBool("isReloading", false);
@@ -130,7 +131,8 @@ namespace StarterAssets
                     EnemySpawnSystem.Spawn();
 
                     Ui_Control.AddFrag();
-
+                    // посмертный выстрел
+                    Invoke("DeadShoot", 0.3f);
                     //уничтожение тела через 30 сек
                     Invoke("Dead", 30f);
                     Invoke("DropAmmo", 1f);
@@ -147,6 +149,11 @@ namespace StarterAssets
                     DamageSoundPlay();
                 }
             }            
+        }
+
+        public void DeadShoot()
+        {
+            EnemyMovement.DeadShoot();
         }
 
 
@@ -200,7 +207,8 @@ namespace StarterAssets
                     Sparks_1.Play();
                     Sparks_2.Play();
 
-
+                    // посмертный выстрел
+                    Invoke("DeadShoot", 0.3f);
                     EnemySpawnSystem.Spawn();
                     Ui_Control.AddFrag();
 

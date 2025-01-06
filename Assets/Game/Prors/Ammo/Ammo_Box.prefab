@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3310009226673354006}
   - component: {fileID: 3976903401441835286}
   - component: {fileID: 7339474314903047528}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Box_final:polySurface52
   m_TagString: Untagged
   m_Icon: {fileID: 0}

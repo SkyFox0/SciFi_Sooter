@@ -27,11 +27,13 @@ namespace StarterAssets
 
         public void Shoot()
         {
+            //int layerMask = 1 << 8;
+
             Vector3 shootPosition = ShootPoint.position;
             var direction = ShootDirection.forward;
             //var direction = ShootPoint.forward;
 
-            if (Physics.Raycast(shootPosition, direction, out var hitInfo))
+            if (Physics.Raycast(shootPosition, direction, out var hitInfo, 50f))   //, layerMask, QueryTriggerInteraction.Ignore))
             {
                 //Debug.DrawRay(SearchPoint, _targetDirection * _fireDistans, Color.red);
                 //Debug.Log("Hit! Object = " + hitInfo.collider.name);

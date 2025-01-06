@@ -1055,7 +1055,7 @@ GameObject:
   - component: {fileID: 3688166151492709955}
   - component: {fileID: 7310358783079705828}
   - component: {fileID: 7028837451234692462}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: scifi_medkit_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}

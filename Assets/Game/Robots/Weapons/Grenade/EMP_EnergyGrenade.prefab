@@ -5026,7 +5026,7 @@ GameObject:
   - component: {fileID: 450322513427461340}
   - component: {fileID: 463700574520953998}
   - component: {fileID: 1950900147114062509}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: ExplosionCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -3652,6 +3652,13 @@ MonoBehaviour:
   Hit: {fileID: 8300000, guid: 3bd11dfaa95d06144b198c198d28a0a2, type: 3}
   GetAmmo: {fileID: 8300000, guid: cb491a0f6adb55644bc9dbea81fd165d, type: 3}
   GetGrenades: {fileID: 8300000, guid: 9c21aca63227cf046b1196f5996797ad, type: 3}
+  NoAmmo1: {fileID: 8300000, guid: badd177a27e6a904e90f133010218f58, type: 3}
+  NoAmmo2: {fileID: 8300000, guid: 68cb560796be0a14cb6453c19602de2e, type: 3}
+  NoGrenades1: {fileID: 8300000, guid: a7d406d019bb5b44ca4c6c25c05cb9c9, type: 3}
+  NoGrenades2: {fileID: 8300000, guid: 65af5e45fe1adb84082a99bcff5d02db, type: 3}
+  MaxAmmo: {fileID: 8300000, guid: 3450d5e52d55bcd48b7c6c9faeb90347, type: 3}
+  MaxGrenades: {fileID: 8300000, guid: f89bc69bbe156fd409e385828857ee58, type: 3}
+  NeedToReload: {fileID: 8300000, guid: a412beec29e24144a8870a9066eb656a, type: 3}
   isRifle: 0
   isGrenade: 0
   _totalAmmo: 10

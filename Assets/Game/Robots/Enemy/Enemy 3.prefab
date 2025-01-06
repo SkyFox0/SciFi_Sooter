@@ -19947,7 +19947,6 @@ MonoBehaviour:
   EnemyAnimator: {fileID: 7597465280145973246}
   SoundController: {fileID: 8245587709941737057}
   Player: {fileID: 0}
-  Enemy: {fileID: 3324741312527919919}
   SearchPoint: {x: 0, y: 0, z: 0}
   NavMeshAgent: {fileID: 2244760334306773398}
   EGA_EnemyLasers: {fileID: 6948041833923837355}
@@ -19957,12 +19956,13 @@ MonoBehaviour:
   _searchTime: 0
   _shootTime: 0
   _enemyChange: 0
-  FirePoint: {fileID: 128232362457003938}
   LaserScript: {fileID: 0}
+  Enemy: {fileID: 3324741312527919919}
   _enemySpeed: 2
   _enemyRotationSpeed: 2
   _stopDistans: 0
   _isMove: 0
+  _isMoveToTheSide: 0
   _isRotate: 0
   _isRotate_L: 0
   _isRotate_R: 0
@@ -19972,9 +19972,13 @@ MonoBehaviour:
   _isDead: 0
   _rotateDirection: {x: 0, y: 0, z: 0}
   targetRotation: {x: 0, y: 0, z: 0, w: 0}
+  MoveToTheSidePoint: {x: 0, y: 0, z: 0}
+  Point: {fileID: 3502816893122315281, guid: bbc4d0ed40a88304393dbf641bf5fad6, type: 3}
   _timer: 0
   _direction: {x: 0, y: 0, z: 0}
   Direction: {x: 0, y: 0, z: 0, w: 0}
+  FirePoint: {fileID: 128232362457003938}
+  RiflePoint: {fileID: 5962374339230334779}
   _fireDistans: 0
   _distance: 0
   _maxBulletSpread:
@@ -20021,6 +20025,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   _bulletSpread: 0
   _spreadVector: {x: 0, y: 0, z: 0}
+  _rifleDirection: {x: 0, y: 0, z: 0}
   _targetDirection: {x: 0, y: 0, z: 0}
   _shootDerection: {x: 0, y: 0, z: 0, w: 0}
   _ammo: 3
@@ -28401,6 +28406,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 128232362457003938}
+  - {fileID: 5962374339230334779}
   m_Father: {fileID: 7597465279496429619}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7597465279495945649
@@ -72323,6 +72329,37 @@ Transform:
   - {fileID: 6999109125625452746}
   - {fileID: 7684514661925529924}
   m_Father: {fileID: 7597465279496429623}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8348817256732073612
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5962374339230334779}
+  m_Layer: 0
+  m_Name: 'RiflePoint '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5962374339230334779
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8348817256732073612}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 55, y: 4, z: -10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7597465279496429647}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8368795891627322761
 GameObject:
