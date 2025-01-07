@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class GrenadeBox : MonoBehaviour
 {
-    public int _grenade = 3;//  сколько гранат в ящике
+    public int _grenade = 5;//  сколько гранат в ящике
     public Text _text;
     public GrenadeSpawnSystem GrenadeSpawnSystem;
 
@@ -13,6 +13,12 @@ public class GrenadeBox : MonoBehaviour
     {
         _text.text = _grenade.ToString();
         //AmmoSpawnSystem = GetComponentInParent<AmmoSpawnSystem>();
+    }
+
+    public void DecriceGrenade(int _kol)
+    {
+        _grenade -= _kol;
+        _text.text = _grenade.ToString();
     }
 
     // Update is called once per frame

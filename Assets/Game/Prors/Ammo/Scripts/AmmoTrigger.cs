@@ -4,13 +4,15 @@ using UnityEngine;
     public class AmmoTrigger : MonoBehaviour
     {
         // Start is called once before the first execution of Update after the MonoBehaviour is created
-        public int _addAmmo;
+        public int _ammo;        // сколько патронов было в ящике
+        public int _addAmmoMax;  // сколько патронов может взять игрок
+        //public int _addAmmo;     // сколько патронов взял игрок по факту
         public AmmoBox AmmoBox;        
 
         void Start()
         {
             //AmmoBox = GetComponentInParent<AmmoBox>();
-            _addAmmo = AmmoBox.Ammo;
+            _ammo = AmmoBox.Ammo; // сколько патронов было в ящике
         }
 
 
@@ -21,10 +23,27 @@ using UnityEngine;
             {   
                 if (other.GetComponent<My_Weapon_Controller>()._totalAmmo < other.GetComponent<My_Weapon_Controller>()._maxAmmo)
                 {
-                    Debug.Log("Игрок поднял патроны +" + _addAmmo.ToString() + "шт!");
-                    other.GetComponent<My_Weapon_Controller>().AddAmmo(_addAmmo);
-                    AmmoBox.Destroy();
-                }                  
+                    _addAmmoMax = other.GetComponent<My_Weapon_Controller>()._maxAmmo - other.GetComponent<My_Weapon_Controller>()._totalAmmo;
+                    if (_addAmmoMax >= _ammo)
+                    {
+                        Debug.Log("Игрок поднял патроны +" + _ammo.ToString() + "шт!");
+                        other.GetComponent<My_Weapon_Controller>().AddAmmo(_ammo);
+                        AmmoBox.Destroy();
+                    }
+                    else
+                    {                    
+                        _ammo -= _addAmmoMax;
+                        AmmoBox.DecriceAmmo(_addAmmoMax);
+                        Debug.Log("Игрок поднял патроны +" + _addAmmoMax.ToString() + "шт!");
+                        other.GetComponent<My_Weapon_Controller>().AddAmmo(_addAmmoMax);
+                        other.GetComponent<My_Weapon_Controller>().AddAmmoFull(1);
+                    }
+                }
+                else
+                {
+                    //патронов слишком много
+                    other.GetComponent<My_Weapon_Controller>().AddAmmoFull(2);
+                }
             }
         }
     }

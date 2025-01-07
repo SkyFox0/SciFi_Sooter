@@ -30,7 +30,7 @@ namespace StarterAssets
 
         [Header("Sounds")]
         public AudioSource PlaySound;
-        public AudioClip Shoot;
+        public AudioSource Shoot;
         public AudioClip Reload;
         public AudioClip Empty;
         public AudioClip Hit;
@@ -40,9 +40,9 @@ namespace StarterAssets
         public AudioClip NoAmmo2;
         public AudioClip NoGrenades1;
         public AudioClip NoGrenades2;
-        public AudioClip MaxAmmo;
-        public AudioClip MaxGrenades;
-        public AudioClip NeedToReload;
+        public AudioClip AmmoFull1;
+        public AudioClip AmmoFull2;
+        public AudioClip NeedToReload;        
         private bool NoAmmo;
         private bool NoGrenade;
 
@@ -51,10 +51,10 @@ namespace StarterAssets
         public bool isGrenade;
 
         [Header("Ammo")]
-        public int _totalAmmo;
+        public int _totalAmmo = 195;
         public int _maxWeaponAmmo = 10;
-        public int _currentWeaponAmmo = 5;
-        public int _maxAmmo = 300;
+        public int _currentWeaponAmmo = 10;
+        public int _maxAmmo = 200;
         public TextMesh _ammoText;
         public TextMesh Total_Ammo_Text;
 
@@ -75,7 +75,7 @@ namespace StarterAssets
         public TypeGrenade _typeGrenade = TypeGrenade.EMP;
         public int _totalEMPGrenades = 0;
         public int _totalEXPLGrenades = 0;
-        public int _maxGrenades = 5;
+        public int _maxGrenades = 15;
         
         public GameObject EMPGrenade;
         public GameObject EXPLGrenade;
@@ -91,7 +91,7 @@ namespace StarterAssets
         {
             isRifle = true;
             isGrenade = false;
-
+            GrenadeText.text = _totalEMPGrenades.ToString();
             _ammoText.text = _currentWeaponAmmo.ToString();
             Total_Ammo_Text.text = _totalAmmo.ToString();
             LastShoot = Time.time;
@@ -125,8 +125,8 @@ namespace StarterAssets
                         ShootComponent.Shoot();
                         EGA_DemoLasers.Shoot();
 
-                        PlaySound.clip = Shoot;
-                        PlaySound.Play();
+                        Shoot.Play();  // звук выстрела
+                        //PlaySound.Play();
 
                         LastShoot = Time.time;
                         _currentWeaponAmmo -= 1;
@@ -201,25 +201,69 @@ namespace StarterAssets
         public void AddAmmo(int _ammo)
         {
             // игрок поднял патроны
-            //PlaySound.clip = GetAmmo;
-            PlaySound.PlayOneShot(GetAmmo);
-            _totalAmmo += _ammo;
-            if (_totalAmmo > _maxAmmo)
+            
+            if ((_totalAmmo + _ammo) < _maxAmmo)  // если есть место
             {
-                _totalAmmo = _maxAmmo;               
+                _totalAmmo += _ammo;
+                PlaySound.PlayOneShot(GetAmmo);
+            }
+            else
+            {
+                if (!PlaySound.isPlaying)
+                {
+                    PlaySound.PlayOneShot(AmmoFull1);                    
+                }
+                _totalAmmo = _maxAmmo;
             }
             
             Total_Ammo_Text.text = _totalAmmo.ToString();
+        }
+        public void AddAmmoFull(int i)  //1 - теперь повоюем, 2 - некуда ложить
+        {
+            // игрок поднял патроны  и достиг лимита
+            if (!PlaySound.isPlaying)
+            {
+                if (i == 1)
+                {
+                    PlaySound.PlayOneShot(AmmoFull1);                
+                }
+                else
+                {
+                    PlaySound.PlayOneShot(AmmoFull2);
+                }                
+            }            
         }
 
         //  -----------гранаты-------------
         public void AddEMPGrenades(int _grenades)
         {
             // игрок поднял гранаты
-            PlaySound.PlayOneShot(GetGrenades);
-            _totalEMPGrenades += _grenades;
+            if ((_totalEMPGrenades + _grenades) < _maxGrenades)
+            {
+                PlaySound.PlayOneShot(GetGrenades);
+                _totalEMPGrenades += _grenades;                
+            }
+            else
+            {
+                if (!PlaySound.isPlaying)
+                {
+                    PlaySound.PlayOneShot(AmmoFull1);                    
+                }
+                _totalEMPGrenades = _maxGrenades;
+            }
             GrenadeText.text = _totalEMPGrenades.ToString();
+
+
+
         }
+        /*public void AddEMPGrenadesFull()
+        {
+            // игрок поднял гранаты  и достиг лимита
+            if (!PlaySound.isPlaying)
+            {
+                PlaySound.PlayOneShot(AmmoFull2);
+            }
+        }*/
 
         /*public void AddEXPLGrenades(int _grenades)
         {

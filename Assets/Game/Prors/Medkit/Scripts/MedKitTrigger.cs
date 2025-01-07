@@ -7,7 +7,9 @@ namespace StarterAssets
     {
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         public int Health;
-        public Medkit Medkit;
+        public Medkit Medkit;        
+
+
         //public MedkitSpawnSystem MedkitSpawnSystem;
 
         void Start()
@@ -30,6 +32,11 @@ namespace StarterAssets
                     other.GetComponent<PlayerHealthComponentNew>().AddHealth(Health);
                     other.GetComponent<PlayerHealthComponentNew>().Healing.Play();
                     Medkit.Destroy();
+                }
+                else
+                {
+                    // если здоровье полное
+                    other.GetComponent<PlayerHealthComponentNew>().HealthFull();                                      
                 }
             }
         }

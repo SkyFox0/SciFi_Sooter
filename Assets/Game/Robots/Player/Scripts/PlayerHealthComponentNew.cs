@@ -18,6 +18,10 @@ namespace StarterAssets
         public SoundController SoumdController;
         public DeadController DeadController;
         public AudioSource Healing;
+        private int Sound = 1;
+        public AudioSource HealthFull1;
+        public AudioSource HealthFull2;
+        public AudioSource HealthFull3;
 
         void Start()
         {   
@@ -84,6 +88,32 @@ namespace StarterAssets
             Live_Score_Text.text = Health.ToString();
         }
 
-
+        public void HealthFull()
+        {
+            if (!HealthFull1.isPlaying && !HealthFull2.isPlaying && !HealthFull3.isPlaying)
+            {
+                if (Sound == 1)
+                {
+                    HealthFull1.Play();
+                    Sound = 2;
+                }
+                else
+                {
+                    if (Sound == 2)
+                    {
+                        HealthFull2.Play();
+                        Sound = 3;
+                    }
+                    else
+                    {
+                        if (Sound == 3)
+                        {
+                            HealthFull3.Play();
+                            Sound = 1;
+                        }
+                    }
+                }
+            }
+        }
     }
 }

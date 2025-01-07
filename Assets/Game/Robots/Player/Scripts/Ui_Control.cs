@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using System;
+using UnityEngine.SocialPlatforms.Impl;
 
 namespace StarterAssets
 {
@@ -9,6 +10,7 @@ namespace StarterAssets
         public Canvas X_Canvas;
         public Canvas Scope_Canvas;
         public TMP_Text Score;
+        public TMP_Text Grenade;        
         public int _fragScore;
 
         public FirstPersonController FirstPersonController;
@@ -18,6 +20,7 @@ namespace StarterAssets
         void Start()
         {
             _fragScore = 0;
+            Score.text = _fragScore.ToString();
             X_Canvas.enabled = true;
             Scope_Canvas.enabled = false;
         }

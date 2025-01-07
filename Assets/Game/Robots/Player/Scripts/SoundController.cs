@@ -5,7 +5,7 @@ namespace StarterAssets
 {
 
 public class SoundController : MonoBehaviour
-{
+{        
         public AudioSource AudioSource_Dead;
         public AudioSource AudioSource_LF;
         public AudioSource AudioSource_RF;
@@ -23,6 +23,7 @@ public class SoundController : MonoBehaviour
         public AudioClip TakeDamage;
         public AudioClip Hit;
         public AudioClip Dead;
+        
 
         public void StepSound_1()
         {

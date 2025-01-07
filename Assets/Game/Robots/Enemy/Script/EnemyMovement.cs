@@ -128,7 +128,7 @@ public class EnemyMovement : MonoBehaviour
         _searchTime = Random.Range(1f, 2f);   // время через которое враг обновляет позицию игрока и начинает визуальный поиск
         _shootTime = Random.Range(0.5f, 1f);    // время через которое враг стреляет по игроку
         _enemySpeed = Random.Range(2f, 4f);
-        _enemyRotationSpeed = Random.Range(2f, 3f);
+        _enemyRotationSpeed = Random.Range(4f, 6f);
         _stopDistans = Random.Range(4f, 6f);
         //NavMeshAgent.speed = _enemySpeed;
         NavMeshAgent.stoppingDistance = _stopDistans;
@@ -136,7 +136,7 @@ public class EnemyMovement : MonoBehaviour
         //_bulletSpread = 2f / ((_shootTime + 1f) * (_shootTime + 1f));  //разлёт пуль
         _bulletSpread = _maxBulletSpread.Evaluate(_shootTime / 3f);
         _enemyChange = Random.Range(10f, 15f);  // время до смены характеристик врага        
-        _fireDistans = Random.Range(25f, 35f);  //максимальная дистанция стрельбы
+        _fireDistans = Random.Range(20f, 30f);  //максимальная дистанция стрельбы
     }
 
     // Update is called once per frame
@@ -161,7 +161,11 @@ public class EnemyMovement : MonoBehaviour
             if ((_timer > _searchTime) && !_isMoveToTheSide) //&& _isMove 
             {
                 Debug.Log("Активирован поиск!");
-                Scan.Play();
+                if (Random.Range(0f, 10f) < 0.1f)
+                {
+                    Scan.Play();
+                }
+                //Scan.Play();
                 try
                     { NavMeshAgent.SetDestination(Player.transform.position); }
                 catch { }

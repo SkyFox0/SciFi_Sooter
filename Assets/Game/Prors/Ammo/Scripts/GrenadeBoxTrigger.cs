@@ -5,7 +5,7 @@ public class GrenadeBoxTrigger : MonoBehaviour
 {
     public int _grenade; // сколько гранат в ящике
     public int _addGrenadeMax;  // сколько гранат может взять игрок
-    public int _addGrenade;  // сколько гранат взял игрок по факту
+    //public int _addGrenade;  // сколько гранат взял игрок по факту
     public GrenadeBox GrenadeBox;
     public enum TypeGrenade
     {
@@ -32,24 +32,27 @@ public class GrenadeBoxTrigger : MonoBehaviour
             if (other.GetComponent<My_Weapon_Controller>()._totalEMPGrenades < other.GetComponent<My_Weapon_Controller>()._maxGrenades)
             {
                 _addGrenadeMax = other.GetComponent<My_Weapon_Controller>()._maxGrenades - other.GetComponent<My_Weapon_Controller>()._totalEMPGrenades;
-                if (_grenade <= _addGrenadeMax)
+                if (_addGrenadeMax >= _grenade)
                 {                    
-                    _addGrenade = _grenade;
-                    Debug.Log("Игрок поднял гранаты +" + _addGrenade.ToString() + "шт!");
-                    other.GetComponent<My_Weapon_Controller>().AddEMPGrenades(_addGrenade);
+                    //_addGrenade = _grenade;
+                    Debug.Log("Игрок поднял гранаты +" + _grenade.ToString() + "шт!");
+                    other.GetComponent<My_Weapon_Controller>().AddEMPGrenades(_grenade);
                     GrenadeBox.Destroy();
                 }
                 else
                 {
-                    _addGrenade = _addGrenadeMax;
-                    _grenade -= _addGrenade;
-
-                    GrenadeBox._grenade = _grenade;
-                    GrenadeBox._text.text = GrenadeBox._grenade.ToString();
-                    Debug.Log("Игрок поднял гранаты +" + _addGrenade.ToString() + "шт!");
-                    other.GetComponent<My_Weapon_Controller>().AddEMPGrenades(_addGrenade);
-                }
-                
+                    //_addGrenade = _addGrenadeMax;
+                    _grenade -= _addGrenadeMax;
+                    GrenadeBox.DecriceGrenade(_addGrenadeMax);
+                    
+                    Debug.Log("Игрок поднял гранаты +" + _addGrenadeMax.ToString() + "шт!");
+                    other.GetComponent<My_Weapon_Controller>().AddEMPGrenades(_addGrenadeMax);
+                    other.GetComponent<My_Weapon_Controller>().AddAmmoFull(1);  // теперь повоюем!
+                }                
+            }
+            else
+            {
+                other.GetComponent<My_Weapon_Controller>().AddAmmoFull(2);  // некуда ложить!
             }
         }
     }

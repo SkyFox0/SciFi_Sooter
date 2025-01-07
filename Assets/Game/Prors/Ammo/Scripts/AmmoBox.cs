@@ -15,6 +15,12 @@ public class AmmoBox : MonoBehaviour
         AmmoSpawnSystem = GetComponentInParent<AmmoSpawnSystem>();
     }
 
+    public void DecriceAmmo(int _kol)
+    {
+        Ammo -= _kol;
+        _text.text = Ammo.ToString();
+    }
+
     // Update is called once per frame
     public void Destroy()
     {
