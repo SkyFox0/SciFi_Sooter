@@ -17,6 +17,8 @@ namespace StarterAssets
         public int Health = 100;
         public bool isDead = false;
         public AudioSource HitSound;
+        public AudioSource HitEMP;
+       
         public AudioSource DamageSound;
         public AudioSource DeadSound;        
         //public ExplodeTarget _ExplodeTarget;
@@ -132,7 +134,8 @@ namespace StarterAssets
 
                     Ui_Control.AddFrag();
                     // посмертный выстрел
-                    Invoke("DeadShoot", 0.3f);
+                    float _t = Random.Range(0.1f, 0.5f);
+                    Invoke("DeadShoot", _t);
                     //уничтожение тела через 30 сек
                     Invoke("Dead", 30f);
                     Invoke("DropAmmo", 1f);
@@ -208,7 +211,8 @@ namespace StarterAssets
                     Sparks_2.Play();
 
                     // посмертный выстрел
-                    Invoke("DeadShoot", 0.3f);
+                    float _t = Random.Range(0.1f, 0.5f);
+                    Invoke("DeadShoot", _t);
                     EnemySpawnSystem.Spawn();
                     Ui_Control.AddFrag();
 
@@ -229,6 +233,88 @@ namespace StarterAssets
                 }
             }                
         }
+
+        public void TakeEMPDamage(int damage)
+        {
+            if (!isDead)
+            {
+                //запустить звук урона
+                HitEMP.Play();
+
+                Health = Health - damage;
+                if (Health > 19 && Health < 30)
+                {
+                    if (!WhiteSmoke.isPlaying) { WhiteSmoke.Play(); }
+                }
+
+                if (Health > 9 && Health < 20)
+                {
+                    if (WhiteSmoke.isPlaying) { WhiteSmoke.Stop(); }
+                    if (!BlackSmoke.isPlaying) { BlackSmoke.Play(); }
+                }
+
+                if (Health <= 0)
+                {
+                    isDead = true;
+                    DeadSound.Play();
+                    EnemyAnimator.SetBool("isReloading", false);
+                    EnemyAnimator.SetBool("isMove", false);
+                    EnemyAnimator.SetBool("isDead", true);
+                    EnemyCollider.enabled = false;
+
+                    //запустить звук разрушения
+                    //DeadSound.Play();
+                    //вызов метода разрушения с задержкой 0,2с
+                    //TargetSystem.DestroyTarget2();
+
+                    //Debug.Log("==\\Смерть врага//==");
+                    EnemyMovement.NavMeshAgent.speed = 0f;
+                    //EnemyMovement.NavMeshAgent.Stop(); // Устарело!
+                    EnemyMovement.NavMeshAgent.isStopped = true;
+                    EnemyMovement._isDead = true;
+                    EnemyMovement._isMove = false;
+
+                    //запускаем анимацию падения дыма и искры
+                    //SFX_Animator.SetBool("isDead", true);
+                    if (WhiteSmoke.isPlaying) { WhiteSmoke.Stop(); }
+                    if (BlackSmoke.isPlaying) { BlackSmoke.Stop(); }
+                    BlackSmokeDead.Play();
+                    Sparks_1.Play();
+                    Sparks_2.Play();
+
+                    // посмертный выстрел
+                    float _t = Random.Range(0.1f, 0.5f);
+                    Invoke("DeadShoot", _t);
+                    EnemySpawnSystem.Spawn();
+                    Ui_Control.AddFrag();
+
+                    //уничтожение тела через 30 сек
+                    Invoke("Dead", 30f);
+                    Invoke("DropAmmo", 1f);
+
+                    //_ExplodeTarget.StartExplosion();
+                    //Destroy(gameObject);
+                }
+                else
+                {
+                    /*EnemyMovement.Stop();
+                    EnemyMovement._isEMPShocking = true;
+                    EnemyMovement._empShokingTimer = 0;
+                    EnemyMovement.NavMeshAgent.speed = 0f;
+                    EnemyMovement.NavMeshAgent.isStopped = true;
+                    EnemyMovement._isDead = false;
+                    EnemyMovement._isMove = false;*/
+
+
+                    EnemyMovement.EMPDamage();
+                    EnemyAnimator.SetBool("isReloading", false);
+                    EnemyAnimator.SetTrigger("Damage");  // запуск анимации урона
+                                                         //Invoke("DamageSoundPlay", 0.1f);
+                    DamageSoundPlay();
+                }
+            }
+        }
+
 
         public void Dead()
         {   

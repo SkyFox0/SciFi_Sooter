@@ -18,7 +18,7 @@ public class ExlosionDamage : MonoBehaviour
     public int _count = 0;  // счетчик ударов
     public float _timer = -1f;  // таймер
     public bool _takeDamage = false;
-    public float _power = 100f; // сила взрыва
+    public float _power = 3f; // сила взрыва
     public Collider[] colliders;
 
 
@@ -92,7 +92,7 @@ public class ExlosionDamage : MonoBehaviour
                         {
                             Debug.Log("ќбнаружен коллайдер с ригидбоди: " + hit.ToString());
                             //Debug.Log("ќбнаружен ригидбоди - подбрасывание!");
-                            rb.AddExplosionForce(_power * 2f, Grenade.transform.position, _maxDistance * 100f, 3f, ForceMode.Acceleration);
+                            rb.AddExplosionForce(_power, Grenade.transform.position, _maxDistance / 2f, 0.2f, ForceMode.Impulse);
                         }
                     }
                     catch { }
@@ -134,7 +134,7 @@ public class ExlosionDamage : MonoBehaviour
                 try
                 {
                     Debug.Log("Ёлектрический урон по врагу = " + _damage.ToString() + "!");
-                    hit.GetComponent<EnemyHealthComponent>().TakeDamage(_damage);
+                    hit.GetComponent<EnemyHealthComponent>().TakeEMPDamage(_damage);
                     Lightning.Play();
                 }
                 catch { }

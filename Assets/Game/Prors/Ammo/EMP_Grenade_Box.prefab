@@ -566,7 +566,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5303384079281553588}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 237dcb2f01b2dbd49a482f96e4e9868b, type: 2}
   m_CullingMode: 0
@@ -683,8 +683,8 @@ Rigidbody:
   m_GameObject: {fileID: 6065635227949210062}
   serializedVersion: 4
   m_Mass: 3
-  m_Drag: 0.5
-  m_AngularDrag: 0.5
+  m_Drag: 3
+  m_AngularDrag: 10
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
