@@ -10,6 +10,10 @@ TagManager:
   - Head
   - FxTemporaire
   - Enemy
+  - AmmoSpawnSystem
+  - MedKitSpawnSystem
+  - GrenaseSpawnSystem
+  - EnemySpawnSystem
   layers:
   - Default
   - TransparentFX

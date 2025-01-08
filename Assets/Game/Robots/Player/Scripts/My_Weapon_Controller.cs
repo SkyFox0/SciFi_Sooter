@@ -1,6 +1,7 @@
 using Cinemachine;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
@@ -49,6 +50,8 @@ namespace StarterAssets
         [Header("Switch Weapon")]
         public bool isRifle;
         public bool isGrenade;
+        public bool isLight;
+        public Light WeaponLight;
 
         [Header("Ammo")]
         public int _totalAmmo = 195;
@@ -484,6 +487,20 @@ namespace StarterAssets
             //CinemachineCameraTarget.transform.localPosition = CameraPoint.localPosition;
             CinemachineCameraTarget.transform.position = CameraPoint.position;
         }
-
+        public void OnLight(InputValue value)
+        {
+            if (!isLight)
+            {
+                isLight = true;
+                WeaponLight.enabled = true;
+            }
+            else
+            {
+                isLight = false;
+                WeaponLight.enabled = false;
+            }
+        }
     }
+ 
+    
 }

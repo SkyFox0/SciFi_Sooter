@@ -17,6 +17,7 @@ namespace StarterAssets
 		public bool sight;
         public bool reload;
         public bool grenade;
+        public bool light;
 
 
         [Header("Movement Settings")]
@@ -88,6 +89,18 @@ namespace StarterAssets
 				Invoke("GrenadeOff", 0.1f);
 			}
         }
+
+		public void OnLight(InputValue value)
+		{
+			if (!light)
+			{
+				light = true;
+			}
+			else
+			{
+				light = false;
+			}
+		}
 
 
 #endif

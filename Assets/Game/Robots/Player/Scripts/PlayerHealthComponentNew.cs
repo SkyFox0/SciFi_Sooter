@@ -10,7 +10,7 @@ namespace StarterAssets
     {
         //public Destroy2 TargetSystem;
         public int Health = 100;
-        public int _maxHealth = 130;
+        public int _maxHealth = 200;
         public TextMesh Live_Score_Text;
         //public AudioSource HitSound;
         //public AudioSource Dead;
@@ -22,10 +22,12 @@ namespace StarterAssets
         public AudioSource HealthFull1;
         public AudioSource HealthFull2;
         public AudioSource HealthFull3;
+        public DamageEffect DamageEffect;
 
         void Start()
         {   
            Live_Score_Text.text = Health.ToString();
+            DamageEffect.SetHealth(Health);
 
 
         }
@@ -67,6 +69,9 @@ namespace StarterAssets
                     //_ExplodeTarget.StartExplosion();
                     //Destroy(gameObject);
                 }
+                DamageEffect.SetHealth(Health);
+
+
             }
         }
 
@@ -86,6 +91,7 @@ namespace StarterAssets
                 Health = _maxHealth;
             }
             Live_Score_Text.text = Health.ToString();
+            DamageEffect.SetHealth(Health);
         }
 
         public void HealthFull()

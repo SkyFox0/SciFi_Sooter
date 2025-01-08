@@ -11,8 +11,14 @@ public class AmmoBox : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        _text.text = Ammo.ToString();   
-        AmmoSpawnSystem = GetComponentInParent<AmmoSpawnSystem>();
+        _text.text = Ammo.ToString();
+        if (AmmoSpawnSystem == null )
+        {
+            AmmoSpawnSystem = GetComponentInParent<AmmoSpawnSystem>();
+            //AmmoSpawnSystem = GetComponent<AmmoSpawnSystem>();
+            //AmmoSpawnSystem = GameObject.FindGameObjectWithTag
+        }
+        
     }
 
     public void DecriceAmmo(int _kol)

@@ -12,7 +12,12 @@ public class GrenadeBox : MonoBehaviour
     void Start()
     {
         _text.text = _grenade.ToString();
+        if (GrenadeSpawnSystem == null)
+        {
+            GrenadeSpawnSystem = GetComponentInParent<GrenadeSpawnSystem>();
+        }
         //AmmoSpawnSystem = GetComponentInParent<AmmoSpawnSystem>();
+
     }
 
     public void DecriceGrenade(int _kol)

@@ -78,6 +78,7 @@ public class EnemyMovement : MonoBehaviour
     public Quaternion Direction;
     public Plane PlaneDirection;
     public Plane goalLine1;
+    float z = 0f;
 
     [Header("Fire")]
     public Transform FirePoint;
@@ -204,6 +205,8 @@ public class EnemyMovement : MonoBehaviour
             {
                 if (_isDamage | _isEMPShocking)
                 {
+                    z = 0f;
+                    EnemyAnimator.SetFloat("z", z);
                     _isMove = false;
                     _isMoveToTheSide = false;
                     _isRotate = false;
@@ -238,15 +241,25 @@ public class EnemyMovement : MonoBehaviour
 
     public void Search()
     {
+        _isRotate = true;
+        NavMeshAgent.isStopped = false;
+        NavMeshAgent.speed = 0f;
+        NavMeshAgent.SetDestination(Player.transform.position);
         Debug.Log("Ищу игрока!");
         //бросаем поисковый луч
-        _direction = Player.transform.position - Enemy.transform.position;
+        _direction = Player.transform.position + Player.transform.right * 0.5f + Player.transform.forward * 0.5f - Enemy.transform.position;  //+ Player.transform.up*0.5f
         Debug.Log("Ищу игрока по вектору! " + _direction.ToString());
         _distance = _direction.magnitude;
         Debug.Log("Расстояние до игрока!" + _distance.ToString());
         //Debug.DrawRay(Enemy.transform.position, Enemy.transform.forward * 30, Color.yellow);
         //Debug.DrawRay(Enemy.transform.position, direction * 30, Color.green);
         //_searchPoint = Enemy.transform.position + new Vector3(0f, 1.6f, 0f);
+
+        z = (90 - Vector3.Angle(_direction, Enemy.transform.up)) / 50;
+        Debug.Log("Вертикальный угол равен " + z.ToString());
+        
+        EnemyAnimator.SetFloat("z", z);
+
         if (Physics.Raycast(_searchPoint, _direction, out var hitInfo))
         {
             //Debug.Log("Hit! Object = " + hitInfo.collider.name);
@@ -254,8 +267,7 @@ public class EnemyMovement : MonoBehaviour
             if (hitInfo.collider.gameObject.name == "Player")  //if (hitInfo.collider.name == "Player")
             {
                 Debug.Log("Вижу игрока!");
-
-
+                
                 if (!_isDamage && !_isMoveToTheSide && !_isDead && !_isEMPShocking)
                 {
                     if (_distance < _fireDistans) // && _isMove
@@ -275,16 +287,31 @@ public class EnemyMovement : MonoBehaviour
                             if (!_isShoot)
                             {
                                 _isShoot = true;
+
                                 Invoke("Shoot2", _shootTime);
                             }
 
                         }
                         else
                         {
+                            //z = 0f;
+                            //EnemyAnimator.SetFloat("z", z);
                             Stop();
+                            _isShoot = false;
                             Reloading();
                         }
 
+                    }
+                    else
+                    {
+                        // если очень далеко от игрока
+                        NavMeshAgent.isStopped = false;
+                        NavMeshAgent.speed = _enemySpeed;
+                        NavMeshAgent.SetDestination(Player.transform.position);
+                        _isRotate = true;
+                        _timer = _searchTime;
+                        _isShoot = false;
+                        Move();
                     }
                 }
                     
@@ -297,22 +324,37 @@ public class EnemyMovement : MonoBehaviour
                 if (_distance <= _stopDistans)  // если игрок слишком близко
                 {
                     _isRotate = true;
+                    _isShoot = false;
+
                 }
                 else
-                { 
+                {
+                    //z = 0f;
+                    //EnemyAnimator.SetFloat("z", z);
+                    NavMeshAgent.isStopped = false;
+                    NavMeshAgent.speed = _enemySpeed;
+                    NavMeshAgent.SetDestination(Player.transform.position);
+                    _isRotate = true;
+                    _timer = _searchTime * 0.5f;
+                    _isShoot = false;
                     Move();
                 }
                 
-                _timer = 0f;
+                //_timer = 0f;
             }
         }
         else
         {
-            Debug.Log("Ошибка - луч не брошен!");
+            Debug.Log("Ошибка - луч не брошен!, угол равен " + Vector3.Angle(_rotateDirection, Enemy.transform.forward).ToString());
+
             NavMeshAgent.isStopped = false;
+            NavMeshAgent.speed = _enemySpeed;
+            NavMeshAgent.SetDestination(Player.transform.position);
             _isRotate = true;
-            _timer = _searchTime/2f;
+            _timer = _searchTime*0.8f;
             _isShoot = false;
+            Move();
+            //Shoot2();
         }
     }
 
@@ -348,6 +390,8 @@ public class EnemyMovement : MonoBehaviour
 
     public void Stop()
     {
+        //z = 0f;
+        //EnemyAnimator.SetFloat("z", z);
         _isMove = false;
         _isMoveToTheSide = false;
         //_isRotate= false;
@@ -501,6 +545,8 @@ public class EnemyMovement : MonoBehaviour
     public void StepsToTheSide(int Direction, int i) // Direction направо=1, налево =-1 // i - расстояние бокового отхода
     {
         // включение маневра-уклонения
+        //z = 0f;
+        //EnemyAnimator.SetFloat("z", z);
         if (Direction > 0)
         {
             Debug.Log("Отход вправо");            
@@ -569,6 +615,8 @@ public class EnemyMovement : MonoBehaviour
 
     public void Move()
     {
+        //z = 0f;
+        //EnemyAnimator.SetFloat("z", z);
         _isMove = true;
         _isRotate = false;
         _isMoveToTheSide = false;
@@ -711,13 +759,15 @@ public class EnemyMovement : MonoBehaviour
     public void Shoot2()
     {
         _isRotate = false;
+
         if (!_isDamage && !_isMoveToTheSide && !_isDead && !_isEMPShocking)
         {
-            if (_ammo > 0)
-            {                
+            if (_ammo > 0)            
+            {    
+                
                 _rifleDirection = FirePoint.position - RiflePoint.position;
                 _shootDerection = Quaternion.LookRotation(_rifleDirection);
-
+                EnemyAnimator.SetTrigger("Shoot");
                 _ammo -= 1;
                 //            EGA_EnemyLasers.ShootEnemy(Prefab, SearchPoint, _shootDerection);
                 EGA_EnemyLasers.ShootEnemy(Prefab, FirePoint.position, _shootDerection);
@@ -740,29 +790,45 @@ public class EnemyMovement : MonoBehaviour
                         }
                     }
                 }
+                
+            }
+            else
+            {
                 if (!_isDead && !_isDamage && !_isEMPShocking)
-                {
-                    if (_ammo <= 0)
-                    {
+                {   
                         Stop();
                         Reloading();
                         _isShoot = false;
-                    }
-                    else
+                    
+                    /*else
                     {
                         //Invoke("Move", _moveTime);
                         Stop();
                         _isShoot = false;
                         _timer = _searchTime / 2f;
-                        
-                        
-                    }
+
+
+                    }*/
                 }
+
             }
         }
-        // Ускоренный повторный выстрел
-        _timer = _searchTime/2f;
-        Stop();
+        if (_distance < _fireDistans/2f) //  если игрок рядом
+        {
+            // Ускоренный повторный выстрел
+            _timer = _searchTime / 3f;
+            _isShoot = false;            
+
+        }
+        else  // если далеко - идти к нему
+        {
+            _timer = 0f;
+            Move();
+        }
+                /*// Ускоренный повторный выстрел
+                _timer = _searchTime/2f;
+        _isShoot = false;*/
+        //Stop();
         //_timer = 0f;
     }
 
