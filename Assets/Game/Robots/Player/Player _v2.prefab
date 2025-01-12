@@ -3801,7 +3801,7 @@ MonoBehaviour:
   isSight: 0
   RotationSpeed: 1
   SpeedChangeRate: 10
-  JumpHeight: 1.5
+  JumpHeight: 1
   Gravity: -15
   JumpTimeout: 0.1
   FallTimeout: 0.15
@@ -4179,7 +4179,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d717bc4067fc8a443b72263cf0907a66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 100
+  HealthOldFloat: 100
+  HealthOld: 100
+  HealthNew: 100
   _maxHealth: 200
   Live_Score_Text: {fileID: 9077661345124923646}
   Animator: {fileID: 2020987907817452834}
@@ -6268,7 +6270,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7098112782914213846}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!114 &893733031616539035
 MonoBehaviour:
   m_ObjectHideFlags: 0

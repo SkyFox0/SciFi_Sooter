@@ -26,8 +26,8 @@ namespace StarterAssets
             //Debug.Log("Поднята аптечка");
             if (other.gameObject.tag == "Player")
             {
-                //Debug.Log("Игрок поднял аптечку");
-                if (other.GetComponent<PlayerHealthComponentNew>().Health < other.GetComponent<PlayerHealthComponentNew>()._maxHealth)
+                Debug.Log("Игрок поднял аптечку");
+                if (other.GetComponent<PlayerHealthComponentNew>().HealthNew < other.GetComponent<PlayerHealthComponentNew>()._maxHealth)
                 {
                     other.GetComponent<PlayerHealthComponentNew>().AddHealth(Health);
                     other.GetComponent<PlayerHealthComponentNew>().Healing.Play();

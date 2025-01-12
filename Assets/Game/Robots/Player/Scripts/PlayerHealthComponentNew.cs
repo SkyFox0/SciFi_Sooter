@@ -2,6 +2,7 @@ using DestroyIt;
 using StarterAssets;
 using Unity.VisualScripting;
 using UnityEngine;
+using Unity.Mathematics;
 using UnityEngine.InputSystem;
 
 namespace StarterAssets
@@ -9,7 +10,9 @@ namespace StarterAssets
     public class PlayerHealthComponentNew : MonoBehaviour
     {
         //public Destroy2 TargetSystem;
-        public int Health = 100;
+        public float HealthOldFloat = 100f;
+        public int HealthOld = 100;
+        public int HealthNew = 100;
         public int _maxHealth = 200;
         public TextMesh Live_Score_Text;
         //public AudioSource HitSound;
@@ -26,20 +29,25 @@ namespace StarterAssets
 
         void Start()
         {   
-           Live_Score_Text.text = Health.ToString();
-            DamageEffect.SetHealth(Health);
-
-
+           Live_Score_Text.text = HealthOld.ToString();
+            DamageEffect.SetHealth(HealthOld);
         }
 
         void Update()
         {
-            //if (Health > 0)
-            //{
-            //    TakeDamage(5);
-            //}
+            if (HealthOld < HealthNew)  // лечение
+            {
+                HealthOldFloat = math.lerp(HealthOldFloat, HealthNew, 1f * Time.deltaTime);
+                HealthOld = (int)Mathf.Round(HealthOldFloat);
+                Live_Score_Text.text = HealthOld.ToString();
+            }
 
-            //TakeDamage(105);
+            if (HealthOld > HealthNew)  // наносим урон
+            {
+                HealthOldFloat = math.lerp(HealthOldFloat, HealthNew, 10f * Time.deltaTime);
+                HealthOld = (int)Mathf.Round(HealthOldFloat);
+                Live_Score_Text.text = HealthOld.ToString();
+            }
         }
         
 
@@ -49,30 +57,27 @@ namespace StarterAssets
             //запустить звук урона
             //Invoke("HitSoundPlay", 0.3f);
             //HitSound.Play();
-            if (Health > 0f)
+            if (HealthOld > 0f)
             {
-                Health = Health - damage;
-                Live_Score_Text.text = Health.ToString();
-                SoumdController.Damage();
+                HealthNew = HealthNew - damage;  // новый уровень здоровья
 
-
-                if (Health <= 0)
+                if (HealthNew > 0f)
                 {
-                    //запустить анимацию и звук гибели            
-                    StartDead();
 
-                    //вызов метода разрушения с задержкой 0,2с
-                    //TargetSystem.DestroyTarget2();
+                    //Live_Score_Text.text = HealthOld.ToString();
+                    SoumdController.Damage();
 
-                    //Invoke("DestroyTarget", 0.1f);
+                    DamageEffect.SetHealth(HealthNew);  // передаём новый уровень здоровья
+                    // запускаем корректировку изменения здоровья
 
-                    //_ExplodeTarget.StartExplosion();
-                    //Destroy(gameObject);
+
                 }
-                DamageEffect.SetHealth(Health);
-
-
+                else
+                {
+                    StartDead();
+                }
             }
+                
         }
 
         public void StartDead()
@@ -85,13 +90,14 @@ namespace StarterAssets
 
         public void AddHealth(int _health)
         {
-            Health = Health + _health;
-            if (Health > _maxHealth)
+            HealthNew = HealthNew + _health;
+
+            if (HealthNew > _maxHealth)
             {
-                Health = _maxHealth;
+                HealthNew = _maxHealth;
             }
-            Live_Score_Text.text = Health.ToString();
-            DamageEffect.SetHealth(Health);
+            //Live_Score_Text.text = HealthOld.ToString();
+            DamageEffect.SetHealth(HealthNew);
         }
 
         public void HealthFull()

@@ -130,6 +130,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "AnyClick",
+                    "type": "Button",
+                    "id": "1dff34dc-91dd-40fe-b093-879bb70c1e1f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -482,6 +491,17 @@
                     "processors": "",
                     "groups": ";KeyboardMouse",
                     "action": "Light",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "70cc8348-482a-4aae-af14-11a65a6688f9",
+                    "path": "<Keyboard>/anyKey",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AnyClick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

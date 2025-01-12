@@ -66,9 +66,9 @@ public class ExlosionDamage : MonoBehaviour
 
     public void GrenadeExplosion()
     {
-        Debug.Log(Grenade.GetComponent<Collider>().ToString());
+        //Debug.Log(Grenade.GetComponent<Collider>().ToString());
         //Debug.Log(Trigger.GetComponent<Collider>().ToString());
-        Debug.Log("--------------");
+        //Debug.Log("--------------");
 
 
 
@@ -80,7 +80,7 @@ public class ExlosionDamage : MonoBehaviour
             if (_count == 1)
             {
 
-                Debug.Log(hit.ToString());
+                //Debug.Log(hit.ToString());
 
                 if (hit != Grenade.GetComponent<Collider>() & hit) // | Trigger.GetComponent<Collider>())
                 {
@@ -90,7 +90,7 @@ public class ExlosionDamage : MonoBehaviour
                         Rigidbody rb = hit.GetComponent<Rigidbody>();
                         if (rb != null)
                         {
-                            Debug.Log("Обнаружен коллайдер с ригидбоди: " + hit.ToString());
+                            //Debug.Log("Обнаружен коллайдер с ригидбоди: " + hit.ToString());
                             //Debug.Log("Обнаружен ригидбоди - подбрасывание!");
                             rb.AddExplosionForce(_power, Grenade.transform.position, _maxDistance / 2f, 0.2f, ForceMode.Impulse);
                         }
@@ -104,16 +104,16 @@ public class ExlosionDamage : MonoBehaviour
             }
             if (hit.gameObject.tag == "Player") // урон по себе!
             {
-                Debug.Log("Обнаружен игрок!");
+                //Debug.Log("Обнаружен игрок!");
                 // вычислить расстояние до игрока
                 float _distance = (hit.transform.position - Grenade.transform.position).magnitude;
-                Debug.Log("Расстояние до игрока = "+ _distance.ToString());
+                //Debug.Log("Расстояние до игрока = "+ _distance.ToString());
 
                 int _damage = (int)Mathf.Round(InensivityDamage.Evaluate(_distance / _maxDistance) * _maxDamage); // рассчет урона;
 
                 try
                 {
-                    Debug.Log("Электрический урон по себе = " + _damage.ToString() + "!");
+                    //Debug.Log("Электрический урон по себе = " + _damage.ToString() + "!");
                     hit.GetComponent<PlayerHealthComponentNew>().TakeDamage(_damage);
                     Lightning.Play();
                 }
@@ -124,16 +124,16 @@ public class ExlosionDamage : MonoBehaviour
             if (hit.gameObject.tag == "Enemy") // урон по врагу!
             {
 
-                Debug.Log("Обнаружен враг!");
+                //Debug.Log("Обнаружен враг!");
                 // вычислить расстояние до врага
                 float _distance = (hit.transform.position - Grenade.transform.position).magnitude;
-                Debug.Log("Расстояние до врага = " + _distance.ToString());
+                //Debug.Log("Расстояние до врага = " + _distance.ToString());
                 int _damage = (int)Mathf.Round(InensivityDamage.Evaluate(_distance / _maxDistance) * _maxDamage); // рассчет урона;
 
 
                 try
                 {
-                    Debug.Log("Электрический урон по врагу = " + _damage.ToString() + "!");
+                    //Debug.Log("Электрический урон по врагу = " + _damage.ToString() + "!");
                     hit.GetComponent<EnemyHealthComponent>().TakeEMPDamage(_damage);
                     Lightning.Play();
                 }

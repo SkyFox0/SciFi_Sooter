@@ -9,7 +9,7 @@ public class DamageEffect : MonoBehaviour
     [SerializeField] private Volume DamageVolume;
    
     [SerializeField] private CanvasGroup CanvasGroup;
-
+    
     public bool _isEffectEnabled;
     public bool _effectOff;
     public float _effectForceNew;
@@ -73,13 +73,17 @@ public class DamageEffect : MonoBehaviour
                 DamageVolume.weight = 0.1f;*/
 
             }
+            if (_effectForceOld == 0f)
+            {
+                _effectOff = false;
+            }
         }
     }
 
  
     public void SetHealth(float Health)
     {
-        if (Health < _minHealth)
+        if (Health < _minHealth)  // если здоровья меньше половины - включить индикацию
         {
             _effectForceOld = _effectForceNew; // сохраняем старое значение
             _effectForceNew = (1f - Health / _minHealth) * _effectForceMAX;   // новое значение

@@ -161,7 +161,7 @@ public class EnemyMovement : MonoBehaviour
             //_timer = _timer + Time.deltaTime;
             if ((_timer > _searchTime) && !_isMoveToTheSide) //&& _isMove 
             {
-                Debug.Log("Активирован поиск!");
+                //Debug.Log("Активирован поиск!");
                 if (Random.Range(0f, 10f) < 0.1f)
                 {
                     Scan.Play();
@@ -245,18 +245,18 @@ public class EnemyMovement : MonoBehaviour
         NavMeshAgent.isStopped = false;
         NavMeshAgent.speed = 0f;
         NavMeshAgent.SetDestination(Player.transform.position);
-        Debug.Log("Ищу игрока!");
+        //Debug.Log("Ищу игрока!");
         //бросаем поисковый луч
         _direction = Player.transform.position + Player.transform.right * 0.5f + Player.transform.forward * 0.5f - Enemy.transform.position;  //+ Player.transform.up*0.5f
-        Debug.Log("Ищу игрока по вектору! " + _direction.ToString());
+        //Debug.Log("Ищу игрока по вектору! " + _direction.ToString());
         _distance = _direction.magnitude;
-        Debug.Log("Расстояние до игрока!" + _distance.ToString());
+        //Debug.Log("Расстояние до игрока!" + _distance.ToString());
         //Debug.DrawRay(Enemy.transform.position, Enemy.transform.forward * 30, Color.yellow);
         //Debug.DrawRay(Enemy.transform.position, direction * 30, Color.green);
         //_searchPoint = Enemy.transform.position + new Vector3(0f, 1.6f, 0f);
 
         z = (90 - Vector3.Angle(_direction, Enemy.transform.up)) / 50;
-        Debug.Log("Вертикальный угол равен " + z.ToString());
+        //Debug.Log("Вертикальный угол равен " + z.ToString());
         
         EnemyAnimator.SetFloat("z", z);
 
@@ -266,7 +266,7 @@ public class EnemyMovement : MonoBehaviour
             //Debug.Log(_direction.ToString());
             if (hitInfo.collider.gameObject.name == "Player")  //if (hitInfo.collider.name == "Player")
             {
-                Debug.Log("Вижу игрока!");
+                //Debug.Log("Вижу игрока!");
                 
                 if (!_isDamage && !_isMoveToTheSide && !_isDead && !_isEMPShocking)
                 {
@@ -319,7 +319,7 @@ public class EnemyMovement : MonoBehaviour
             else
             {
                 // если не видит игрока
-                Debug.Log("Не вижу игрока! - " + hitInfo.collider.gameObject.name.ToString());
+                //Debug.Log("Не вижу игрока! - " + hitInfo.collider.gameObject.name.ToString());
                 
                 if (_distance <= _stopDistans)  // если игрок слишком близко
                 {
@@ -345,7 +345,7 @@ public class EnemyMovement : MonoBehaviour
         }
         else
         {
-            Debug.Log("Ошибка - луч не брошен!, угол равен " + Vector3.Angle(_rotateDirection, Enemy.transform.forward).ToString());
+            //Debug.Log("Ошибка - луч не брошен!, угол равен " + Vector3.Angle(_rotateDirection, Enemy.transform.forward).ToString());
 
             NavMeshAgent.isStopped = false;
             NavMeshAgent.speed = _enemySpeed;
@@ -471,31 +471,31 @@ public class EnemyMovement : MonoBehaviour
         try
         { 
             Physics.Raycast(Enemy.transform.position + Enemy.transform.right * 0.25f, Enemy.transform.right + new Vector3(0f, 0.5f, 0f), out var hitInfoRight);
-            Debug.Log("Коллайдер спарава " + hitInfoRight.transform.name.ToString());
+            //Debug.Log("Коллайдер спарава " + hitInfoRight.transform.name.ToString());
             RightDistance = hitInfoRight.distance;
 
         }
         catch 
         {
-            Debug.Log("Коллайдер спарава не найден");
+            //Debug.Log("Коллайдер спарава не найден");
             RightDistance = 10f;
         }
         try
         {
             Physics.Raycast(Enemy.transform.position + Enemy.transform.right * -0.25f, Enemy.transform.right * -1 + new Vector3(0f, 0.5f, 0f), out var hitInfoLeft);
-            Debug.Log("Коллайдер слева " + hitInfoLeft.transform.name.ToString());
+            //Debug.Log("Коллайдер слева " + hitInfoLeft.transform.name.ToString());
             LeftDistance = hitInfoLeft.distance;
         }
         catch 
         {
-            Debug.Log("Коллайдер слева не найден");
+            //Debug.Log("Коллайдер слева не найден");
             LeftDistance = 10f;
         }
 
         if (RightDistance > 9f && LeftDistance > 9f)
         {
             float _random = Random.Range(-1f, 1f);
-            Debug.Log("Рандом равен: " + _random.ToString());
+            //Debug.Log("Рандом равен: " + _random.ToString());
             if (_random > 0f)
             {
                 LeftDistance = 0f;
@@ -511,14 +511,14 @@ public class EnemyMovement : MonoBehaviour
             if (RightDistance > 2f)
             {
                 MoveToTheSidePoint = Enemy.transform.position + Enemy.transform.right * 2;
-                Debug.Log("Иду направо в точку: " + MoveToTheSidePoint.ToString() + " " + RightDistance.ToString());
+                //Debug.Log("Иду направо в точку: " + MoveToTheSidePoint.ToString() + " " + RightDistance.ToString());
                 //Instance = Instantiate(Point, MoveToTheSidePoint, Point.transform.rotation);
                 StepsToTheSide(1, 2);
                 return true;
             }
             else
             {
-                Debug.Log("Направо = " + RightDistance.ToString());
+                //Debug.Log("Направо = " + RightDistance.ToString());
 
             }
         }
@@ -527,14 +527,14 @@ public class EnemyMovement : MonoBehaviour
             if (LeftDistance > 2f)
             {
                 MoveToTheSidePoint = Enemy.transform.position + Enemy.transform.right * -2;                
-                Debug.Log("Иду налево в точку: " + MoveToTheSidePoint.ToString() + " " + LeftDistance.ToString());
+                //Debug.Log("Иду налево в точку: " + MoveToTheSidePoint.ToString() + " " + LeftDistance.ToString());
                 //Instance = Instantiate(Point, MoveToTheSidePoint, Point.transform.rotation);
                 StepsToTheSide(-1, 2);
                 return true;
             }
             else
             {
-                Debug.Log("Налево = " + LeftDistance.ToString());
+                //Debug.Log("Налево = " + LeftDistance.ToString());
 
             }
         }
@@ -549,11 +549,11 @@ public class EnemyMovement : MonoBehaviour
         //EnemyAnimator.SetFloat("z", z);
         if (Direction > 0)
         {
-            Debug.Log("Отход вправо");            
+            //Debug.Log("Отход вправо");            
         }
         else
         {
-            Debug.Log("Отход влево");           
+            //Debug.Log("Отход влево");           
         }
         // Отключить навигацию!!!
         NavMeshAgent.speed = 0f;
@@ -579,7 +579,7 @@ public class EnemyMovement : MonoBehaviour
 
         if ((Enemy.transform.position - MoveToTheSidePoint).magnitude > 0.5f && _timerMoveToTheSide < 2f)
         {
-            Debug.Log("Расстояние до цели " + (Enemy.transform.position - MoveToTheSidePoint).magnitude.ToString());
+            //Debug.Log("Расстояние до цели " + (Enemy.transform.position - MoveToTheSidePoint).magnitude.ToString());
             Enemy.transform.position = Vector3.Lerp(Enemy.transform.position, MoveToTheSidePoint, 1.5f * Time.deltaTime);
         }
         else
@@ -678,7 +678,7 @@ public class EnemyMovement : MonoBehaviour
             }
             else
             {
-                Debug.Log("Путь для маневра уклонения не обнаружен!");
+                //Debug.Log("Путь для маневра уклонения не обнаружен!");
                 //Invoke("Move", _moveTime);
                 _timer = 0f;
                 Stop();
@@ -735,7 +735,7 @@ public class EnemyMovement : MonoBehaviour
 //            EGA_EnemyLasers.ShootEnemy(Prefab, SearchPoint, _shootDerection);
             EGA_EnemyLasers.ShootEnemy(Prefab, FirePoint.position, _shootDerection);
             ShootSound.Play();
-            Debug.Log("Выстрел мёртвой руки!");
+            //Debug.Log("Выстрел мёртвой руки!");
 
             if (Physics.Raycast(FirePoint.position, _rifleDirection, out var hitInfo))
             {
