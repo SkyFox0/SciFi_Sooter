@@ -7,7 +7,8 @@ namespace StarterAssets
     {
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         public int Health;
-        public Medkit Medkit;        
+        public Medkit Medkit;
+        public bool _isUse = false;
 
 
         //public MedkitSpawnSystem MedkitSpawnSystem;
@@ -26,18 +27,25 @@ namespace StarterAssets
             //Debug.Log("Поднята аптечка");
             if (other.gameObject.tag == "Player")
             {
-                Debug.Log("Игрок поднял аптечку");
-                if (other.GetComponent<PlayerHealthComponentNew>().HealthNew < other.GetComponent<PlayerHealthComponentNew>()._maxHealth)
+                if (!_isUse)
                 {
-                    other.GetComponent<PlayerHealthComponentNew>().AddHealth(Health);
-                    other.GetComponent<PlayerHealthComponentNew>().Healing.Play();
-                    Medkit.Destroy();
+                    
+                    Debug.Log("Игрок поднял аптечку");
+                    if (other.GetComponent<PlayerHealthComponentNew>().HealthNew < other.GetComponent<PlayerHealthComponentNew>()._maxHealth)
+                    {
+                        _isUse = true;
+                        other.GetComponent<PlayerHealthComponentNew>().AddHealth(Health);
+                        other.GetComponent<PlayerHealthComponentNew>().Healing.Play();
+                        Medkit.Destroy();
+                    }
+                    else
+                    {
+                        // если здоровье полное
+                        other.GetComponent<PlayerHealthComponentNew>().HealthFull();
+                        _isUse = false;
+                    }
                 }
-                else
-                {
-                    // если здоровье полное
-                    other.GetComponent<PlayerHealthComponentNew>().HealthFull();                                      
-                }
+                
             }
         }
     }

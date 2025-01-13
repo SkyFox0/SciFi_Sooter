@@ -20,7 +20,7 @@ public class Medkit : MonoBehaviour
     public void Destroy()        
     {
         Debug.Log("”ничтожение аптечки # " + SpawnPoint.name);
-        MedkitSpawnSystem.SpawnMedkit(SpawnPoint); 
+        MedkitSpawnSystem.SpawnMedkit(SpawnPoint, transform.gameObject); 
         Destroy(gameObject);
 
     }

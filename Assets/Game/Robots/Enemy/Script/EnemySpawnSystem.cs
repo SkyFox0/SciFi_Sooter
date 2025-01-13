@@ -4,6 +4,7 @@ public class EnemySpawnSystem : MonoBehaviour
 {
     public bool _isAutoSpawnOn;
     public int _autoSpawnCount;
+    public float _timeToSpawn = 10f;
     public GameObject Enemy;
     private GameObject Instance;
     private EnemyMovement EnemyMovement;
@@ -31,8 +32,6 @@ public class EnemySpawnSystem : MonoBehaviour
             Destroy(Instance);
             //AvtoSpavn(_autoSpawnCount); 
         }
-        
-        //
     }
 
     private void Update()
@@ -47,8 +46,6 @@ public class EnemySpawnSystem : MonoBehaviour
                 AvtoSpavn();
             }
         }
-       
-
     }
 
     // Update is called once per frame
@@ -86,6 +83,11 @@ public class EnemySpawnSystem : MonoBehaviour
     }
 
     public void Spawn()
+    {
+        Invoke("SpawnEnemy", _timeToSpawn);        
+    }
+
+    public void SpawnEnemy()
     {
         Debug.Log("Спавн нового врага");
         //Destroy(Instance);

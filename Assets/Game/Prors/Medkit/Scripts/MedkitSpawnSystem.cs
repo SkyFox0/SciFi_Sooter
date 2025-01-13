@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
-//using System;
+
 
 public class MedkitSpawnSystem : MonoBehaviour
 {
@@ -8,6 +8,7 @@ public class MedkitSpawnSystem : MonoBehaviour
     private GameObject Instance;
     public bool _isAutoSpawnOn;
     public int _autoSpawnCount;
+    public float _timeToSpawn = 15f;
     public GameObject SpawnPoint;
     public GameObject[] SpawnPoints;
 
@@ -16,13 +17,7 @@ public class MedkitSpawnSystem : MonoBehaviour
     public int _spawnPoint;
 
     public Medkit MedkitScript;
-
-    //public GameObject[] InstanceArr = new GameObject[3];
-    //public List<GameObject> InstanceList = new List<GameObject>();
-    //public int CountList;
-
-
-
+    public SpawnMedkit SpawnMedkitScript;
 
 
     //Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -72,11 +67,14 @@ public class MedkitSpawnSystem : MonoBehaviour
             _spawnPoint += 1;
         }
 
-        Instance = Instantiate(Megkit, SpawnPoint.transform.position, transform.rotation);
+        SpawnMedkitScript = SpawnPoint.GetComponent<SpawnMedkit>();
+        SpawnMedkitScript.Spawn(SpawnPoint);
+
+/*        Instance = Instantiate(Megkit, SpawnPoint.transform.position, transform.rotation);
         Instance.transform.parent = transform;
         MedkitScript = Instance.GetComponent<Medkit>();
         MedkitScript.SpawnPoint = SpawnPoint;
-
+*/
 
 
         //EnemyMovement = Instance.GetComponent<EnemyMovement>();
@@ -90,38 +88,24 @@ public class MedkitSpawnSystem : MonoBehaviour
     }
 
 
-    public void SpawnMedkit(GameObject NewSpawnPoint)
+    public void SpawnMedkit(GameObject NewSpawnPoint, GameObject Medkit)
     {
-        Debug.Log("Взял аптечку " + NewSpawnPoint.name);
+        Debug.Log("Взял аптечку " + NewSpawnPoint.name + Medkit.ToString());
         SpawnPoint = NewSpawnPoint;
-        //Destroy(Instance);
-        //SpawnPoint = SpawnPoints[Random.Range(0, SpawnPoints.Length)];
+        SpawnMedkitScript = NewSpawnPoint.GetComponent<SpawnMedkit>();
+        SpawnMedkitScript.Spawn(SpawnPoint);        
 
-        //InstanceArr[0] = Instantiate(Megkit, SpawnPoint.transform.position, transform.rotation);
-
-        //Instance = Instantiate(Megkit, SpawnPoint.transform.position, transform.rotation);
-        //Instance.transform.parent = transform;
-
-        Invoke("SpawnMedkitNow", 5f);
-        //InstanceList.Add(Instantiate(Megkit, SpawnPoint.transform.position, transform.rotation));
-        //InstanceList[InstanceList.Count-1].transform.parent = transform;
-        //InstanceList.Sort();
-        //InstanceList.RemoveAll(x => x == null);
-
-    // помещаем клон аптечки с систему спавна
-    //InstanceArr[0].transform.parent = transform;
-    //CountList = InstanceList.Count;
-    //Sort();
+        //Invoke("SpawnMedkitNow", _timeToSpawn);        
     }
 
-    public void SpawnMedkitNow()
+    /*public void SpawnMedkitNow()
     {
         Debug.Log("Спавн аптечки - " + SpawnPoint.name);
         Instance = Instantiate(Megkit, SpawnPoint.transform.position, transform.rotation);
         Instance.transform.parent = transform;
         MedkitScript = Instance.GetComponent<Medkit>();
         MedkitScript.SpawnPoint = SpawnPoint;
-    }
+    }*/
 
 
     /*public void Sort()

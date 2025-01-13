@@ -6,38 +6,21 @@ public class AmmoSpawnSystem : MonoBehaviour
     private GameObject Instance;    
     public GameObject[] SpawnPoints;    
     private GameObject SpawnPoint;
-
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    //void Start()
-    //{
-    //    Destroy(Instance);
-    //Player = GameObject.Find("Player");
-
-    //    for (int i = 0; i < SpawnPoints.Length; i++)
-    //    {
-    //       SpawnPoint = SpawnPoints[i];
-
-    //       Instance = Instantiate(Megkit, SpawnPoint.transform.position, transform.rotation);
-    //EnemyMovement = Instance.GetComponent<EnemyMovement>();
-    //EnemyMovement.Player = Player.transform;
-    //  }        
-    // }
-
-    // Update is called once per frame
+    public float _timeToSpawn = 15f;
+      
 
     public void Spawn()
     {
+        Invoke("Spawnammo", _timeToSpawn);
+    }
+
+    public void SpawnAmmo()
+    {
         //Destroy(Instance);
         SpawnPoint = SpawnPoints[Random.Range(0, SpawnPoints.Length)];
-
-
         Instance = Instantiate(Ammo, SpawnPoint.transform.position, transform.rotation);
         // помещаем клон аптечки с систему спавна
         Instance.transform.parent = transform;
-
-        //EnemyMovement = Instance.GetComponent<EnemyMovement>();
-        //EnemyMovement.Player = Player.transform;
     }
 
     

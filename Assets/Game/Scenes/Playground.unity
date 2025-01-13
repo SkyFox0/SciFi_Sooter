@@ -648,8 +648,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe3473037d579494aa972417924ca303, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isAutoSpawnOn: 1
+  _isAutoSpawnOn: 0
   _autoSpawnCount: 2
+  _timeToSpawn: 30
   Enemy: {fileID: 5341923219988903007, guid: 8e4c40a6f68913b41aad804867c850dd, type: 3}
   SpawnPoints:
   - {fileID: 302420839}
@@ -719,6 +720,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 108684635}
+  - component: {fileID: 108684636}
   m_Layer: 0
   m_Name: SpawnPoint_3
   m_TagString: Untagged
@@ -741,6 +743,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1444478135}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &108684636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 108684634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27ceb9eb0b004c942bc1a0123b6e256b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Megkit: {fileID: 0}
+  SpawnPoint: {fileID: 0}
+  MedkitSpawnSystem: {fileID: 0}
+  _timeToSpawn: 15
+  MedkitScript: {fileID: 0}
+  _isSpawn: 1
 --- !u!1 &110059572
 GameObject:
   m_ObjectHideFlags: 0
@@ -1430,6 +1450,56 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4240951606087838, guid: f65c749dbf5aa644f93885c63627731b, type: 3}
   m_PrefabInstance: {fileID: 426525388}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &230126086
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 230126087}
+  - component: {fileID: 230126088}
+  m_Layer: 0
+  m_Name: SpawnPoint_6
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &230126087
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 230126086}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 4, y: 1.75, z: -19.75}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1444478135}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &230126088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 230126086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27ceb9eb0b004c942bc1a0123b6e256b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Megkit: {fileID: 0}
+  SpawnPoint: {fileID: 0}
+  MedkitSpawnSystem: {fileID: 0}
+  _timeToSpawn: 15
+  MedkitScript: {fileID: 0}
+  _isSpawn: 1
 --- !u!1001 &255611381
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1569,8 +1639,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 277767500}
+  - component: {fileID: 277767501}
   m_Layer: 0
-  m_Name: SpawnPoint_5
+  m_Name: SpawnPoint_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1591,6 +1662,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1444478135}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &277767501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 277767499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27ceb9eb0b004c942bc1a0123b6e256b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Megkit: {fileID: 0}
+  SpawnPoint: {fileID: 0}
+  MedkitSpawnSystem: {fileID: 0}
+  _timeToSpawn: 15
+  MedkitScript: {fileID: 0}
+  _isSpawn: 1
 --- !u!1 &302420839
 GameObject:
   m_ObjectHideFlags: 0
@@ -6256,8 +6345,12 @@ Transform:
   - {fileID: 1998153072}
   - {fileID: 1768226271}
   - {fileID: 108684635}
-  - {fileID: 2037865949}
   - {fileID: 277767500}
+  - {fileID: 2037865949}
+  - {fileID: 230126087}
+  - {fileID: 2075448020}
+  - {fileID: 1512879684}
+  - {fileID: 2028012102}
   - {fileID: 1479967353}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6275,18 +6368,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Megkit: {fileID: 4777798087034618257, guid: 1a7b8162de35cdd4a86295ed1904ef1b, type: 3}
   _isAutoSpawnOn: 1
-  _autoSpawnCount: 5
+  _autoSpawnCount: 9
+  _timeToSpawn: 15
   SpawnPoint: {fileID: 0}
   SpawnPoints:
   - {fileID: 1998153071}
   - {fileID: 1768226270}
   - {fileID: 108684634}
-  - {fileID: 2037865948}
   - {fileID: 277767499}
+  - {fileID: 2037865948}
+  - {fileID: 230126086}
+  - {fileID: 2075448019}
+  - {fileID: 1512879683}
+  - {fileID: 2028012101}
   _timer: 0
   _spawnNumber: 0
   _spawnPoint: 0
   MedkitScript: {fileID: 0}
+  SpawnMedkitScript: {fileID: 0}
 --- !u!1001 &1445952739
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6345,7 +6444,7 @@ PrefabInstance:
       objectReference: {fileID: 513695783}
     - target: {fileID: 4865960796838464376, guid: db98b3d734b5f4941ba78293d3f6a159, type: 3}
       propertyPath: m_Name
-      value: Player
+      value: Player_02
       objectReference: {fileID: 0}
     - target: {fileID: 6681009711220714394, guid: db98b3d734b5f4941ba78293d3f6a159, type: 3}
       propertyPath: ShootDirection
@@ -6715,6 +6814,56 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5332791ebce075d4a9e56f4581e7fb47, type: 3}
+--- !u!1 &1512879683
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1512879684}
+  - component: {fileID: 1512879685}
+  m_Layer: 0
+  m_Name: SpawnPoint_8
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1512879684
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1512879683}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 10.25, y: 1.75, z: -19.75}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1444478135}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1512879685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1512879683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27ceb9eb0b004c942bc1a0123b6e256b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Megkit: {fileID: 0}
+  SpawnPoint: {fileID: 0}
+  MedkitSpawnSystem: {fileID: 0}
+  _timeToSpawn: 15
+  MedkitScript: {fileID: 0}
+  _isSpawn: 0
 --- !u!1001 &1525337220
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6902,6 +7051,10 @@ PrefabInstance:
     - target: {fileID: 5341923219988903007, guid: 8e4c40a6f68913b41aad804867c850dd, type: 3}
       propertyPath: m_Name
       value: Enemy 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5341923219988903007, guid: 8e4c40a6f68913b41aad804867c850dd, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7475,6 +7628,7 @@ MonoBehaviour:
   - {fileID: 107463794}
   - {fileID: 2003144244}
   - {fileID: 1486714608}
+  _timeToSpawn: 15
 --- !u!4 &1704065133
 Transform:
   m_ObjectHideFlags: 0
@@ -7991,6 +8145,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1768226271}
+  - component: {fileID: 1768226272}
   m_Layer: 0
   m_Name: SpawnPoint_2
   m_TagString: Untagged
@@ -8013,6 +8168,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1444478135}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1768226272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1768226270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27ceb9eb0b004c942bc1a0123b6e256b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Megkit: {fileID: 0}
+  SpawnPoint: {fileID: 0}
+  MedkitSpawnSystem: {fileID: 0}
+  _timeToSpawn: 15
+  MedkitScript: {fileID: 0}
+  _isSpawn: 1
 --- !u!1001 &1772854165
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9110,6 +9283,7 @@ MonoBehaviour:
   - {fileID: 1146019001}
   - {fileID: 1459197562}
   - {fileID: 1701505588}
+  _timeToSpawn: 15
 --- !u!1001 &1979352518
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9349,6 +9523,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1998153072}
+  - component: {fileID: 1998153073}
   m_Layer: 0
   m_Name: SpawnPoint_1
   m_TagString: Untagged
@@ -9365,12 +9540,30 @@ Transform:
   m_GameObject: {fileID: 1998153071}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.41, y: 6.816, z: 9.244}
+  m_LocalPosition: {x: 4.41, y: 6.816, z: 9.25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1444478135}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1998153073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1998153071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27ceb9eb0b004c942bc1a0123b6e256b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Megkit: {fileID: 0}
+  SpawnPoint: {fileID: 0}
+  MedkitSpawnSystem: {fileID: 0}
+  _timeToSpawn: 15
+  MedkitScript: {fileID: 0}
+  _isSpawn: 1
 --- !u!1 &2003144244
 GameObject:
   m_ObjectHideFlags: 0
@@ -9402,6 +9595,56 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1704065133}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2028012101
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2028012102}
+  - component: {fileID: 2028012103}
+  m_Layer: 0
+  m_Name: SpawnPoint_9
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2028012102
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2028012101}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 12.75, y: 1.75, z: -19.75}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1444478135}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2028012103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2028012101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27ceb9eb0b004c942bc1a0123b6e256b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Megkit: {fileID: 0}
+  SpawnPoint: {fileID: 0}
+  MedkitSpawnSystem: {fileID: 0}
+  _timeToSpawn: 15
+  MedkitScript: {fileID: 0}
+  _isSpawn: 1
 --- !u!1 &2037865948
 GameObject:
   m_ObjectHideFlags: 0
@@ -9411,8 +9654,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2037865949}
+  - component: {fileID: 2037865950}
   m_Layer: 0
-  m_Name: SpawnPoint_4
+  m_Name: SpawnPoint_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9433,6 +9677,74 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1444478135}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2037865950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2037865948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27ceb9eb0b004c942bc1a0123b6e256b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Megkit: {fileID: 0}
+  SpawnPoint: {fileID: 0}
+  MedkitSpawnSystem: {fileID: 0}
+  _timeToSpawn: 15
+  MedkitScript: {fileID: 0}
+  _isSpawn: 1
+--- !u!1 &2075448019
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2075448020}
+  - component: {fileID: 2075448021}
+  m_Layer: 0
+  m_Name: SpawnPoint_7
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2075448020
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2075448019}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 7.25, y: 1.75, z: -19.75}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1444478135}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2075448021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2075448019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27ceb9eb0b004c942bc1a0123b6e256b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Megkit: {fileID: 0}
+  SpawnPoint: {fileID: 0}
+  MedkitSpawnSystem: {fileID: 0}
+  _timeToSpawn: 15
+  MedkitScript: {fileID: 0}
+  _isSpawn: 1
 --- !u!1001 &2084445384
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18001,7 +18313,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}

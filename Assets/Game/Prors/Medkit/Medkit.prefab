@@ -996,8 +996,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a960a69280988394aa18b0f8deda22e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 50
+  Health: 15
   MedkitSpawnSystem: {fileID: 0}
+  SpawnPoint: {fileID: 0}
 --- !u!65 &2195860339437924508
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1535,7 +1536,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 0
   Medkit: {fileID: 3542453785907810836}
-  Sound: 0
-  HealthFull1: {fileID: 5995078561371451716}
-  HealthFull2: {fileID: 9190871162231943315}
-  HealthFull3: {fileID: 7602871182836204805}
