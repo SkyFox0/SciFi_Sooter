@@ -17,14 +17,21 @@ public class DoorsTrigger : MonoBehaviour
         //_timer = -1f;
         //_timeClose = 10f;
         if (_open)
-        { 
-            DoorsAnimator.SetTrigger("ToClose");
-            _open = false;
-            DoorsClose.Play();
-            _timer = -1f;
+        {
+            Invoke("ToCloseDoors", 2f);
 
         }
     }
+
+    public void ToCloseDoors()
+    {
+        DoorsAnimator.SetTrigger("ToClose");
+        _open = false;
+        DoorsClose.Play();
+        _timer = -1f;
+
+    }
+
 
     // Update is called once per frame
     void Update()

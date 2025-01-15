@@ -1,4 +1,6 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.Device;
 using UnityEngine.Video;
 using static UnityEngine.Rendering.DebugUI;
 
@@ -19,9 +21,15 @@ public class VideoManager : MonoBehaviour
     [SerializeField] private int _videoClipNumber;     // =1-4
     private int _videoClipNumberMax;  // =4
     [SerializeField] private float _timer = -1f;
+    public Material _screen;
+    public Color _screenColorWhite = Color.white;
+    public Color _screenColorBlack = Color.black;
+    public TMP_Text _text;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        //_screen.color = _screenColorBlack;
         _videoClipNumber = 0;
         _videoClipNumberMax = 3;
 
@@ -40,7 +48,9 @@ public class VideoManager : MonoBehaviour
 
         _player = GetComponent<VideoPlayer>();
         _player.url = _url[_videoClipNumber];
-        _player.Prepare();      
+        _player.Prepare();
+        _text.text = "Загрузка видео...";
+        _screen.color = _screenColorBlack;
 
     }
 
@@ -49,17 +59,27 @@ public class VideoManager : MonoBehaviour
     {
         if (_player.isPrepared && _timer == -1f)  // если видео готово к запуску
         {
-            _player.Play();
+            _text.text = "";
+            _player.Play();            
             _timer = 0f;  // запуск таймера
+            _screen.color = _screenColorWhite;
+            _text.text = "";
         }
          
         if (_timer >= 0f)
         {
             _timer += Time.deltaTime;  // счетчик времени запущен
+            if (_screen.color != _screenColorWhite)
+            { 
+                _screen.color = _screenColorWhite;
+                _text.text = "";
+            }
         }
 
         if  (_timer >= _time[_videoClipNumber]) // если видео закончилось
-        {           
+        {
+            _text.text = "Загрузка видео...";
+            _screen.color = _screenColorBlack;
             _timer = -1f;   // остановить таймер
             if (_videoClipNumber < _videoClipNumberMax)
                 {
