@@ -50,7 +50,7 @@ public class DoorsTrigger : MonoBehaviour
     }
     public void OnTriggerEnter(Collider other)
     {
-        if (!_open)
+        if ((other.gameObject.tag == "Player") && !_open)
         {
             _open = true;
             DoorsOpen.Play();

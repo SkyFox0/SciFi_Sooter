@@ -147,7 +147,10 @@ namespace StarterAssets
                 }
                 else                
                 {
-                    PlaySound.PlayOneShot(NeedToReload);
+                    if (!PlaySound.isPlaying)
+                    {
+                        PlaySound.PlayOneShot(NeedToReload);
+                    }                    
                 }
             }                
         }
