@@ -51,7 +51,7 @@ public class DamageEffect : MonoBehaviour
         
         if (_isEffectEnabled)
         {
-            if (math.abs(_effectForceOld - _effectForceNew) > 0.05f)  // уменьшаем эффект
+            if (math.abs(_effectForceOld - _effectForceNew) > 0.01f)  // увеличиваем эффект
             {
                 _effectForceOld = math.lerp(_effectForceOld, _effectForceNew, 0.3f * Time.deltaTime);
                 HeartBeat.volume = _effectForceOld;
@@ -63,9 +63,10 @@ public class DamageEffect : MonoBehaviour
 
         if (_effectOff)
         {
-            if (_effectForceOld > 0f)
+            if (_effectForceOld > _effectForceNew)   // уменьшаем эффект
             {
-                _effectForceOld = math.lerp(_effectForceOld, _effectForceNew, 0.3f * Time.deltaTime);
+                _effectForceOld = math.lerp(_effectForceOld, 0f, 0.3f * Time.deltaTime);
+                //_effectForceOld = math.lerp(_effectForceOld, _effectForceNew, 0.3f * Time.deltaTime);
                 CanvasGroup.alpha = _effectForceOld;
                 DamageVolume.weight = _effectForceOld + 0.05f;
 
@@ -73,20 +74,30 @@ public class DamageEffect : MonoBehaviour
                 DamageVolume.weight = 0.1f;*/
 
             }
-            if (_effectForceOld == 0f)
+            else
+            {
+                if (DamageVolume.weight == _effectForceOld + 0.05f)
+                {
+                    _effectOff = false;
+                } 
+            } 
+            if (_effectForceOld < 0.1f && _effectForceNew == 0f)
             {
                 _effectOff = false;
+                _effectForceOld = 0f;
+                CanvasGroup.alpha = _effectForceOld;
+                DamageVolume.weight = _effectForceOld + 0.05f;
             }
         }
     }
 
  
-    public void SetHealth(float Health)
+    public void SetHealth(float Health)  // передача нового уровня здоровья игрока
     {
         if (Health < _minHealth)  // если здоровья меньше половины - включить индикацию
         {
-            _effectForceOld = _effectForceNew; // сохраняем старое значение
-            _effectForceNew = (1f - Health / _minHealth) * _effectForceMAX;   // новое значение
+           //_effectForceOld = _effectForceNew; // сохраняем старое значение
+            _effectForceNew = (1f - Health / _minHealth) * _effectForceMAX;   // новое значение силы индикации
             if (_effectForceNew > 0f)
             {
                 

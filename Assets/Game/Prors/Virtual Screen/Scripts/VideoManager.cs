@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.Android.Gradle.Manifest;
 using UnityEngine;
 using UnityEngine.Device;
 using UnityEngine.Video;
@@ -20,67 +21,96 @@ public class VideoManager : MonoBehaviour
     //private float _timer4 = 84f;
     [SerializeField] private int _videoClipNumber;     // =1-4
     private int _videoClipNumberMax;  // =4
-    [SerializeField] private float _timer = -1f;
+    [SerializeField] private float _playTimer = -1f;
     public Material _screen;
     public Color _screenColorWhite = Color.white;
     public Color _screenColorBlack = Color.black;
     public TMP_Text _text;
+    [SerializeField] private float _loadTimer = -1f;
+    public GameObject BlackScreen;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        BlackScreen.SetActive(true);
+        
+        //ScreenTexture = BlackTexture;
         //_screen.color = _screenColorBlack;
         _videoClipNumber = 0;
-        _videoClipNumberMax = 3;
+        _videoClipNumberMax = 4;
 
-        _time = new float[4];
-        _url = new string[4];
+        _time = new float[_videoClipNumberMax + 1];
+        _url = new string[_videoClipNumberMax + 1];
 
-        _url[0] = "https://drive.google.com/uc?export=download&id=1QfpCr7NTERS0Uf-mCAAHLaUvdfPdKJmK";
-        _url[1] = "https://drive.google.com/uc?export=download&id=1OAidR1m2_19hYdnGRKVhHhMK1RU3vWIl";
-        _url[2] = "https://drive.google.com/uc?export=download&id=1hOYWv4YIgqg_3UugkxJMK3on1D8Pz0DS";
-        _url[3] = "https://drive.google.com/uc?export=download&id=1QPvMcitfRSAcWiq3wU-ofDLyjPff0UuI";
+        _url[0] = "https://drive.google.com/uc?export=download&id=1sbxNdtV8V9JdiGF97cSqvgezNNeYw-iA";
+        _url[1] = "https://drive.google.com/uc?export=download&id=1QfpCr7NTERS0Uf-mCAAHLaUvdfPdKJmK";
+        _url[2] = "https://drive.google.com/uc?export=download&id=1OAidR1m2_19hYdnGRKVhHhMK1RU3vWIl";
+        _url[3] = "https://drive.google.com/uc?export=download&id=1hOYWv4YIgqg_3UugkxJMK3on1D8Pz0DS";
+        _url[4] = "https://drive.google.com/uc?export=download&id=1QPvMcitfRSAcWiq3wU-ofDLyjPff0UuI";
 
-        _time[0] = 49f;
-        _time[1] = 118f;
-        _time[2] = 114f;
-        _time[3] = 84f;
+        _time[0] = 55f;
+        _time[1] = 49f;
+        _time[2] = 118f;
+        _time[3] = 114f;
+        _time[4] = 84f;
 
         _player = GetComponent<VideoPlayer>();
         _player.url = _url[_videoClipNumber];
         _player.Prepare();
-        _text.text = "Загрузка видео...";
-        _screen.color = _screenColorBlack;
-
-    }
+        _text.text = "Загрузка видео";
+        _screen.color = _screenColorBlack;       
+        
+        _loadTimer = - 1f;
+}
 
     // Update is called once per frame
     void Update()
     {
-        if (_player.isPrepared && _timer == -1f)  // если видео готово к запуску
+        if (_player.isPrepared && _playTimer == -1f)  // если видео готово к запуску
         {
             _text.text = "";
+            BlackScreen.SetActive(false);
             _player.Play();            
-            _timer = 0f;  // запуск таймера
+            _playTimer = 0f;  // запуск таймера
+            _loadTimer = -1f; // остановка таймера анимации текста
             _screen.color = _screenColorWhite;
             _text.text = "";
         }
          
-        if (_timer >= 0f)
+        if (_playTimer >= 0f)
         {
-            _timer += Time.deltaTime;  // счетчик времени запущен
+            _playTimer += Time.deltaTime;  // счетчик времени запущен
             if (_screen.color != _screenColorWhite)
             { 
                 _screen.color = _screenColorWhite;
                 _text.text = "";
             }
+            
+        }
+        if (_loadTimer >= 0f)
+        {
+            _loadTimer += Time.deltaTime;  // счетчик времени запущен
+            if (_loadTimer > 1f)
+            {
+                _loadTimer = 0f;
+                if (_text.text.Length < 19)
+                {
+                    _text.text = _text.text + ".";
+                }
+                else
+                {
+                    _text.text = "Загрузка видео";
+                }
+            }
         }
 
-        if  (_timer >= _time[_videoClipNumber]) // если видео закончилось
+        if  (_playTimer >= _time[_videoClipNumber]) // если видео закончилось
         {
-            _text.text = "Загрузка видео...";
+            _loadTimer = 0f;  //  запуск таймера анимации текста
+            _text.text = "Загрузка видео";
             _screen.color = _screenColorBlack;
-            _timer = -1f;   // остановить таймер
+            _playTimer = -1f;   // остановить таймер видео
             if (_videoClipNumber < _videoClipNumberMax)
                 {
                     _videoClipNumber++;  // следующий клип

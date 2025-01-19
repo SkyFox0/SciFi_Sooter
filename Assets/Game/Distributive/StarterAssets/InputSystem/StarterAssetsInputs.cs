@@ -16,6 +16,7 @@ namespace StarterAssets
 		public bool shoot;
 		public bool sight;
         public bool reload;
+        public bool reloadHold;
         public bool grenade;
         public bool light;
 
@@ -80,6 +81,14 @@ namespace StarterAssets
 				Invoke("ReloadOff", 0.1f);
 			}			    
         }
+        public void OnReloadHold(InputValue value)
+        {
+            if (!reloadHold)
+            {
+                reloadHold = true;
+                Invoke("ReloadHoldOff", 0.4f);
+            }
+        }
 
         public void OnGrenade(InputValue value)
         {
@@ -104,9 +113,6 @@ namespace StarterAssets
 
 
 #endif
-
-
-
 
         public void MoveInput(Vector2 newMoveDirection)
 		{
@@ -160,6 +166,11 @@ namespace StarterAssets
         public void ReloadOff()
         {
             reload = false;
+        }
+
+        public void ReloadHoldOff()
+        {
+            reloadHold = false;
         }
 
         public void GrenadeOff()

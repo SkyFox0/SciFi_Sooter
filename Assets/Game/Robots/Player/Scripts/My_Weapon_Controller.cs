@@ -1,9 +1,11 @@
 using Cinemachine;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Experimental.GlobalIllumination;
+//using UnityEngine.Experimental.GlobalIllumination;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+//using Unity.Mathematics;
 
 namespace StarterAssets
 {
@@ -15,14 +17,30 @@ namespace StarterAssets
         private float LastShoot;        
 
         [Header("Cinemachine")]
+        public PlayerCameraController PlayerCameraController;
+
+        //--------------------------------------
+
         [Tooltip("The follow target set in the Cinemachine Virtual Camera that the camera will follow")]
         public GameObject CinemachineCameraTarget;
-        public Transform CameraPoint;
+        public float _cameraspeed;
+        public Transform CameraTargetPosition;
+        public Transform IdleCameraPoint;
+        public Transform GuardIdleCameraPoint;
+        public Transform GuardMoveCameraPoint;
+        public Transform GuardRunCameraPoint;
+
         public Transform SightPoint;
         public Transform SightPointShoot;
         public CinemachineVirtualCamera Camera;
         public float _sigthFocus = 30;
         public float _normalFocus = 65;
+
+        [Header("UI")]
+        public Image _imageX;
+        public Image _image0;
+
+        //--------------------------------------
 
         [Header("Shoot")]
         public ShootComponent ShootComponent;
@@ -92,6 +110,10 @@ namespace StarterAssets
 
         private void Start()
         {
+            _cameraspeed = 10f;
+            CameraTargetPosition.position = IdleCameraPoint.position;
+            _imageX.enabled = true;
+            _image0.enabled = false;
             isRifle = true;
             isGrenade = false;
             GrenadeText.text = _totalEMPGrenades.ToString();
@@ -106,6 +128,7 @@ namespace StarterAssets
                 Animator.SetBool("isNeedToReload", true);
             }
             FirstPersonController = GetComponent<FirstPersonController>();
+            ArmedOnOff();
         }
 
         private void FixedUpdate()
@@ -113,46 +136,108 @@ namespace StarterAssets
             CameraSightOn();
             CameraSightOff();
             Camerashooting();
+
+            if (!Animator.GetBool("isSight") && Animator.GetBool("isArmed"))
+            {
+                if (CameraTargetPosition.position != IdleCameraPoint.position)
+                    //if (CinemachineCameraTarget.transform.position != IdleCameraPoint.position)
+                {
+                    CinemachineCameraTarget.transform.position = IdleCameraPoint.position;
+                    CameraTargetPosition.position = IdleCameraPoint.position;
+                }
+            }
+
+            if (!Animator.GetBool("isArmed"))
+            {
+                if (Animator.GetBool("isMove"))
+                {
+                    //CinemachineCameraTarget.transform.position = GuardMoveCameraPoint.position;
+                    CameraTargetPosition.position = GuardMoveCameraPoint.position;
+                }
+                else
+                {
+                    //CinemachineCameraTarget.transform.position = GuardIdleCameraPoint.position;
+                    CameraTargetPosition.position = GuardIdleCameraPoint.position;
+                }
+
+                if (Animator.GetBool("isRun"))
+                {
+                    //CinemachineCameraTarget.transform.position = GuardRunCameraPoint.position;
+                    CameraTargetPosition.position = GuardRunCameraPoint.position;
+                }
+            }
+
+            if (CinemachineCameraTarget.transform.position != CameraTargetPosition.position)
+            {
+                //Debug.Log((CinemachineCameraTarget.transform.position - CameraTargetPosition.position).magnitude.ToString());
+                if ((CinemachineCameraTarget.transform.position - CameraTargetPosition.position).magnitude > 0.1f)
+                {
+                    //CinemachineCameraTarget.transform.position = CameraTargetPosition.position;
+                    //Debug.Log("Корректировка положения камеры" + (CinemachineCameraTarget.transform.position - CameraTargetPosition.position).magnitude.ToString());
+                    CinemachineCameraTarget.transform.position = Vector3.Lerp(CinemachineCameraTarget.transform.position, CameraTargetPosition.position, _cameraspeed * Time.deltaTime);
+                }
+                else
+                {
+                    CinemachineCameraTarget.transform.position = CameraTargetPosition.position;
+                }
+                
+            }
+
+
+
         }
 
         public void OnShoot(InputValue value)  // нажата кнопка стрельбы
         {
             //Debug.Log("Нажата кнопка стрельбы");
-            if (!Animator.GetBool("isDead")&&!Animator.GetBool("isRun"))
+            if (Animator.GetBool("isArmed"))
             {
-                if (_currentWeaponAmmo > 0)
+
+                if (!Animator.GetBool("isDead") && !Animator.GetBool("isRun"))
                 {
-                    if ((Time.time - LastShoot > _shootSpeed) && (!Animator.GetBool("isReloading")))  //_shootSpeed = 0.5f; && (_currentWeaponAmmo > 0) 
+                    if (_currentWeaponAmmo > 0)
                     {
-                        Animator.SetTrigger("Shoot");
-                        ShootComponent.Shoot();
-                        EGA_DemoLasers.Shoot();
+                        if ((Time.time - LastShoot > _shootSpeed) && (!Animator.GetBool("isReloading")))  //_shootSpeed = 0.5f; && (_currentWeaponAmmo > 0) 
+                        {
+                            Animator.SetTrigger("Shoot");
+                            ShootComponent.Shoot();
+                            EGA_DemoLasers.Shoot();
 
-                        Shoot.Play();  // звук выстрела
-                        //PlaySound.Play();
+                            Shoot.Play();  // звук выстрела
+                                           //PlaySound.Play();
 
-                        LastShoot = Time.time;
-                        _currentWeaponAmmo -= 1;
-                        _ammoText.text = _currentWeaponAmmo.ToString();
-                        Animator.SetBool("isNeedToReload", true);                        
+                            LastShoot = Time.time;
+                            _currentWeaponAmmo -= 1;
+                            _ammoText.text = _currentWeaponAmmo.ToString();
+                            Animator.SetBool("isNeedToReload", true);
+                        }
+                        else
+                        {
+                            if (!Animator.GetBool("isReloading"))
+                            {
+                                PlaySound.clip = Empty; //оружие не готово к стрельбе
+                                PlaySound.Play();
+                            }
+                        }
                     }
                     else
                     {
-                        if (!Animator.GetBool("isReloading"))
+                        if (!PlaySound.isPlaying)
                         {
-                            PlaySound.clip = Empty; //оружие не готово к стрельбе
-                            PlaySound.Play();
+                            PlaySound.PlayOneShot(NeedToReload);
                         }
                     }
                 }
-                else                
-                {
-                    if (!PlaySound.isPlaying)
-                    {
-                        PlaySound.PlayOneShot(NeedToReload);
-                    }                    
-                }
-            }                
+            } 
+            else
+            {
+                Animator.SetBool("isArmed", true);
+                _imageX.enabled = true;
+                _image0.enabled = false;
+                CinemachineCameraTarget.transform.position = IdleCameraPoint.position;
+                CameraTargetPosition.position = IdleCameraPoint.position;
+
+            }
         }
 
         public void OnShootOff(InputValue value)  // отпущена кнопка стрельбы
@@ -160,43 +245,85 @@ namespace StarterAssets
             //Debug.Log("Отпущена кнопка стрельбы");
         }
 
-            public void OnReload(InputValue value)
+        public void OnReload(InputValue value)
         {
-            if ((_totalAmmo > 0) && Animator.GetBool("isNeedToReload") && !Animator.GetBool("isReloading") 
-                && Animator.GetBool("isGround") && (!Animator.GetBool("isDead") && !Animator.GetBool("isRun")))
+            if (Animator.GetBool("isArmed"))
             {
 
-                //Debug.Log("Перезарядка");
-                Ui_Control.Scope_Off();
-                Animator.SetTrigger("Reload");
-                //------
-                //&& !Animator.GetBool("isMove") 
-                Animator.SetBool("isMove", false);
-                Animator.SetBool("isReloading", true);
-                PlaySound.clip = Reload;
-                PlaySound.Play();
-                //Animator.SetBool("isReloading", true);                
+                if ((_totalAmmo > 0) && Animator.GetBool("isNeedToReload") && !Animator.GetBool("isReloading")
+                && Animator.GetBool("isGround") && (!Animator.GetBool("isDead") && !Animator.GetBool("isRun")))
+                {
+
+                    //Debug.Log("Перезарядка");
+                    Ui_Control.Scope_Off();
+                    Animator.SetTrigger("Reload");
+                    //------
+                    //&& !Animator.GetBool("isMove") 
+                    Animator.SetBool("isMove", false);
+                    Animator.SetBool("isReloading", true);
+                    PlaySound.clip = Reload;
+                    PlaySound.Play();
+                    //Animator.SetBool("isReloading", true);                
+                }
+                else
+                {
+                    if (_totalAmmo == 0)
+                    {
+                        //Звук отсутствия патронов
+                        //PlaySound.clip = Empty; //патроны закончились
+                        //PlaySound.Play();
+                        NoAmmo = !NoAmmo;
+                        if (NoAmmo)
+                        {
+                            PlaySound.PlayOneShot(NoAmmo1);  //патроны закончились
+                        }
+                        else
+                        {
+                            PlaySound.PlayOneShot(NoAmmo2);  //патроны закончились
+                        }
+
+                    }
+                }
+            }            
+        }
+
+        public void OnReloadHold(InputValue value)  // убрать оружие!
+        {
+            /*if (!reloadHold)
+            {
+                reloadHold = true;
+                Invoke("ReloadHoldOff", 0.4f);
+            }*/
+            ArmedOnOff();
+
+
+
+        }
+
+        public void ArmedOnOff()
+        {
+            if (Animator.GetBool("isArmed"))
+            {
+                Animator.SetBool("isArmed", false);
+                if (!Animator.GetBool("isReloading"))
+                {
+                    CinemachineCameraTarget.transform.position = GuardIdleCameraPoint.position;
+                    CameraTargetPosition.position = GuardIdleCameraPoint.position;
+                    _imageX.enabled = false;
+                    _image0.enabled = true;
+                }
             }
             else
             {
-                if (_totalAmmo == 0)
-                {
-                    //Звук отсутствия патронов
-                    //PlaySound.clip = Empty; //патроны закончились
-                    //PlaySound.Play();
-                    NoAmmo = !NoAmmo;
-                    if (NoAmmo)
-                    {
-                        PlaySound.PlayOneShot(NoAmmo1);  //патроны закончились
-                    }
-                    else
-                    {
-                        PlaySound.PlayOneShot(NoAmmo2);  //патроны закончились
-                    }
-                    
-                }
+                Animator.SetBool("isArmed", true);
+                CinemachineCameraTarget.transform.position = IdleCameraPoint.position;
+                CameraTargetPosition.position = IdleCameraPoint.position;
+                _imageX.enabled = true;
+                _image0.enabled = false;
             }
         }
+
+
 
         public void OnSelectWeapon(InputValue value)
         {
@@ -345,13 +472,12 @@ namespace StarterAssets
             {
                 GrenadeBar.fillAmount = 0f;
 
-            }
-            
+            }            
         }
 
         public void ThrowGrenade()
         {
-            if (Animator.GetBool("isGround") && !Animator.GetBool("isDead") && !Animator.GetBool("isRun")) // !Animator.GetBool("isMove") && 
+            if (Animator.GetBool("isArmed") && !Animator.GetBool("isSight") && Animator.GetBool("isGround") && !Animator.GetBool("isDead") && !Animator.GetBool("isRun")) // !Animator.GetBool("isMove") && 
             {
                 // Приготовить гранату к броску - анимация...
                 //isRifle = false;  // убрали винтовку
@@ -407,28 +533,42 @@ namespace StarterAssets
             //-----
             Animator.SetBool("isReloading", false);
             Animator.SetBool("isNeedToReload", false);
+
+            // если надо убрать оружие
+            if (!Animator.GetBool("isArmed"))
+            {
+                CinemachineCameraTarget.transform.position = GuardIdleCameraPoint.position;
+                CameraTargetPosition.position = GuardIdleCameraPoint.position;
+                _imageX.enabled = false;
+                _image0.enabled = true;
+            }
         }
 
         public void OnSight(InputValue value)
         {
-            if (!Animator.GetBool("isReloading") && Animator.GetBool("isGround") && (!Animator.GetBool("isDead") && !Animator.GetBool("isRun")))
+            if (Animator.GetBool("isArmed") && !Animator.GetBool("isReloading") && Animator.GetBool("isGround") && (!Animator.GetBool("isDead") && !Animator.GetBool("isRun")))
             {
                 Animator.SetBool("isSight", true);
                 FirstPersonController.isSight = true;
                 Ui_Control.Scope_On();
-                //CinemachineCameraTarget.transform.localPosition = SightPoint.localPosition;
+
+                // ?????????????????????
+                
                 CinemachineCameraTarget.transform.position = SightPoint.position;
+                CameraTargetPosition.position = SightPoint.position;
             }                        
         }
 
         public void Sighting()
         {
             CinemachineCameraTarget.transform.position = SightPoint.position;
+            CameraTargetPosition.position = SightPoint.position;
         }
 
         public void Shooting()
         {
             CinemachineCameraTarget.transform.position = SightPointShoot.position;
+            CameraTargetPosition.position = SightPointShoot.position;
 
             Invoke("Sighting", 0.3f);
             
@@ -488,7 +628,11 @@ namespace StarterAssets
             //Camera.m_Lens.FieldOfView = 60f;
             //Debug.Log("Выключить прицеливание");
             //CinemachineCameraTarget.transform.localPosition = CameraPoint.localPosition;
-            CinemachineCameraTarget.transform.position = CameraPoint.position;
+
+            //????????????????????????
+
+            //CinemachineCameraTarget.transform.position = IdleCameraPoint.position;
+            CameraTargetPosition.position = IdleCameraPoint.position;
         }
         public void OnLight(InputValue value)
         {

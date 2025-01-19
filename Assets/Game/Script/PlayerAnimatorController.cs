@@ -15,6 +15,7 @@ namespace StarterAssets
 
         private void Start()
         {
+            //Animator.SetBool("isArmed", false);
             //My_Weapon_Controller = GetComponent<My_Weapon_Controller>();
             //FirstPersonController = GetComponent<FirstPersonController>();
             //Animator = GetComponent<Animator>();

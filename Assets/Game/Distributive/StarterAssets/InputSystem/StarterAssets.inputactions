@@ -139,6 +139,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ReloadHold",
+                    "type": "Button",
+                    "id": "9ac9a419-aa3b-4ff5-be9b-f3c2a0941728",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -454,7 +463,7 @@
                     "name": "",
                     "id": "7e6c9552-6ba3-47ac-bdfc-025ddf1a9c29",
                     "path": "<Keyboard>/r",
-                    "interactions": "Press",
+                    "interactions": "Press(pressPoint=0.4)",
                     "processors": "",
                     "groups": ";KeyboardMouse",
                     "action": "Reload",
@@ -502,6 +511,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "AnyClick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e9f81a27-587a-43db-80f4-697ccfad2823",
+                    "path": "<Keyboard>/r",
+                    "interactions": "Hold(duration=0.8,pressPoint=0.4)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ReloadHold",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

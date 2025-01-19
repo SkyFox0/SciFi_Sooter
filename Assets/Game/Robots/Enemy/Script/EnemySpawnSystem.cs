@@ -3,12 +3,12 @@ using UnityEngine;
 public class EnemySpawnSystem : MonoBehaviour
 {
     public bool _isAutoSpawnOn;
-    public int _autoSpawnCount;
+    public int _spawnCount;
     public float _timeToSpawn = 10f;
     public GameObject Enemy;
     private GameObject Instance;
     private EnemyMovement EnemyMovement;
-    private GameObject Player;
+    public GameObject Player;
     public GameObject[] SpawnPoints;
     //public GameObject SpawnPoint_1;
     //public GameObject SpawnPoint_2;
@@ -21,11 +21,10 @@ public class EnemySpawnSystem : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     void Start()
-    {
-        //Player = GameObject.Find("Player");
-        Player = GameObject.FindGameObjectWithTag("Player");
-        if (_isAutoSpawnOn && _autoSpawnCount > 0) 
+    {       
+        if (_isAutoSpawnOn && _spawnCount > 0) 
         {
+            Player = GameObject.FindGameObjectWithTag("Player");
             _spawnNumber = 0;
             _spawnPoint = 0;
             _timer = 0f;
@@ -36,7 +35,7 @@ public class EnemySpawnSystem : MonoBehaviour
 
     private void Update()
     {
-        if (_isAutoSpawnOn && (_spawnNumber < _autoSpawnCount))
+        if (_isAutoSpawnOn && (_spawnNumber < _spawnCount))
         {
             _timer = _timer + Time.deltaTime;
             if (_timer > 1)
@@ -75,12 +74,20 @@ public class EnemySpawnSystem : MonoBehaviour
             EnemyMovement = Instance.GetComponent<EnemyMovement>();
             EnemyMovement.Player = Player;//.transform;
         //}
-        if (_spawnNumber == _autoSpawnCount)
+        /*if (_spawnNumber == _spawnCount)
         {
             _isAutoSpawnOn = false;
             _spawnNumber = 0;
-        }
+        }*/
     }
+
+    public void ReSpawn()
+    {
+        _isAutoSpawnOn = true;
+        _spawnNumber = 0;
+        _timer = 0f;
+    }
+
 
     public void Spawn()
     {

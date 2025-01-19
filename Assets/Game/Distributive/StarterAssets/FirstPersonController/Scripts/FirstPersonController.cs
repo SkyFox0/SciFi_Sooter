@@ -31,8 +31,9 @@ namespace StarterAssets
 
 		[Space(10)]
 		[Tooltip("The height the player can jump")]
-		public float JumpHeight = 1.2f;
-		[Tooltip("The character uses its own gravity value. The engine default is -9.81f")]
+		public float JumpHeightArmed = 1.2f;
+        public float JumpHeight = 1.5f;
+        [Tooltip("The character uses its own gravity value. The engine default is -9.81f")]
 		public float Gravity = -15.0f;
 
 		[Space(10)]
@@ -245,7 +246,7 @@ namespace StarterAssets
 			if (_input.move.magnitude > 0f)
 			{
                 Animator.SetBool("isMove", true);
-                if (_input.sprint && !isReloading && !isSight && Grounded)
+                if (_input.sprint && !isReloading && !isSight && Grounded && (_input.move.y == 1f))
                 {
                     Animator.SetBool("isRun", true);
                 }
@@ -263,7 +264,7 @@ namespace StarterAssets
 			Animator.SetFloat("y", _input.move.y);
 
 			// set target speed based on move speed, sprint speed and if sprint is pressed
-			if (!isReloading && !isSight)
+			if (!isReloading && !isSight && (_input.move.y == 1f))
 			{
                 targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
                 //targetSpeed = _input.reload ? MoveReloadSpeed : targetSpeed;
@@ -319,7 +320,16 @@ namespace StarterAssets
         public void Jump()
 		{
             // Jump
-            _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+			if (Animator.GetBool("isArmed"))
+			{
+                _verticalVelocity = Mathf.Sqrt(JumpHeightArmed * -2f * Gravity);
+            }
+			else
+			{
+                _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+            }
+
+            
         }
 
         private void JumpAndGravity()
