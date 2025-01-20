@@ -106,7 +106,7 @@ namespace StarterAssets
         public GameObject CameraDirection;
         public TMP_Text GrenadeText;
         public Image GrenadeBar;
-
+        public GameObject AllScore;
 
         private void Start()
         {
@@ -232,6 +232,7 @@ namespace StarterAssets
             else
             {
                 Animator.SetBool("isArmed", true);
+                AllScore.SetActive(true);
                 _imageX.enabled = true;
                 _image0.enabled = false;
                 CinemachineCameraTarget.transform.position = IdleCameraPoint.position;
@@ -300,11 +301,13 @@ namespace StarterAssets
 
         }
 
+
         public void ArmedOnOff()
         {
             if (Animator.GetBool("isArmed"))
             {
                 Animator.SetBool("isArmed", false);
+                AllScore.SetActive(false);
                 if (!Animator.GetBool("isReloading"))
                 {
                     CinemachineCameraTarget.transform.position = GuardIdleCameraPoint.position;
@@ -316,6 +319,7 @@ namespace StarterAssets
             else
             {
                 Animator.SetBool("isArmed", true);
+                AllScore.SetActive(true);
                 CinemachineCameraTarget.transform.position = IdleCameraPoint.position;
                 CameraTargetPosition.position = IdleCameraPoint.position;
                 _imageX.enabled = true;

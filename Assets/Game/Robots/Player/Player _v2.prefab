@@ -4202,6 +4202,7 @@ MonoBehaviour:
   CameraDirection: {fileID: 0}
   GrenadeText: {fileID: 5239326648737615812}
   GrenadeBar: {fileID: 2982945131924650334}
+  AllScore: {fileID: 292513653996425617}
 --- !u!114 &7381082330683704693
 MonoBehaviour:
   m_ObjectHideFlags: 0
