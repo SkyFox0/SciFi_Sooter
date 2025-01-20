@@ -110,6 +110,7 @@ namespace StarterAssets
 
 		private void Start()
 		{
+			//Отключить и спрятать курсор
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
 

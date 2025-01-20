@@ -1,9 +1,7 @@
 using TMPro;
-using Unity.Android.Gradle.Manifest;
 using UnityEngine;
-using UnityEngine.Device;
 using UnityEngine.Video;
-using static UnityEngine.Rendering.DebugUI;
+//using static UnityEngine.Rendering.DebugUI;
 
 public class VideoManager : MonoBehaviour
 { 
@@ -121,6 +119,61 @@ public class VideoManager : MonoBehaviour
             }
             _player.url = _url[_videoClipNumber];
             _player.Prepare();
+
         }
+    }
+
+    public void OnClickNext()
+    {
+        _loadTimer = 0f;  //  запуск таймера анимации текста
+        _text.text = "Загрузка видео";
+        _screen.color = _screenColorBlack;
+        _playTimer = -1f;   // остановить таймер видео
+        if (_videoClipNumber < _videoClipNumberMax)
+        {
+            _videoClipNumber++;  // следующий клип
+        }
+        else
+        {
+            _videoClipNumber = 0;
+        }
+        _player.url = _url[_videoClipNumber];
+        _player.Prepare();
+    }
+
+    public void OnClickBack()
+    {
+        _loadTimer = 0f;  //  запуск таймера анимации текста
+        _text.text = "Загрузка видео";
+        _screen.color = _screenColorBlack;
+        _playTimer = -1f;   // остановить таймер видео
+        if (_videoClipNumber > 0)
+        {
+            _videoClipNumber--;  // следующий клип
+        }
+        else
+        {
+            _videoClipNumber = _videoClipNumberMax - 1;
+        }
+        _player.url = _url[_videoClipNumber];
+        _player.Prepare();
+
+    }
+
+    public void OnClickON()
+    {
+        _player.Prepare();
+        _text.text = "Загрузка видео";
+        _screen.color = _screenColorBlack;
+        _loadTimer = -1f;
+    }
+
+    public void OnClickOFF()
+    {
+        _player.Stop();
+        _text.text = "";
+        BlackScreen.SetActive(true);        
+        _playTimer = -1f;  // запуск таймера
+        _loadTimer = -1f;  // остановка таймера анимации текста
     }
 }
