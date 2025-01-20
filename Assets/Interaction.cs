@@ -4,63 +4,86 @@ using UnityEngine;
 //using UnityEngine.UIElements;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityEngine.InputSystem;
 
-
-public class Interaction : MonoBehaviour
+namespace StarterAssets
 {
-    public Camera _camera;
-    public Button _button;
 
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public class Interaction : MonoBehaviour
     {
-        StartCoroutine(TestCoroutine());
-    }
+        public Camera _camera;
+        public Animator Animator;
+        [SerializeField] private Button _button;
+        public TVButtonClick TVButtonClick;
 
-    IEnumerator TestCoroutine()
-    {
-        while (true)
+
+        // Start is called once before the first execution of Update after the MonoBehaviour is created
+        void Start()
         {
-            ShootRaycast();
-            yield return new WaitForSeconds(1f);
-            //Debug.Log(Time.time.ToString());
-            
-
+            StartCoroutine(FindButton());
         }
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        Vector3 shootPosition = _camera.transform.position;
-        var direction = _camera.transform.forward;
-        
-        Debug.DrawRay(shootPosition, direction * 2f, Color.green);
-
-    }
-
-    
-
-    public void ShootRaycast()
-    {
-        Vector3 shootPosition = _camera.transform.position;
-        var direction = _camera.transform.forward;
-        
-        //Debug.DrawRay(shootPosition, direction * 2f, Color.green);
-        if (Physics.Raycast(shootPosition, direction, out var hitInfo, 2f))   //, layerMask, QueryTriggerInteraction.Ignore))
+        IEnumerator FindButton()
         {
-            //Debug.DrawRay(SearchPoint, _targetDirection * _fireDistans, Color.red);
-            //Debug.Log("Hit! Object = " + hitInfo.collider.name);
-
-            if (hitInfo.collider.tag == "Button")
+            while (true)
             {
-                Debug.Log("Кнопка : " + hitInfo.collider.name);
+                if (!Animator.GetBool("isArmed"))
+                {
+                    ShootRaycast();
+                }
+                yield return new WaitForSeconds(0.3f);  // счетчик таймера поиска кнопки
+                                                        //Debug.Log(Time.time.ToString());
+            }
+        }
 
-                _button = hitInfo.collider.GetComponent<Button>();
-                Debug.Log(_button.name);
-                _button.onClick.Invoke();
+        // Update is called once per frame
+        void Update()
+        {
+            //Vector3 shootPosition = _camera.transform.position;
+            //var direction = _camera.transform.forward;
 
+            //Debug.DrawRay(shootPosition, direction * 2f, Color.green);
+        }
+
+        public void ShootRaycast()
+        {
+            Vector3 shootPosition = _camera.transform.position;
+            var direction = _camera.transform.forward;
+
+            //Debug.DrawRay(shootPosition, direction * 2f, Color.green);
+            if (Physics.Raycast(shootPosition, direction, out var hitInfo, 2f))   //, layerMask, QueryTriggerInteraction.Ignore))
+            {
+                //Debug.DrawRay(SearchPoint, _targetDirection * _fireDistans, Color.red);
+                //Debug.Log("Hit! Object = " + hitInfo.collider.name);
+
+                if (hitInfo.collider.tag == "Button")
+                {
+                    //Debug.Log("Кнопка : " + hitInfo.collider.name);
+                    TVButtonClick = hitInfo.collider.GetComponent<TVButtonClick>();
+                    TVButtonClick.SetButtonActive();
+                }
+            }
+        }
+
+        public void OnActivate(InputValue value)
+        {
+            Debug.Log("кнопка активации нажата");
+            Vector3 shootPosition = _camera.transform.position;
+            var direction = _camera.transform.forward;
+
+            //Debug.DrawRay(shootPosition, direction * 2f, Color.green);
+            if (Physics.Raycast(shootPosition, direction, out var hitInfo, 2f))   //, layerMask, QueryTriggerInteraction.Ignore))
+            {
+                //Debug.DrawRay(SearchPoint, _targetDirection * _fireDistans, Color.red);
+                //Debug.Log("Hit! Object = " + hitInfo.collider.name);
+
+                if (hitInfo.collider.tag == "Button")
+                {
+                    //Debug.Log("Кнопка : " + hitInfo.collider.name);
+                    TVButtonClick = hitInfo.collider.GetComponent<TVButtonClick>();
+                    Debug.Log("кнопка активации нажата2");
+                    TVButtonClick.Click();
+                }
             }
         }
     }

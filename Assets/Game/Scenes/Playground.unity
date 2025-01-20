@@ -1150,6 +1150,7 @@ GameObject:
   - component: {fileID: 74955521}
   - component: {fileID: 74955520}
   - component: {fileID: 74955523}
+  - component: {fileID: 74955524}
   m_Layer: 0
   m_Name: ButtonPowerOn
   m_TagString: Button
@@ -1191,7 +1192,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -1293,6 +1294,24 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 80, y: 40, z: 5}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &74955524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 74955518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ad157655f786234290ce0c814a6a7fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _button: {fileID: 0}
+  _image: {fileID: 0}
+  _activeColor: {r: 0.4117647, g: 0.85490197, b: 0.41960785, a: 1}
+  _isActive: 0
+  _isFlash: 0
+  _activateTime: 0
 --- !u!1 &75571348 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: a186f82934d947542a449542863de122, type: 3}
@@ -3574,6 +3593,7 @@ GameObject:
   - component: {fileID: 247390946}
   - component: {fileID: 247390945}
   - component: {fileID: 247390948}
+  - component: {fileID: 247390949}
   m_Layer: 0
   m_Name: ButtonBack
   m_TagString: Button
@@ -3589,7 +3609,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 247390943}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3615,7 +3635,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -3717,6 +3737,24 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 80, y: 40, z: 5}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &247390949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 247390943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ad157655f786234290ce0c814a6a7fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _button: {fileID: 0}
+  _image: {fileID: 0}
+  _activeColor: {r: 0.6509804, g: 0.7647059, b: 0.5411765, a: 1}
+  _isActive: 0
+  _isFlash: 0
+  _activateTime: 0
 --- !u!1001 &255611381
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9682,6 +9720,7 @@ GameObject:
   - component: {fileID: 841369022}
   - component: {fileID: 841369021}
   - component: {fileID: 841369024}
+  - component: {fileID: 841369025}
   m_Layer: 0
   m_Name: ButtonPowerOff
   m_TagString: Button
@@ -9723,7 +9762,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -9825,6 +9864,24 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 80, y: 40, z: 5}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &841369025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 841369019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ad157655f786234290ce0c814a6a7fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _button: {fileID: 0}
+  _image: {fileID: 0}
+  _activeColor: {r: 0.7882353, g: 0.48235294, b: 0.48235294, a: 1}
+  _isActive: 0
+  _isFlash: 0
+  _activateTime: 0
 --- !u!1001 &855289001
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17751,6 +17808,7 @@ GameObject:
   - component: {fileID: 1563973807}
   - component: {fileID: 1563973806}
   - component: {fileID: 1563973809}
+  - component: {fileID: 1563973810}
   m_Layer: 0
   m_Name: ButtonNext
   m_TagString: Button
@@ -17792,7 +17850,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -17894,6 +17952,24 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 80, y: 40, z: 5}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1563973810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1563973804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ad157655f786234290ce0c814a6a7fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _button: {fileID: 0}
+  _image: {fileID: 0}
+  _activeColor: {r: 0.5686275, g: 0.7058824, b: 0.78039217, a: 1}
+  _isActive: 0
+  _isFlash: 0
+  _activateTime: 0
 --- !u!1001 &1566637485
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19871,6 +19947,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7be730e27f3ec77448ba676606455fc0, type: 3}
+--- !u!95 &1732029347 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2020987907817452834, guid: db98b3d734b5f4941ba78293d3f6a159, type: 3}
+  m_PrefabInstance: {fileID: 1445952739}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1764214107
 GameObject:
   m_ObjectHideFlags: 0
@@ -24134,6 +24215,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2818880278989867931, guid: 2d3a85ecde41a8246a79669975912b74, type: 3}
+      propertyPath: Animator
+      value: 
+      objectReference: {fileID: 1732029347}
     - target: {fileID: 9005220659476430818, guid: 2d3a85ecde41a8246a79669975912b74, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.9438076
@@ -37494,7 +37579,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c40e683ccd388a4faa74db263ca2874, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 0}
+  VideoPlayer: {fileID: 0}
   _url: []
   _time: []
   _videoClipNumber: 0

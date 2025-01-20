@@ -6,17 +6,9 @@ using UnityEngine.Video;
 public class VideoManager : MonoBehaviour
 { 
 
-    public VideoPlayer _player;
-    [SerializeField] private string[] _url;
-    //private string _url1 = "https://drive.google.com/uc?export=download&id=1QfpCr7NTERS0Uf-mCAAHLaUvdfPdKJmK";
-    //private string _url2 = "https://drive.google.com/uc?export=download&id=1OAidR1m2_19hYdnGRKVhHhMK1RU3vWIl";
-    //private string _url3 = "https://drive.google.com/uc?export=download&id=1hOYWv4YIgqg_3UugkxJMK3on1D8Pz0DS";
-    //private string _url4 = "https://drive.google.com/uc?export=download&id=1QPvMcitfRSAcWiq3wU-ofDLyjPff0UuI";
-    [SerializeField] private float[] _time;
-    //private float _timer1 = 49f;
-    //private float _timer2 = 118f;
-    //private float _timer3 = 114f;
-    //private float _timer4 = 84f;
+    public VideoPlayer VideoPlayer;
+    [SerializeField] private string[] _url;    
+    [SerializeField] private float[] _time;    
     [SerializeField] private int _videoClipNumber;     // =1-4
     private int _videoClipNumberMax;  // =4
     [SerializeField] private float _playTimer = -1f;
@@ -26,6 +18,15 @@ public class VideoManager : MonoBehaviour
     public TMP_Text _text;
     [SerializeField] private float _loadTimer = -1f;
     public GameObject BlackScreen;
+
+    //private string _url1 = "https://drive.google.com/uc?export=download&id=1QfpCr7NTERS0Uf-mCAAHLaUvdfPdKJmK";
+    //private string _url2 = "https://drive.google.com/uc?export=download&id=1OAidR1m2_19hYdnGRKVhHhMK1RU3vWIl";
+    //private string _url3 = "https://drive.google.com/uc?export=download&id=1hOYWv4YIgqg_3UugkxJMK3on1D8Pz0DS";
+    //private string _url4 = "https://drive.google.com/uc?export=download&id=1QPvMcitfRSAcWiq3wU-ofDLyjPff0UuI";
+    //private float _timer1 = 49f;
+    //private float _timer2 = 118f;
+    //private float _timer3 = 114f;
+    //private float _timer4 = 84f;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -53,11 +54,11 @@ public class VideoManager : MonoBehaviour
         _time[3] = 114f;
         _time[4] = 84f;
 
-        _player = GetComponent<VideoPlayer>();
-        _player.url = _url[_videoClipNumber];
-        _player.Prepare();
+        VideoPlayer = GetComponent<VideoPlayer>();
+        VideoPlayer.url = _url[_videoClipNumber];
+        VideoPlayer.Prepare();
         _text.text = "Загрузка видео";
-        _screen.color = _screenColorBlack;       
+        //_screen.color = _screenColorBlack;       
         
         _loadTimer = - 1f;
 }
@@ -65,11 +66,11 @@ public class VideoManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_player.isPrepared && _playTimer == -1f)  // если видео готово к запуску
+        if (VideoPlayer.isPrepared && _playTimer == -1f)  // если видео готово к запуску
         {
             _text.text = "";
             BlackScreen.SetActive(false);
-            _player.Play();            
+            VideoPlayer.Play();            
             _playTimer = 0f;  // запуск таймера
             _loadTimer = -1f; // остановка таймера анимации текста
             _screen.color = _screenColorWhite;
@@ -107,7 +108,7 @@ public class VideoManager : MonoBehaviour
         {
             _loadTimer = 0f;  //  запуск таймера анимации текста
             _text.text = "Загрузка видео";
-            _screen.color = _screenColorBlack;
+            //_screen.color = _screenColorBlack;
             _playTimer = -1f;   // остановить таймер видео
             if (_videoClipNumber < _videoClipNumberMax)
                 {
@@ -117,17 +118,18 @@ public class VideoManager : MonoBehaviour
             {
                 _videoClipNumber = 0;
             }
-            _player.url = _url[_videoClipNumber];
-            _player.Prepare();
+            VideoPlayer.url = _url[_videoClipNumber];
+            VideoPlayer.Prepare();
 
         }
     }
 
     public void OnClickNext()
     {
+        BlackScreen.SetActive(true);
         _loadTimer = 0f;  //  запуск таймера анимации текста
         _text.text = "Загрузка видео";
-        _screen.color = _screenColorBlack;
+        //_screen.color = _screenColorBlack;
         _playTimer = -1f;   // остановить таймер видео
         if (_videoClipNumber < _videoClipNumberMax)
         {
@@ -137,15 +139,16 @@ public class VideoManager : MonoBehaviour
         {
             _videoClipNumber = 0;
         }
-        _player.url = _url[_videoClipNumber];
-        _player.Prepare();
+        VideoPlayer.url = _url[_videoClipNumber];
+        VideoPlayer.Prepare();
     }
 
     public void OnClickBack()
     {
+        BlackScreen.SetActive(true);
         _loadTimer = 0f;  //  запуск таймера анимации текста
         _text.text = "Загрузка видео";
-        _screen.color = _screenColorBlack;
+        //_screen.color = _screenColorBlack;
         _playTimer = -1f;   // остановить таймер видео
         if (_videoClipNumber > 0)
         {
@@ -155,24 +158,25 @@ public class VideoManager : MonoBehaviour
         {
             _videoClipNumber = _videoClipNumberMax - 1;
         }
-        _player.url = _url[_videoClipNumber];
-        _player.Prepare();
+        VideoPlayer.url = _url[_videoClipNumber];
+        VideoPlayer.Prepare();
 
     }
 
     public void OnClickON()
     {
-        _player.Prepare();
+        BlackScreen.SetActive(true);
+        VideoPlayer.Prepare();
         _text.text = "Загрузка видео";
-        _screen.color = _screenColorBlack;
+        //_screen.color = _screenColorBlack;
         _loadTimer = -1f;
     }
 
     public void OnClickOFF()
     {
-        _player.Stop();
-        _text.text = "";
-        BlackScreen.SetActive(true);        
+        BlackScreen.SetActive(true);
+        VideoPlayer.Stop();
+        _text.text = "";        
         _playTimer = -1f;  // запуск таймера
         _loadTimer = -1f;  // остановка таймера анимации текста
     }

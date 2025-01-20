@@ -19,6 +19,7 @@ namespace StarterAssets
         public bool reloadHold;
         public bool grenade;
         public bool light;
+		public bool activate;
 
 
         [Header("Movement Settings")]
@@ -29,7 +30,9 @@ namespace StarterAssets
 		public bool cursorInputForLook = true;
 
 #if ENABLE_INPUT_SYSTEM
-		public void OnMove(InputValue value)
+
+
+    public void OnMove(InputValue value)
 		{
 			MoveInput(value.Get<Vector2>());
 		}
@@ -48,7 +51,7 @@ namespace StarterAssets
 			{
 				//Debug.Log("Ïðûæîê!");
 				jump = true;
-				Invoke("JumpOff", 0.1f);
+				Invoke("JumpOff", 0.2f);
 			}
 				//JumpInput(value.isPressed);
 		}
@@ -78,7 +81,7 @@ namespace StarterAssets
 			if (!reload)
 			{
 				reload = true;
-				Invoke("ReloadOff", 0.1f);
+				Invoke("ReloadOff", 0.2f);
 			}			    
         }
         public void OnReloadHold(InputValue value)
@@ -95,7 +98,7 @@ namespace StarterAssets
 			if (!grenade)
 			{
                 grenade = true;
-				Invoke("GrenadeOff", 0.1f);
+				Invoke("GrenadeOff", 0.2f);
 			}
         }
 
@@ -110,11 +113,24 @@ namespace StarterAssets
 				light = false;
 			}
 		}
+		public void OnActivate(InputValue value)
+		{
+			if (!activate)
+			{				
+				activate = true;
+				Invoke("ActivateOff", 0.2f);
+			}
+			/*else
+			{
+                Activate = false;
+            }*/
+		}
+
 
 
 #endif
 
-        public void MoveInput(Vector2 newMoveDirection)
+    public void MoveInput(Vector2 newMoveDirection)
 		{
 			move = newMoveDirection;
 		} 
@@ -178,7 +194,13 @@ namespace StarterAssets
             grenade = false;
         }
 
+        public void ActivateOff()
+        {
+            activate = false;
+        }
         
+
+
 
 
         private void OnApplicationFocus(bool hasFocus)
