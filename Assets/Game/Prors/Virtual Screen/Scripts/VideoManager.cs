@@ -18,6 +18,9 @@ public class VideoManager : MonoBehaviour
     public TMP_Text _text;
     [SerializeField] private float _loadTimer = -1f;
     public GameObject BlackScreen;
+    public AudioSource PressButtonSound;
+    public bool isPower;
+
 
     //private string _url1 = "https://drive.google.com/uc?export=download&id=1QfpCr7NTERS0Uf-mCAAHLaUvdfPdKJmK";
     //private string _url2 = "https://drive.google.com/uc?export=download&id=1OAidR1m2_19hYdnGRKVhHhMK1RU3vWIl";
@@ -97,10 +100,10 @@ public class VideoManager : MonoBehaviour
                 {
                     _text.text = _text.text + ".";
                 }
-                else
+                /*else
                 {
                     _text.text = "Загрузка видео";
-                }
+                }*/
             }
         }
 
@@ -126,9 +129,10 @@ public class VideoManager : MonoBehaviour
 
     public void OnClickNext()
     {
+        PressButtonSound.Play();
         BlackScreen.SetActive(true);
         _loadTimer = 0f;  //  запуск таймера анимации текста
-        _text.text = "Загрузка видео";
+        _text.text = "Загрузка следующего видео";
         //_screen.color = _screenColorBlack;
         _playTimer = -1f;   // остановить таймер видео
         if (_videoClipNumber < _videoClipNumberMax)
@@ -145,9 +149,10 @@ public class VideoManager : MonoBehaviour
 
     public void OnClickBack()
     {
+        PressButtonSound.Play();
         BlackScreen.SetActive(true);
         _loadTimer = 0f;  //  запуск таймера анимации текста
-        _text.text = "Загрузка видео";
+        _text.text = "Загрузка предыдущего видео";
         //_screen.color = _screenColorBlack;
         _playTimer = -1f;   // остановить таймер видео
         if (_videoClipNumber > 0)
@@ -165,6 +170,7 @@ public class VideoManager : MonoBehaviour
 
     public void OnClickON()
     {
+        PressButtonSound.Play();
         BlackScreen.SetActive(true);
         VideoPlayer.Prepare();
         _text.text = "Загрузка видео";
@@ -174,9 +180,10 @@ public class VideoManager : MonoBehaviour
 
     public void OnClickOFF()
     {
+        PressButtonSound.Play();
         BlackScreen.SetActive(true);
         VideoPlayer.Stop();
-        _text.text = "";        
+        _text.text = "Power Off";        
         _playTimer = -1f;  // запуск таймера
         _loadTimer = -1f;  // остановка таймера анимации текста
     }
