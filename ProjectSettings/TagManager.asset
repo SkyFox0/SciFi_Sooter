@@ -14,7 +14,8 @@ TagManager:
   - MedKitSpawnSystem
   - GrenaseSpawnSystem
   - EnemySpawnSystem
-  - Button
+  - TVButton
+  - DoorButton
   layers:
   - Default
   - TransparentFX

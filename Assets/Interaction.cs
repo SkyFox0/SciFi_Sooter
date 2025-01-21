@@ -56,11 +56,11 @@ namespace StarterAssets
                 //Debug.DrawRay(SearchPoint, _targetDirection * _fireDistans, Color.red);
                 //Debug.Log("Hit! Object = " + hitInfo.collider.name);
 
-                if (hitInfo.collider.tag == "Button")
+                if (hitInfo.collider.tag == "TVButton")
                 {
                     //Debug.Log("Кнопка : " + hitInfo.collider.name);
                     TVButtonClick = hitInfo.collider.GetComponent<TVButtonClick>();
-                    TVButtonClick.SetButtonActive();
+                    TVButtonClick.CheckButtonEnabled();
                 }
             }
         }

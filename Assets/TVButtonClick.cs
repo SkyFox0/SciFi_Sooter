@@ -17,6 +17,10 @@ public class TVButtonClick : MonoBehaviour
 
     public float _activateTime; // время, когда была активирована кнопка
 
+    public VideoManager VideoManager;
+    public bool _isTVEnabled;
+    public int _typeOfButton; //1 = On, 2 = Off, 3 = Next, 4 = Back; 
+    
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -27,7 +31,7 @@ public class TVButtonClick : MonoBehaviour
         _isActive = false;
         _isFlash = false;
         _deactiveColor = Color.white;
-        
+        _isTVEnabled = VideoManager.isPower;
 
     }
 
@@ -42,23 +46,22 @@ public class TVButtonClick : MonoBehaviour
             _image.color = _deactiveColor;
         }*/
     }
-
     public void SetButtonActive()
     {
-        if ( !_isActive )
+        if (!_isActive)
         {
             StartCoroutine(CheckActiveButton());   // запуск проверка активна ли всё ещё кнопка?
                                                    //StartCoroutine(Flashing());
-            
+
             _button.transform.localScale = new Vector3(1.1f, 1f, 1f);
-            _image.color = _activeColor; 
+            _image.color = _activeColor;
             _isActive = true;
             _isFlash = true;
             _activateTime = Time.time;
         }
         else
         {
-            if (_isFlash) 
+            if (_isFlash)
             {
                 _button.transform.localScale = new Vector3(1f, 1f, 1f);
                 _image.color = _deactiveColor;
@@ -73,7 +76,27 @@ public class TVButtonClick : MonoBehaviour
                 _isActive = true;
                 _isFlash = true;
                 _activateTime = Time.time;
-            }            
+            }
+        }
+    }
+
+
+    public void CheckButtonEnabled()
+    {
+        _isTVEnabled = VideoManager.isPower;
+        if (_isTVEnabled)
+        {
+            if (_typeOfButton > 1)
+            {
+                SetButtonActive();
+            }
+        }
+        else
+        {
+            if (_typeOfButton == 1)
+            {
+                SetButtonActive();
+            }
         }
     }   
 
