@@ -13,8 +13,8 @@ public class EnemyMovement : MonoBehaviour
     public Animator EnemyAnimator;
     public SoundController SoundController;
     public GameObject Player;
-    
-    
+    public EnemyHealthComponent EnemyHealthComponent;
+
     //public Transform SearchPoint;
     public NavMeshAgent NavMeshAgent;
     public EGA_EnemyLasers EGA_EnemyLasers;
@@ -143,100 +143,118 @@ public class EnemyMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _searchPoint = SearchPoint.position;
-        Debug.DrawRay(_searchPoint + Enemy.transform.right * 0.5f, Enemy.transform.right * 5, Color.green);
-        Debug.DrawRay(_searchPoint + Enemy.transform.right * -0.5f, Enemy.transform.right * -5, Color.green);
-        Debug.DrawRay(_searchPoint, Enemy.transform.forward * _fireDistans, Color.red);
-
-        _timer = _timer + Time.deltaTime;
-        //_searchPoint = Enemy.transform.position + new Vector3(0f, 1.6f, 0f);
-        if (_isReloading)
+        if (EnemyHealthComponent.Health <= 0f)
         {
-            Stop();
-            _timer = 0;
+            _isDead = true;
+            NavMeshAgent.speed = 0f;
+            NavMeshAgent.isStopped = true;
+
+            _isMove = false;
+            _isMoveToTheSide = false;
+            _isRotate= false;
+                        
+            EnemyAnimator.SetFloat("y", 0f);
+            EnemyAnimator.SetFloat("x", 0f);
+            EnemyAnimator.SetBool("isMove", false);
+            EnemyAnimator.SetBool("isDead", true);
         }
-
-        if (!_isDead && !_isDamage && !_isEMPShocking)
+        else
         {
-            //_timer = _timer + Time.deltaTime;
-            if ((_timer > _searchTime) && !_isMoveToTheSide) //&& _isMove 
+            _searchPoint = SearchPoint.position;
+            Debug.DrawRay(_searchPoint + Enemy.transform.right * 0.5f, Enemy.transform.right * 5, Color.green);
+            Debug.DrawRay(_searchPoint + Enemy.transform.right * -0.5f, Enemy.transform.right * -5, Color.green);
+            Debug.DrawRay(_searchPoint, Enemy.transform.forward * _fireDistans, Color.red);
+
+            _timer = _timer + Time.deltaTime;
+            //_searchPoint = Enemy.transform.position + new Vector3(0f, 1.6f, 0f);
+            if (_isReloading)
             {
-                //Debug.Log("Активирован поиск!");
-                if (Random.Range(0f, 10f) < 0.1f)
+                Stop();
+                _timer = 0;
+            }
+
+            if (!_isDead && !_isDamage && !_isEMPShocking)
+            {
+                //_timer = _timer + Time.deltaTime;
+                if ((_timer > _searchTime) && !_isMoveToTheSide) //&& _isMove 
                 {
-                    Scan.Play();
-                }
-                //Scan.Play();
-                try
+                    //Debug.Log("Активирован поиск!");
+                    if (Random.Range(0f, 10f) < 0.1f)
+                    {
+                        Scan.Play();
+                    }
+                    //Scan.Play();
+                    try
                     { NavMeshAgent.SetDestination(Player.transform.position); }
-                catch { }
-                //_isShoot = true;
-                Search();
-                _timer = 0f;
-            }
+                    catch { }
+                    //_isShoot = true;
+                    Search();
+                    _timer = 0f;
+                }
 
-            if (_isShoot)
-            {
-                //_searchPoint = Enemy.transform.position + new Vector3(0f, 1.6f, 0f);
-                
-                Debug.DrawRay(_searchPoint, _direction * _fireDistans, Color.red);
-            }
-
-            if (_isRotate)
-            {
-                _isMove = false;
-                _isMoveToTheSide = false;
-                NavMeshAgent.speed = 0f;
-                //NavMeshAgent.isStopped = true;
-
-                Rotate();
-                //Enemy.transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
-            }
-
-
-            //SearchPoint = Enemy.transform.position + new Vector3(0f, 1.6f, 0f);
-            //Debug.DrawRay(SearchPoint, Enemy.transform.forward * 5, Color.green);
-            //Debug.DrawRay(SearchPoint, _direction * 5, Color.yellow);
-            //NavMeshAgent.SetDestination(Player.position);
-            //Debug.DrawRay(Enemy.transform.position, Enemy.transform.forward * 30, Color.yellow);
-            //Debug.DrawRay(Enemy.transform.position, direction * 30, Color.green);
-
-            if (_isShoot | _isMove | _isRotate | _isReloading | _isMoveToTheSide)                
-            {
-                if (_isDamage | _isEMPShocking)
+                if (_isShoot)
                 {
-                    z = 0f;
-                    EnemyAnimator.SetFloat("z", z);
+                    //_searchPoint = Enemy.transform.position + new Vector3(0f, 1.6f, 0f);
+
+                    Debug.DrawRay(_searchPoint, _direction * _fireDistans, Color.red);
+                }
+
+                if (_isRotate)
+                {
                     _isMove = false;
                     _isMoveToTheSide = false;
-                    _isRotate = false;
-                    _isShoot = false;
-                    _isReloading = false;
-                    Stop();
+                    NavMeshAgent.speed = 0f;
+                    //NavMeshAgent.isStopped = true;
+
+                    Rotate();
+                    //Enemy.transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+                }
+
+
+                //SearchPoint = Enemy.transform.position + new Vector3(0f, 1.6f, 0f);
+                //Debug.DrawRay(SearchPoint, Enemy.transform.forward * 5, Color.green);
+                //Debug.DrawRay(SearchPoint, _direction * 5, Color.yellow);
+                //NavMeshAgent.SetDestination(Player.position);
+                //Debug.DrawRay(Enemy.transform.position, Enemy.transform.forward * 30, Color.yellow);
+                //Debug.DrawRay(Enemy.transform.position, direction * 30, Color.green);
+
+                if (_isShoot | _isMove | _isRotate | _isReloading | _isMoveToTheSide)
+                {
+                    if (_isDamage | _isEMPShocking)
+                    {
+                        z = 0f;
+                        EnemyAnimator.SetFloat("z", z);
+                        _isMove = false;
+                        _isMoveToTheSide = false;
+                        _isRotate = false;
+                        _isShoot = false;
+                        _isReloading = false;
+                        Stop();
+                    }
                 }
             }
-        }
 
-        if (_isMoveToTheSide)  // выполняется маневр уклонения вбок
-        {
-            MoveToTheSide();
-        }
-
-        if (_isEMPShocking)
-        {
-            _empShokingTimer += Time.deltaTime;
-            if (_empShokingTimer > 2f)
+            if (_isMoveToTheSide)  // выполняется маневр уклонения вбок
             {
-                _isEMPShocking = false;
-                _empShokingTimer = -1;
-                if (!_isDead )
-                {
-                    //Move();
-                    Stop();
-                    _timer = 0f;
-                }                
+                MoveToTheSide();
             }
-        }
+
+            if (_isEMPShocking)
+            {
+                _empShokingTimer += Time.deltaTime;
+                if (_empShokingTimer > 2f)
+                {
+                    _isEMPShocking = false;
+                    _empShokingTimer = -1;
+                    if (!_isDead)
+                    {
+                        //Move();
+                        Stop();
+                        _timer = 0f;
+                    }
+                }
+            }
+        }        
     }
 
     public void Search()

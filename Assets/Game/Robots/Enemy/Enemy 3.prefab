@@ -20118,6 +20118,7 @@ MonoBehaviour:
   EnemyAnimator: {fileID: 7597465280145973246}
   SoundController: {fileID: 8245587709941737057}
   Player: {fileID: 0}
+  EnemyHealthComponent: {fileID: 8899486680258560258}
   NavMeshAgent: {fileID: 2244760334306773398}
   EGA_EnemyLasers: {fileID: 6948041833923837355}
   Prefab: {fileID: 1395565506770744, guid: 78acb8611c2f5474e984ccdccd9029d7, type: 3}
