@@ -11,7 +11,7 @@ using UnityEngine;
 
         void Start()
         {
-            //AmmoBox = GetComponentInParent<AmmoBox>();
+            AmmoBox = GetComponentInParent<AmmoBox>();
             _ammo = AmmoBox.Ammo; // сколько патронов было в ящике
         }
 

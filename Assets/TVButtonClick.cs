@@ -118,9 +118,9 @@ public class TVButtonClick : MonoBehaviour
 
     public void Click()
     {
-        Debug.Log("кнопка активации нажата3");
+        //Debug.Log("кнопка активации нажата3");
         _button.onClick.Invoke();
-        Debug.Log("кнопка активации нажата4");
+        //Debug.Log("кнопка активации нажата4");
 
     }
 }

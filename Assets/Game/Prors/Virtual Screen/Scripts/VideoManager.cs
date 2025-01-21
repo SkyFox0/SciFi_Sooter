@@ -16,6 +16,7 @@ public class VideoManager : MonoBehaviour
     public Color _screenColorWhite = Color.white;
     public Color _screenColorBlack = Color.black;
     public TMP_Text _text;
+    public int _textLenght;
     [SerializeField] private float _loadTimer = -1f;
     public GameObject BlackScreen;
     public AudioSource PressButtonSound;
@@ -101,7 +102,7 @@ public class VideoManager : MonoBehaviour
                 if (_loadTimer > 1f)
                 {
                     _loadTimer = 0f;
-                    if (_text.text.Length < 19)
+                    if (_text.text.Length < (_textLenght + 5))
                     {
                         _text.text = _text.text + ".";
                     }
@@ -116,6 +117,7 @@ public class VideoManager : MonoBehaviour
             {
                 _loadTimer = 0f;  //  запуск таймера анимации текста
                 _text.text = "Загрузка видео";
+                _textLenght = _text.text.Length;
                 //_screen.color = _screenColorBlack;
                 _playTimer = -1f;   // остановить таймер видео
                 if (_videoClipNumber < _videoClipNumberMax)
@@ -145,6 +147,7 @@ public class VideoManager : MonoBehaviour
             BlackScreen.SetActive(true);
             _loadTimer = 0f;  //  запуск таймера анимации текста
             _text.text = "Загрузка следующего видео";
+            _textLenght = _text.text.Length;
             //_screen.color = _screenColorBlack;
             _playTimer = -1f;   // остановить таймер видео
             if (_videoClipNumber < _videoClipNumberMax)
@@ -173,6 +176,7 @@ public class VideoManager : MonoBehaviour
             BlackScreen.SetActive(true);
             _loadTimer = 0f;  //  запуск таймера анимации текста
             _text.text = "Загрузка предыдущего видео";
+            _textLenght = _text.text.Length;
             //_screen.color = _screenColorBlack;
             _playTimer = -1f;   // остановить таймер видео
             if (_videoClipNumber > 0)
@@ -208,8 +212,9 @@ public class VideoManager : MonoBehaviour
             VideoPlayer.url = _url[_videoClipNumber];
             VideoPlayer.Prepare();
             _text.text = "Загрузка видео";
+            _textLenght = _text.text.Length;
             //_screen.color = _screenColorBlack;
-            _loadTimer = -1f;
+            _loadTimer = 0f;
         }
         
     }

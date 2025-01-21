@@ -8,7 +8,7 @@ public class AmmoDropBoxTrigger : MonoBehaviour
 
     void Start()
     {
-        //AmmoBox = GetComponentInParent<AmmoBox>();
+        AmmoBoxEnemyDrop = GetComponentInParent<AmmoBoxEnemyDrop>();
         _addAmmo = AmmoBoxEnemyDrop.Ammo;
     }
 
