@@ -15,6 +15,7 @@ namespace StarterAssets
         public Animator Animator;
         [SerializeField] private Button _button;
         public TVButtonClick TVButtonClick;
+        public DoorButtonClick DoorButtonClick;
 
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -62,6 +63,13 @@ namespace StarterAssets
                     TVButtonClick = hitInfo.collider.GetComponent<TVButtonClick>();
                     TVButtonClick.CheckButtonEnabled();
                 }
+
+                if (hitInfo.collider.tag == "DoorButton")
+                {
+                    //Debug.Log(" нопка : " + hitInfo.collider.name);
+                    DoorButtonClick = hitInfo.collider.GetComponent<DoorButtonClick>();
+                    DoorButtonClick.CheckButtonEnabled();
+                }
             }
         }
 
@@ -83,6 +91,15 @@ namespace StarterAssets
                     TVButtonClick = hitInfo.collider.GetComponent<TVButtonClick>();
                     //Debug.Log("кнопка активации нажата2");
                     TVButtonClick.Click();
+                }
+
+                if (hitInfo.collider.tag == "DoorButton")
+                {
+                    Debug.Log("кнопка пульта двери нажата");
+                    //Debug.Log(" нопка : " + hitInfo.collider.name);
+                    DoorButtonClick = hitInfo.collider.GetComponent<DoorButtonClick>();
+                    //Debug.Log("кнопка активации нажата2");
+                    DoorButtonClick.Click();
                 }
             }
         }
