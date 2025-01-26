@@ -3901,6 +3901,7 @@ GameObject:
   - component: {fileID: 6681009711220714394}
   - component: {fileID: 8025738245884195963}
   - component: {fileID: 8633515508418166727}
+  - component: {fileID: 4008046417346044307}
   m_Layer: 8
   m_Name: Player _v2
   m_TagString: Player
@@ -4031,6 +4032,7 @@ MonoBehaviour:
   reloadHold: 0
   grenade: 0
   light: 0
+  activate: 0
   analogMovement: 0
   cursorLocked: 1
   cursorInputForLook: 1
@@ -4182,7 +4184,7 @@ MonoBehaviour:
   isRifle: 0
   isGrenade: 0
   isLight: 0
-  WeaponLight: {fileID: 4803689580569668043}
+  WeaponLight: {fileID: 0}
   _totalAmmo: 30
   _maxWeaponAmmo: 10
   _currentWeaponAmmo: 10
@@ -4428,6 +4430,23 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &4008046417346044307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4865960796838464376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbb0958226ee0bb4cb7d8aa6b5436fd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _camera: {fileID: 0}
+  Animator: {fileID: 2020987907817452834}
+  _button: {fileID: 0}
+  TVButtonClick: {fileID: 0}
+  DoorButton: {fileID: 0}
 --- !u!1 &4932388845634387048
 GameObject:
   m_ObjectHideFlags: 0
@@ -8342,6 +8361,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spot Light (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1306568180456073605, guid: dc23d659ac44f4c4d8671cf375c00cec, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3897307967473595956, guid: dc23d659ac44f4c4d8671cf375c00cec, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -8406,10 +8429,5 @@ PrefabInstance:
 --- !u!4 &4544500743918597630 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5453130804606380545, guid: dc23d659ac44f4c4d8671cf375c00cec, type: 3}
-  m_PrefabInstance: {fileID: 8411640854666125311}
-  m_PrefabAsset: {fileID: 0}
---- !u!108 &4803689580569668043 stripped
-Light:
-  m_CorrespondingSourceObject: {fileID: 3897307967473595956, guid: dc23d659ac44f4c4d8671cf375c00cec, type: 3}
   m_PrefabInstance: {fileID: 8411640854666125311}
   m_PrefabAsset: {fileID: 0}

@@ -15,6 +15,7 @@ public class DoorSystem : MonoBehaviour
     private float _saveTimer;
     public float _timeClose = 10f;  // вемя закрытия по таймеру
 
+    public DoorButton[] DoorButton;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -36,6 +37,13 @@ public class DoorSystem : MonoBehaviour
         _doorIsOpen = false;
         DoorsClose.Play();
         _timer = -1f;
+        for (int i = 0; i < DoorButton.Length; i++)
+        {
+            if (DoorButton[i]._isPower) 
+            {
+                DoorButton[i].SetButtonImageToOpen();
+            }            
+        }
     }
 
     void Update()
@@ -64,6 +72,11 @@ public class DoorSystem : MonoBehaviour
     public void EnemyInTrigger()
     {
         //----------------
+        Debug.Log("Открыть дверь!");
+        if (!_doorIsOpen)
+        {
+            OpenDoor();
+        }
     }
 
     public void OpenDoor()
@@ -72,6 +85,14 @@ public class DoorSystem : MonoBehaviour
         DoorsOpen.Play();
         DoorsAnimator.SetBool("isOpen", true);
         DoorsAnimator.SetTrigger("ToOpen");
+
+        for (int i = 0; i < DoorButton.Length; i++)
+        {
+            if (DoorButton[i]._isPower)
+            {
+                DoorButton[i].SetButtonImageToClose();
+            }
+        }
 
         if (_isCloseTimer && !_doorIsLocked)
         {
@@ -87,6 +108,14 @@ public class DoorSystem : MonoBehaviour
         DoorsAnimator.SetBool("isOpen", false);
         DoorsAnimator.SetTrigger("ToClose");
         DoorsClose.Play();
+        for (int i = 0; i < DoorButton.Length; i++)
+        {
+            if (DoorButton[i]._isPower)
+            {
+                DoorButton[i].SetButtonImageToOpen();
+            }
+        }
+
     }
 
     public void CloseAndSetLocked()  // функция закрывает и блокирует дверь
@@ -98,6 +127,14 @@ public class DoorSystem : MonoBehaviour
         }        
         _doorIsLocked = true;
         _timer = -1f;
+
+        for (int i = 0; i < DoorButton.Length; i++)
+        {
+            if (DoorButton[i]._isPower)
+            {
+                DoorButton[i].SetButtonImageToBlocked();
+            }
+        }
     }
 
     public void SetLocked()  // функция просто блокирует дверь
@@ -112,7 +149,14 @@ public class DoorSystem : MonoBehaviour
         {
             _saveTimer = -1f;
         }
-        _doorIsLocked = true;        
+        _doorIsLocked = true;
+        for (int i = 0; i < DoorButton.Length; i++)
+        {
+            if (DoorButton[i]._isPower)
+            {
+                DoorButton[i].SetButtonImageToBlocked();
+            }
+        }
     }
 
     public void SetUnlocked()  // функция разблокирует дверь
@@ -127,7 +171,23 @@ public class DoorSystem : MonoBehaviour
             _timer = _saveTimer;
             _saveTimer = -1f;
         }
-        _doorIsLocked = false;        
+        _doorIsLocked = false;
+
+        for (int i = 0; i < DoorButton.Length; i++)
+        {
+            if (DoorButton[i]._isPower)
+            {
+                if (_doorIsOpen)
+                {
+                    DoorButton[i].SetButtonImageToClose(); 
+                }
+                else
+                {
+                    DoorButton[i].SetButtonImageToOpen();
+                }
+                
+            }
+        }
     }
 }
 

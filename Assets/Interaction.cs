@@ -15,7 +15,7 @@ namespace StarterAssets
         public Animator Animator;
         [SerializeField] private Button _button;
         public TVButtonClick TVButtonClick;
-        public DoorButtonClick DoorButtonClick;
+        public DoorButton DoorButton;
 
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -66,42 +66,45 @@ namespace StarterAssets
 
                 if (hitInfo.collider.tag == "DoorButton")
                 {
-                    //Debug.Log("Кнопка : " + hitInfo.collider.name);
-                    DoorButtonClick = hitInfo.collider.GetComponent<DoorButtonClick>();
-                    DoorButtonClick.CheckButtonEnabled();
+                    Debug.Log("Обнаружена кнопка : " + hitInfo.collider.name);
+                    DoorButton = hitInfo.collider.GetComponent<DoorButton>();
+                    DoorButton.CheckButtonEnabled();
                 }
             }
         }
 
-        public void OnActivate(InputValue value)
+        public void OnActivate(InputValue value)  // обработчик нажатия на кнопку "F"
         {
-            Debug.Log("кнопка активации нажата");
-            Vector3 shootPosition = _camera.transform.position;
-            var direction = _camera.transform.forward;
-
-            //Debug.DrawRay(shootPosition, direction * 2f, Color.green);
-            if (Physics.Raycast(shootPosition, direction, out var hitInfo, 2f))   //, layerMask, QueryTriggerInteraction.Ignore))
+            if (!Animator.GetBool("isArmed"))
             {
-                //Debug.DrawRay(SearchPoint, _targetDirection * _fireDistans, Color.red);
-                //Debug.Log("Hit! Object = " + hitInfo.collider.name);
+                Debug.Log("кнопка активации нажата");
+                Vector3 shootPosition = _camera.transform.position;
+                var direction = _camera.transform.forward;
 
-                if (hitInfo.collider.tag == "TVButton")
+                //Debug.DrawRay(shootPosition, direction * 2f, Color.green);
+                if (Physics.Raycast(shootPosition, direction, out var hitInfo, 2f))   //, layerMask, QueryTriggerInteraction.Ignore))
                 {
-                    //Debug.Log("Кнопка : " + hitInfo.collider.name);
-                    TVButtonClick = hitInfo.collider.GetComponent<TVButtonClick>();
-                    //Debug.Log("кнопка активации нажата2");
-                    TVButtonClick.Click();
-                }
+                    //Debug.DrawRay(SearchPoint, _targetDirection * _fireDistans, Color.red);
+                    //Debug.Log("Hit! Object = " + hitInfo.collider.name);
 
-                if (hitInfo.collider.tag == "DoorButton")
-                {
-                    Debug.Log("кнопка пульта двери нажата");
-                    //Debug.Log("Кнопка : " + hitInfo.collider.name);
-                    DoorButtonClick = hitInfo.collider.GetComponent<DoorButtonClick>();
-                    //Debug.Log("кнопка активации нажата2");
-                    DoorButtonClick.Click();
+                    if (hitInfo.collider.tag == "TVButton")
+                    {
+                        //Debug.Log("Кнопка : " + hitInfo.collider.name);
+                        TVButtonClick = hitInfo.collider.GetComponent<TVButtonClick>();
+                        //Debug.Log("кнопка активации нажата2");
+                        TVButtonClick.Click();
+                    }
+
+                    if (hitInfo.collider.tag == "DoorButton")
+                    {
+                        Debug.Log("Кнопка пульта двери нажата");
+                        //Debug.Log("Кнопка : " + hitInfo.collider.name);
+                        DoorButton = hitInfo.collider.GetComponent<DoorButton>();
+                        //Debug.Log("кнопка активации нажата2");
+                        DoorButton.Click();
+                    }
                 }
-            }
+            }            
         }
     }
 }

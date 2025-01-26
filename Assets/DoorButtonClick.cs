@@ -4,13 +4,40 @@ using System.Collections;
 
 public class DoorButtonClick : MonoBehaviour
 {
+    public DoorSystem DoorSystem;
     public Button _button;
     public Image _image;
+
+    public Image[] _buttonImageList;        // список всех кнопок кнопка
+    public Image _activeButtonImage;          // текущая активная кнопка
+    [SerializeField] private int _activeButtonIndex = 1;
+    [SerializeField] private string[] ButtonType = new string[]
+        { "ButtonToOpen",
+          "ButtonToClose",
+          "ButtonLockedClosed",
+          "ButtonDooorBlocked" };
+
+    /*    public Image _buttonToOpen;
+        public Image _buttonToClose;
+        public Image _buttonLockedClosed;
+        public Image _buttonDooorBlocked;*/
+
+    /*public enum myEnum
+    {
+        _buttonToOpen,
+        _buttonToClose,
+        _buttonLockedClosed,
+        _buttonDooorBlocked
+    };*/
+
+    /*public myEnum _buttonType;  // тип кнопки виден как дропдаун*/
+
+
     public Color _activeColor;
     private Color _deactiveColor;
-
-    [SerializeField] private bool _isActive;
-    [SerializeField] private bool _isFlash;
+    [SerializeField] private bool _isVisible; // кнопка видима и доступна для нажатия
+    [SerializeField] private bool _isActive; // кнопка активна - подсвечена игроком
+    [SerializeField] private bool _isFlash;  // кнопка мигает
 
     public float _activateTime; // время, когда была активирована кнопка
 
@@ -24,10 +51,51 @@ public class DoorButtonClick : MonoBehaviour
     {
         _button = GetComponent<Button>();
         _image = GetComponent<Image>();
+        _isVisible = true;
+
         _isActive = false;
         _isFlash = false;
         _deactiveColor = Color.white;
         //_isTVEnabled = VideoManager.isPower;
+        Invoke("CheckButton", 3f);
+    }
+
+    public void CheckButton()  // проверка правильно ли горит кнопка
+    {
+        _activeButtonImage = _buttonImageList[_activeButtonIndex];
+        for (int i = 0; i < ButtonType.Length; i++)
+        {
+            Debug.Log(i.ToString());
+            if (_buttonImageList[i] = _activeButtonImage)
+            {
+                _buttonImageList[i].enabled = true;
+            }
+            else
+            {
+                _buttonImageList[i].enabled = false;
+            }
+        }
+/*
+        if (_activeButtonImage.name == ButtonType[_activeButtonIndex]) // если активна правильная кнопка
+        {
+           // _buttonType = myEnum[1];
+
+        }
+        else  // установить правильную кнопку
+        {
+            _activeButtonImage = _buttonImageList[_activeButtonIndex];
+            for (int i = 0; i < ButtonType.Length; i++)
+            {
+                if (_buttonImageList[i] == _activeButtonImage)
+                {
+                    _activeButtonImage.enabled = true;
+                }
+                else
+                {
+                    _activeButtonImage.enabled = false;
+                }
+            }            
+        }*/
     }
 
     // Update is called once per frame
@@ -71,7 +139,7 @@ public class DoorButtonClick : MonoBehaviour
         // ПЕРЕДЕЛАТЬ!
         //
         //
-        /*_isTVEnabled = VideoManager.isPower;
+        /*_isTVEnabled = VideoManager.isPower
         if (_isTVEnabled)
         {
             if (_typeOfButton > 1)
@@ -104,11 +172,14 @@ public class DoorButtonClick : MonoBehaviour
         }
     }
 
-    public void Click()
+    public void Click()  // кнопка нажата игроком  - вызов события
     {
-        //Debug.Log("кнопка активации нажата3");
-        _button.onClick.Invoke();
-        //Debug.Log("кнопка активации нажата4");
-
+        if (_isVisible)
+        {
+            //Debug.Log("кнопка активации нажата3");
+            _button = _activeButtonImage.transform.GetComponent<Button>();
+            _button.onClick.Invoke();
+            //Debug.Log("кнопка активации нажата4");
+        }
     }
 }
