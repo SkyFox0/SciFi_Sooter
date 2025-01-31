@@ -76,7 +76,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 951
+    m_Bits: 1983
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -189,7 +189,7 @@ MonoBehaviour:
   m_IsGlobal: 1
   priority: 0
   blendDistance: 0
-  weight: 1
+  weight: 0.5
   sharedProfile: {fileID: 11400000, guid: cddc559f010ef5245bfb5c89e9d312ec, type: 2}
 --- !u!1001 &8156527511113248870
 PrefabInstance:
@@ -207,6 +207,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3877938909921644029, guid: dc23d659ac44f4c4d8671cf375c00cec, type: 3}
+      propertyPath: m_AdditionalLightsShadowResolutionTier
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3897307967473595956, guid: dc23d659ac44f4c4d8671cf375c00cec, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -222,6 +226,18 @@ PrefabInstance:
     - target: {fileID: 3897307967473595956, guid: dc23d659ac44f4c4d8671cf375c00cec, type: 3}
       propertyPath: m_InnerSpotAngle
       value: 37
+      objectReference: {fileID: 0}
+    - target: {fileID: 3897307967473595956, guid: dc23d659ac44f4c4d8671cf375c00cec, type: 3}
+      propertyPath: m_Shadows.m_Type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3897307967473595956, guid: dc23d659ac44f4c4d8671cf375c00cec, type: 3}
+      propertyPath: m_BounceIntensity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3897307967473595956, guid: dc23d659ac44f4c4d8671cf375c00cec, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 951
       objectReference: {fileID: 0}
     - target: {fileID: 5453130804606380545, guid: dc23d659ac44f4c4d8671cf375c00cec, type: 3}
       propertyPath: m_LocalScale.x
