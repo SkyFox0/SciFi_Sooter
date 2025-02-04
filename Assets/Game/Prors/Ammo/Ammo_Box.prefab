@@ -131,7 +131,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3, y: 2, z: 3}
+  m_Size: {x: 4, y: 2, z: 4}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7339474314903047528
 MonoBehaviour:
@@ -298,6 +298,7 @@ MonoBehaviour:
   Ammo: 20
   _text: {fileID: 8316679146208078292}
   AmmoSpawnSystem: {fileID: 0}
+  SpawnPoint: {fileID: 0}
 --- !u!65 &868962201804413775
 BoxCollider:
   m_ObjectHideFlags: 0

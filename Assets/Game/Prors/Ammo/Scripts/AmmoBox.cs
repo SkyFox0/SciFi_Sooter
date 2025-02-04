@@ -6,6 +6,7 @@ public class AmmoBox : MonoBehaviour
     public int Ammo = 20;
     public Text _text;
     public AmmoSpawnSystem AmmoSpawnSystem;
+    public GameObject SpawnPoint;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -30,8 +31,13 @@ public class AmmoBox : MonoBehaviour
     // Update is called once per frame
     public void Destroy()
     {
-        AmmoSpawnSystem.Spawn();
+        //AmmoSpawnSystem.Spawn();
+        try
+        {
+            AmmoSpawnSystem.SpawnAmmo(SpawnPoint, transform.gameObject);
+        }
+        catch { }
+        
         Destroy(gameObject);
-
     }
 }

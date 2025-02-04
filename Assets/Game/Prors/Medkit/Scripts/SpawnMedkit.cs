@@ -20,15 +20,24 @@ public class SpawnMedkit : MonoBehaviour
         Megkit = MedkitSpawnSystem.Megkit;
     }
 
+    public void AutoSpawn(GameObject NewSpawnPoint)
+    {
+        if (_isSpawn)
+        {
+            SpawnPoint = NewSpawnPoint;
+            Invoke("SpawnMedkitNow", 1f);
+        }
+    }
+
     public void Spawn(GameObject NewSpawnPoint)
     {
         if (_isSpawn)
         {
             SpawnPoint = NewSpawnPoint;
             Invoke("SpawnMedkitNow", _timeToSpawn);
-        }
-        
+        }        
     }
+
     public void SpawnMedkitNow()
     {
         //Debug.Log("Спавн аптечки - " + SpawnPoint.name);

@@ -73,7 +73,7 @@ public class DoorSystem : MonoBehaviour
     {
         //----------------
         Debug.Log("Открыть дверь!");
-        if (!_doorIsOpen)
+        if (_doorTrigger && !_doorIsOpen)  // враги разблокируют заблокированные двери
         {
             OpenDoor();
         }

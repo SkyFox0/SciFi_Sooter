@@ -24,9 +24,11 @@ namespace StarterAssets
         public float MoveSigthSpeed = 2.0f;
         public bool isReloading;
         public bool isSight;
-        [Tooltip("Rotation speed of the character")]
-		public float RotationSpeed = 1.0f;
-		[Tooltip("Acceleration and deceleration")]
+        [Tooltip("Rotation speed X of the character")]
+		public float RotationSpeedX = 2.0f;
+        [Tooltip("Rotation speed of Y the character")]
+        public float RotationSpeedY = 1.0f;
+        [Tooltip("Acceleration and deceleration")]
 		public float SpeedChangeRate = 10.0f;
 
 		[Space(10)]
@@ -208,8 +210,8 @@ namespace StarterAssets
                     //Don't multiply mouse input by Time.deltaTime
                     float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
 
-                    _cinemachineTargetPitch += _input.look.y * RotationSpeed * deltaTimeMultiplier; // требуемый угол наклона камеры
-                    _rotationVelocity = _input.look.x * RotationSpeed * deltaTimeMultiplier;
+                    _cinemachineTargetPitch += _input.look.y * RotationSpeedY * deltaTimeMultiplier; // требуемый угол наклона камеры
+                    _rotationVelocity = _input.look.x * RotationSpeedX * deltaTimeMultiplier;
 
                     Animator.SetFloat("z", _cinemachineTargetPitch / -50f);
                     //if (_cinemachineTargetPitch <= 0)

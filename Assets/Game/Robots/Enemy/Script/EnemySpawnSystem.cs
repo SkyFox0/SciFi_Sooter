@@ -18,6 +18,7 @@ public class EnemySpawnSystem : MonoBehaviour
     public int _spawnNumber;
     public int _spawnPoint;
 
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     void Start()
@@ -90,8 +91,8 @@ public class EnemySpawnSystem : MonoBehaviour
 
 
     public void Spawn()
-    {
-        Invoke("SpawnEnemy", _timeToSpawn);        
+    {        
+        Invoke("SpawnEnemy", (_timeToSpawn + Random.Range(-5f, 5f)));        
     }
 
     public void SpawnEnemy()

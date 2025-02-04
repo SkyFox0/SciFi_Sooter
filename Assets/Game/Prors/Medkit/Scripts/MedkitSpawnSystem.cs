@@ -68,7 +68,7 @@ public class MedkitSpawnSystem : MonoBehaviour
         }
 
         SpawnMedkitScript = SpawnPoint.GetComponent<SpawnMedkit>();
-        SpawnMedkitScript.Spawn(SpawnPoint);
+        SpawnMedkitScript.AutoSpawn(SpawnPoint);
 
 /*        Instance = Instantiate(Megkit, SpawnPoint.transform.position, transform.rotation);
         Instance.transform.parent = transform;

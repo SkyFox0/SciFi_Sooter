@@ -335,7 +335,7 @@ namespace StarterAssets
         {
             //Vector3 DropPosition = new Vector3(Random.Range(-1, 1), 0.5f, Random.Range(-1, 1));
             Vector3 DropPosition = Enemy.transform.position;// + DropPosition;
-            DropPosition.y = 0.5f;
+            DropPosition.y = Enemy.transform.position.y + 1f;
             Ammo_Box_Enemy_Drop = Instantiate(Ammo_Box_Enemy_Drop, DropPosition, Ammo_Box_Enemy_Drop.transform.rotation);
             //Ammo_Box_Enemy_Drop = Instantiate(Ammo_Box_Enemy_Drop, RoboHeadPosition.transform.position, RoboHeadPosition.transform.rotation);
 

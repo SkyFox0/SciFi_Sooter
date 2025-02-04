@@ -5,6 +5,7 @@ using UnityEngine;
 //using UnityEngine.Experimental.GlobalIllumination;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using System.Collections;
 //using Unity.Mathematics;
 
 namespace StarterAssets
@@ -66,7 +67,9 @@ namespace StarterAssets
         private bool NoGrenade;
 
         [Header("Switch Weapon")]
-        public bool isRifle;
+        public bool isLaserPistol;
+        public bool isLaserRifle;
+        public bool isGatlingLaser;
         public bool isGrenade;
         public bool isLight;
         public Light WeaponLight;
@@ -108,13 +111,19 @@ namespace StarterAssets
         public Image GrenadeBar;
         public GameObject AllScore;
 
+        //public TMP_Text AddGrenadeText;
+        //public Image AddGrenadeBar;
+
+        [SerializeField] private AddGrenadeScreen AddGrenadeScreen;
+
+
         private void Start()
         {
             _cameraspeed = 10f;
             CameraTargetPosition.position = IdleCameraPoint.position;
             _imageX.enabled = true;
             _image0.enabled = false;
-            isRifle = true;
+            isLaserRifle = true;
             isGrenade = false;
             GrenadeText.text = _totalEMPGrenades.ToString();
             _ammoText.text = _currentWeaponAmmo.ToString();
@@ -129,6 +138,8 @@ namespace StarterAssets
             }
             FirstPersonController = GetComponent<FirstPersonController>();
             ArmedOnOff();
+
+            StartCoroutine(ShowThrowGrenadeInficator());        
         }
 
         private void FixedUpdate()
@@ -378,7 +389,8 @@ namespace StarterAssets
             if ((_totalEMPGrenades + _grenades) < _maxGrenades)
             {
                 PlaySound.PlayOneShot(GetGrenades);
-                _totalEMPGrenades += _grenades;                
+                _totalEMPGrenades += _grenades;
+                AddGrenadeScreen.AddGrenadeShow(_grenades); // показать экран добавления гранат +5
             }
             else
             {
@@ -386,13 +398,20 @@ namespace StarterAssets
                 {
                     PlaySound.PlayOneShot(AmmoFull1);                    
                 }
-                _totalEMPGrenades = _maxGrenades;
+                if (_totalEMPGrenades < _maxGrenades)
+                {                     
+                    AddGrenadeScreen.AddGrenadeShow(_maxGrenades - _totalEMPGrenades); // показать экран добавления гранат < +5
+                    _totalEMPGrenades = _maxGrenades;
+                }
+                else
+                {
+                    _totalEMPGrenades = _maxGrenades;
+                }
+
             }
             GrenadeText.text = _totalEMPGrenades.ToString();
-
-
-
         }
+
         /*public void AddEMPGrenadesFull()
         {
             // игрок поднял гранаты  и достиг лимита
@@ -466,17 +485,43 @@ namespace StarterAssets
             }
         }
 
-            private void Update()
+/*        private void Update()
         {
-            if (_isThrowing)
+            // прорисовка индикатора силы блока гранаты
+            //ThrowingIndicatorShow();
+                      
+        }*/
+
+        
+
+    IEnumerator ShowThrowGrenadeInficator()  // прорисовка индикатора силы блока гранаты
+        {
+            while (true)
+            {
+                if (_isThrowing)
+                {
+
+                    ThrowingIndicatorShow();
+                }
+                else
+                {
+                    GrenadeBar.fillAmount = 0f;
+                }
+            yield return new WaitForSeconds(0.1f);  // счетчик таймера отрисовки индикатора броска
+        }
+    }
+
+    public void ThrowingIndicatorShow()
+        {
+            if (_isThrowing)  // если зажата кнопка броска гранаты
             {
                 GrenadeBar.fillAmount = (Time.time - _forceTimer) / 2f;
             }
-            else
+            /*else
             {
                 GrenadeBar.fillAmount = 0f;
 
-            }            
+            }*/
         }
 
         public void ThrowGrenade()

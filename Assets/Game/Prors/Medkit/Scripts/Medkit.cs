@@ -19,8 +19,13 @@ public class Medkit : MonoBehaviour
     // Update is called once per frame
     public void Destroy()        
     {
-        Debug.Log("”ничтожение аптечки # " + SpawnPoint.name);
-        MedkitSpawnSystem.SpawnMedkit(SpawnPoint, transform.gameObject); 
+        //Debug.Log("”ничтожение аптечки # " + SpawnPoint.name);
+        try
+        {
+            MedkitSpawnSystem.SpawnMedkit(SpawnPoint, transform.gameObject);
+        }
+        catch { }
+        
         Destroy(gameObject);
 
     }

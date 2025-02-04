@@ -6,7 +6,7 @@ public class GrenadeBox : MonoBehaviour
     public int _grenade = 5;//  сколько гранат в ящике
     public Text _text;
     public GrenadeSpawnSystem GrenadeSpawnSystem;
-
+    public GameObject SpawnPoint;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -29,7 +29,13 @@ public class GrenadeBox : MonoBehaviour
     // Update is called once per frame
     public void Destroy()
     {
-        GrenadeSpawnSystem.Spawn();
+        //GrenadeSpawnSystem.Spawn();
+        try
+        {
+            GrenadeSpawnSystem.SpawnGrenade(SpawnPoint, transform.gameObject);
+        }
+        catch { }
+             
         Destroy(gameObject);
 
     }
