@@ -12,10 +12,10 @@ namespace StarterAssets
 {
     public class My_Weapon_Controller : MonoBehaviour
     {
-        public Animator Animator;         
+        public Animator Animator;
         public FirstPersonController FirstPersonController;
         public Ui_Control Ui_Control;
-        private float LastShoot;        
+        private float LastShoot;
 
         [Header("Cinemachine")]
         public PlayerCameraController PlayerCameraController;
@@ -50,7 +50,8 @@ namespace StarterAssets
 
         [Header("Sounds")]
         public AudioSource PlaySound;
-        public AudioSource Shoot;
+        public AudioSource SingleShoot;
+        public AudioSource AutoShoot;
         public AudioClip Reload;
         public AudioClip Empty;
         public AudioClip Hit;
@@ -62,7 +63,7 @@ namespace StarterAssets
         public AudioClip NoGrenades2;
         public AudioClip AmmoFull1;
         public AudioClip AmmoFull2;
-        public AudioClip NeedToReload;        
+        public AudioClip NeedToReload;
         private bool NoAmmo;
         private bool NoGrenade;
 
@@ -73,6 +74,20 @@ namespace StarterAssets
         public bool isGrenade;
         public bool isLight;
         public Light WeaponLight;
+        public bool PlayerIsArmed;
+        public float CheckArmedOnTime;
+
+        [Header("Radial Menu")]
+        public My_RadialMenu My_RadialMenu;
+        public bool RadialWeaponMenu;        
+        public enum Weapons
+        {
+            Rifle = 0,
+            PlasmaGun = 1
+        }
+        public Weapons SelectedWeapons;
+        public GameObject Weapon_0;
+        public GameObject Weapon_1;
 
         [Header("Ammo")]
         public int _totalAmmo = 195;
@@ -82,7 +97,7 @@ namespace StarterAssets
         public TextMesh _ammoText;
         public TextMesh Total_Ammo_Text;
 
-        
+
 
         [Header("Grenades")]
         public float _throwForce;
@@ -90,17 +105,17 @@ namespace StarterAssets
         public bool _isThrowing;
         public enum TypeGrenade
         {
-            EMP,
-            Explosive,
-            Smoke,
-            Flame,
-            Bomb
+            EMP = 0,
+            Explosive = 1,
+            Smoke = 2,
+            Flame = 3,
+            Bomb = 4
         };
         public TypeGrenade _typeGrenade = TypeGrenade.EMP;
         public int _totalEMPGrenades = 0;
         public int _totalEXPLGrenades = 0;
         public int _maxGrenades = 15;
-        
+
         public GameObject EMPGrenade;
         public GameObject EXPLGrenade;
 
@@ -119,6 +134,7 @@ namespace StarterAssets
 
         private void Start()
         {
+            PlayerIsArmed = false;
             _cameraspeed = 10f;
             CameraTargetPosition.position = IdleCameraPoint.position;
             _imageX.enabled = true;
@@ -139,7 +155,9 @@ namespace StarterAssets
             FirstPersonController = GetComponent<FirstPersonController>();
             ArmedOnOff();
 
-            StartCoroutine(ShowThrowGrenadeInficator());        
+            StartCoroutine(ShowThrowGrenadeInficator());
+            StartCoroutine(CheckArmedOn());
+            CheckArmedOnTime = Time.time;
         }
 
         private void FixedUpdate()
@@ -151,7 +169,7 @@ namespace StarterAssets
             if (!Animator.GetBool("isSight") && Animator.GetBool("isArmed"))
             {
                 if (CameraTargetPosition.position != IdleCameraPoint.position)
-                    //if (CinemachineCameraTarget.transform.position != IdleCameraPoint.position)
+                //if (CinemachineCameraTarget.transform.position != IdleCameraPoint.position)
                 {
                     CinemachineCameraTarget.transform.position = IdleCameraPoint.position;
                     CameraTargetPosition.position = IdleCameraPoint.position;
@@ -191,11 +209,14 @@ namespace StarterAssets
                 {
                     CinemachineCameraTarget.transform.position = CameraTargetPosition.position;
                 }
-                
             }
-
-
-
+        }
+        public void MultyShoot()  // нажата кнопка стрельбы в режиме Plasma Gun
+        {
+            ShootComponent.Shoot();
+            EGA_DemoLasers.AutoShoot();
+            AutoShoot.Play();  // звук выстрела
+            //CheckArmedOnTime = Time.time;
         }
 
         public void OnShoot(InputValue value)  // нажата кнопка стрельбы
@@ -210,14 +231,18 @@ namespace StarterAssets
                     {
                         if ((Time.time - LastShoot > _shootSpeed) && (!Animator.GetBool("isReloading")))  //_shootSpeed = 0.5f; && (_currentWeaponAmmo > 0) 
                         {
+                            Animator.SetBool("isShooting", true);
                             Animator.SetTrigger("Shoot");
+                            
                             ShootComponent.Shoot();
                             EGA_DemoLasers.Shoot();
 
-                            Shoot.Play();  // звук выстрела
+                            SingleShoot.Play();  // звук выстрела
                                            //PlaySound.Play();
 
                             LastShoot = Time.time;
+                            CheckArmedOnTime = Time.time;
+
                             _currentWeaponAmmo -= 1;
                             _ammoText.text = _currentWeaponAmmo.ToString();
                             Animator.SetBool("isNeedToReload", true);
@@ -239,9 +264,10 @@ namespace StarterAssets
                         }
                     }
                 }
-            } 
+            }
             else
             {
+                PlayerIsArmed = true;
                 Animator.SetBool("isArmed", true);
                 AllScore.SetActive(true);
                 _imageX.enabled = true;
@@ -254,11 +280,13 @@ namespace StarterAssets
 
         public void OnShootOff(InputValue value)  // отпущена кнопка стрельбы
         {
-            //Debug.Log("Отпущена кнопка стрельбы");
+            Debug.Log("Отпущена кнопка стрельбы");
+            Animator.SetBool("isShooting", false);
         }
 
         public void OnReload(InputValue value)
         {
+            CheckArmedOnTime = Time.time;
             if (Animator.GetBool("isArmed"))
             {
 
@@ -296,7 +324,11 @@ namespace StarterAssets
 
                     }
                 }
-            }            
+            }
+            else
+            {
+                AutoArmedOn();
+            }
         }
 
         public void OnReloadHold(InputValue value)  // убрать оружие!
@@ -317,6 +349,7 @@ namespace StarterAssets
         {
             if (Animator.GetBool("isArmed"))
             {
+                PlayerIsArmed = false;
                 Animator.SetBool("isArmed", false);
                 AllScore.SetActive(false);
                 if (!Animator.GetBool("isReloading"))
@@ -329,20 +362,131 @@ namespace StarterAssets
             }
             else
             {
+                PlayerIsArmed = true;
                 Animator.SetBool("isArmed", true);
                 AllScore.SetActive(true);
                 CinemachineCameraTarget.transform.position = IdleCameraPoint.position;
                 CameraTargetPosition.position = IdleCameraPoint.position;
                 _imageX.enabled = true;
                 _image0.enabled = false;
+                CheckArmedOnTime = Time.time;
             }
         }
 
+        public void AutoArmedOff()
+        {
+            Debug.Log("вошел в зону комфорта");
+            if (Animator.GetBool("isArmed"))
+            {
+                Animator.SetBool("isArmed", false);
+                AllScore.SetActive(false);
+
+                CinemachineCameraTarget.transform.position = GuardIdleCameraPoint.position;
+                CameraTargetPosition.position = GuardIdleCameraPoint.position;
+                _imageX.enabled = false;
+                _image0.enabled = true;
+                //CheckArmedOnTime = Time.time;
+            }
+        }
+
+        public void AutoArmedOn()
+        {
+            //Debug.Log("вышел из зоны комфорта");
+            if (PlayerIsArmed)
+            {
+                //Debug.Log("вышел из зоны комфорта2");
+                try
+                {
+                    if (!Animator.GetBool("isArmed"))
+                    {
+                        //Debug.Log("вышел из зоны комфорта3");
+                        Animator.SetBool("isArmed", true);
+                        AllScore.SetActive(true);
+
+                        CinemachineCameraTarget.transform.position = IdleCameraPoint.position;
+                        CameraTargetPosition.position = IdleCameraPoint.position;
+                        _imageX.enabled = true;
+                        _image0.enabled = false;
+                        CheckArmedOnTime = Time.time;
+                    }
+                }
+                catch
+                { Debug.Log("не сработало"); }
+
+            }
+        }
+
+        IEnumerator CheckArmedOn() // проверяет как долго времени прошло с последнего выстрела.
+            // если игрок давно не стрелял - убирает оружие
+        {
+            while (true)
+            {
+                // если время больше 15 сек - убрать оружие
+                if (PlayerIsArmed && !RadialWeaponMenu && (Time.time - CheckArmedOnTime) > 5f)
+                {
+                    CheckArmedOnTime = Time.time;
+                    AutoArmedOff();
+                }
+                yield return new WaitForSeconds(5f);
+            }
+        } 
 
 
         public void OnSelectWeapon(InputValue value)
         {
             Debug.Log("Scroll!");
+        }
+
+        public void OnWeaponMenuOn(InputValue value)
+        {
+            RadialWeaponMenu = true;
+            //Debug.Log("Открыть радиальное меню");
+            My_RadialMenu.Open();
+            AutoArmedOff();
+        }
+
+        public void OnWeaponMenuOff(InputValue value)
+        {
+            RadialWeaponMenu = false;
+            //Debug.Log("Закрыть радиальное меню");
+            
+            My_RadialMenu.Close();
+
+            // проверить и если надо сменить оружие
+            CheckWeapon();
+        }
+
+        public void CheckWeapon() // проверка на смену оружия
+        {
+            if (SelectedWeapons == Weapons.Rifle && My_RadialMenu.SelectedWeapons == My_RadialMenu.Weapons.PlasmaGun)
+            {
+                SelectedWeapons = Weapons.PlasmaGun;
+                ChangeWeapon();
+            }
+            else
+            {
+                if (SelectedWeapons == Weapons.PlasmaGun && My_RadialMenu.SelectedWeapons == My_RadialMenu.Weapons.Rifle)
+                {
+                    SelectedWeapons = Weapons.Rifle;
+                    ChangeWeapon();
+                }
+            }
+        }
+
+        public void ChangeWeapon()  // смена оружия
+        {
+            if (SelectedWeapons == Weapons.Rifle)
+            {
+                Animator.SetBool("PlasmaGun", false);
+                Weapon_0.SetActive(true);
+                Weapon_1.SetActive(false);
+            }
+            else
+            {
+                Animator.SetBool("PlasmaGun", true);
+                Weapon_0.SetActive(false);
+                Weapon_1.SetActive(true);
+            }
         }
 
 
@@ -430,6 +574,7 @@ namespace StarterAssets
 
         public void OnGrenade(InputValue value)
         {
+            CheckArmedOnTime = Time.time;
             if (_totalEMPGrenades > 0)
             {            
                 if (!_isThrowing)
@@ -595,7 +740,7 @@ namespace StarterAssets
 
         public void OnSight(InputValue value)
         {
-            if (Animator.GetBool("isArmed") && !Animator.GetBool("isReloading") && Animator.GetBool("isGround") && (!Animator.GetBool("isDead") && !Animator.GetBool("isRun")))
+            if (!Animator.GetBool("PlasmaGun") && Animator.GetBool("isArmed") && !Animator.GetBool("isReloading") && Animator.GetBool("isGround") && (!Animator.GetBool("isDead") && !Animator.GetBool("isRun")))
             {
                 Animator.SetBool("isSight", true);
                 FirstPersonController.isSight = true;

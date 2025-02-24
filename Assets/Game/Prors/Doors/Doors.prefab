@@ -16,7 +16,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 0
 --- !u!224 &5114133206033025716
 RectTransform:
@@ -153,7 +153,7 @@ GameObject:
   m_TagString: DoorButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!224 &6698739203396876971
 RectTransform:
@@ -255,7 +255,7 @@ GameObject:
   - component: {fileID: 7728159825735027393}
   - component: {fileID: 8937283379944521433}
   - component: {fileID: 5381935421237741013}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PR_Wall_R (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -389,7 +389,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!224 &5929685999365756031
 RectTransform:
@@ -522,7 +522,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &4613550192047313550
 Transform:
@@ -581,7 +581,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!224 &5042564327176712394
 RectTransform:
@@ -717,7 +717,7 @@ GameObject:
   m_TagString: DoorButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!224 &8750733929121893891
 RectTransform:
@@ -882,7 +882,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 0
 --- !u!224 &9028311835622762961
 RectTransform:
@@ -941,6 +941,73 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &1180795810236913784
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6520255024910480418}
+  - component: {fileID: 3776738306085688983}
+  - component: {fileID: 671070030989276175}
+  m_Layer: 2
+  m_Name: Interactive Zone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6520255024910480418
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1180795810236913784}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4824324923006272595}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &3776738306085688983
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1180795810236913784}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3, y: 1, z: 3}
+  m_Center: {x: 0, y: 0, z: -1}
+--- !u!114 &671070030989276175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1180795810236913784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29d3428f17d1ce948aec99bbd2a0c2d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  My_Weapon_Controller: {fileID: 0}
 --- !u!1 &1755752992557657147
 GameObject:
   m_ObjectHideFlags: 0
@@ -958,7 +1025,7 @@ GameObject:
   m_TagString: DoorButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!224 &4469089445999454157
 RectTransform:
@@ -1063,7 +1130,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 0
 --- !u!224 &604463943416921719
 RectTransform:
@@ -1138,7 +1205,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 0
 --- !u!224 &2962805982728865585
 RectTransform:
@@ -1217,7 +1284,7 @@ GameObject:
   m_TagString: DoorButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!224 &6937293372596230535
 RectTransform:
@@ -1411,7 +1478,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 0
 --- !u!224 &8641581676105259472
 RectTransform:
@@ -1485,7 +1552,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &3463694029706145118
 Transform:
@@ -1616,7 +1683,7 @@ GameObject:
   m_TagString: DoorButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!224 &7916296821504781955
 RectTransform:
@@ -1721,7 +1788,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 0
 --- !u!224 &23487456826627461
 RectTransform:
@@ -1859,7 +1926,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &6475028319063013592
 Transform:
@@ -1875,6 +1942,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6937293372596230535}
+  - {fileID: 8650230822975314740}
   m_Father: {fileID: 4613550192047313550}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2455737164165867744
@@ -1982,8 +2050,8 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 0
 --- !u!4 &389633200100144339
 Transform:
   m_ObjectHideFlags: 0
@@ -2018,8 +2086,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.75, y: 0.41000003, z: 2.2271664}
-  m_Center: {x: 0, y: 0, z: 0.81358325}
+  m_Size: {x: 1.2500001, y: 0.41000003, z: 1.7271667}
+  m_Center: {x: 0.000000059604645, y: -0.33333334, z: 2.0635831}
 --- !u!114 &7950412168439723211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2050,7 +2118,7 @@ GameObject:
   m_TagString: DoorButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!224 &1690989497363865477
 RectTransform:
@@ -2155,7 +2223,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 0
 --- !u!224 &5678288278440628636
 RectTransform:
@@ -2291,7 +2359,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 0
 --- !u!224 &8299641337195850564
 RectTransform:
@@ -2426,7 +2494,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8506550990135141988
 Transform:
@@ -2556,7 +2624,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 0
 --- !u!224 &4584716332879997881
 RectTransform:
@@ -2631,7 +2699,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 0
 --- !u!224 &4682512806379795462
 RectTransform:
@@ -2767,7 +2835,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 0
 --- !u!224 &7215923385611547741
 RectTransform:
@@ -2842,7 +2910,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 0
 --- !u!224 &2214046718244203108
 RectTransform:
@@ -2977,7 +3045,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8772740615227714461
 Transform:
@@ -3025,6 +3093,73 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &4488514072810909297
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8650230822975314740}
+  - component: {fileID: 2958055877115813011}
+  - component: {fileID: 8307960665044297427}
+  m_Layer: 2
+  m_Name: Interactive Zone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8650230822975314740
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4488514072810909297}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 1.25}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6475028319063013592}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &2958055877115813011
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4488514072810909297}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3, y: 1, z: 3}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8307960665044297427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4488514072810909297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29d3428f17d1ce948aec99bbd2a0c2d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  My_Weapon_Controller: {fileID: 0}
 --- !u!1 &4808073722686537601
 GameObject:
   m_ObjectHideFlags: 0
@@ -3043,7 +3178,7 @@ GameObject:
   m_TagString: DoorButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!224 &4198402616631872478
 RectTransform:
@@ -3209,7 +3344,7 @@ GameObject:
   m_TagString: DoorButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!224 &2629712898059126880
 RectTransform:
@@ -3313,7 +3448,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!224 &621128224653723617
 RectTransform:
@@ -3447,7 +3582,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 0
 --- !u!224 &5110358668951213615
 RectTransform:
@@ -3583,7 +3718,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 0
 --- !u!224 &706740343026377766
 RectTransform:
@@ -3716,7 +3851,7 @@ GameObject:
   - component: {fileID: 266035717850646180}
   - component: {fileID: 7241279056543841222}
   - component: {fileID: 1643347615577049960}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PR_Wall _L (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3852,7 +3987,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 0
 --- !u!224 &8993118738327327080
 RectTransform:
@@ -3987,7 +4122,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!224 &1763443807292697282
 RectTransform:
@@ -4121,7 +4256,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 0
 --- !u!224 &8405067423256080345
 RectTransform:
@@ -4197,7 +4332,7 @@ GameObject:
   m_TagString: DoorButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!224 &6292563446729403763
 RectTransform:
@@ -4302,7 +4437,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 0
 --- !u!224 &4455410459574102878
 RectTransform:
@@ -4377,7 +4512,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 0
 --- !u!224 &781899885604236918
 RectTransform:
@@ -4513,7 +4648,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 0
 --- !u!224 &6880016790192363704
 RectTransform:
@@ -4590,7 +4725,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &4824324923006272595
 Transform:
@@ -4606,6 +4741,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7878666505436807552}
+  - {fileID: 6520255024910480418}
   m_Father: {fileID: 4613550192047313550}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!33 &1100835788139312656
@@ -4715,7 +4851,7 @@ GameObject:
   m_TagString: DoorButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!224 &4344840420227826627
 RectTransform:
@@ -4873,7 +5009,7 @@ GameObject:
   - component: {fileID: 6722808500143024359}
   - component: {fileID: 7817387680007657854}
   - component: {fileID: 475799385911752289}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PR_Wall_R (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5010,7 +5146,7 @@ GameObject:
   m_TagString: DoorButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!224 &8673614702191227106
 RectTransform:
@@ -5171,7 +5307,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 0
 --- !u!224 &8033279088872832619
 RectTransform:
@@ -5250,7 +5386,7 @@ GameObject:
   m_TagString: DoorButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!224 &7878666505436807552
 RectTransform:
@@ -5440,6 +5576,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PR_Wall_R
       objectReference: {fileID: 0}
+    - target: {fileID: 1559786612978218, guid: 43ae581d2689e404d8f9e0dcbcb8a845, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4233718861138646, guid: 43ae581d2689e404d8f9e0dcbcb8a845, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.2999998
@@ -5518,8 +5658,32 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4233718861138646, guid: 43ae581d2689e404d8f9e0dcbcb8a845, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7540265037673047026}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1559786612978218, guid: 43ae581d2689e404d8f9e0dcbcb8a845, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7752799552517665591}
   m_SourcePrefab: {fileID: 100100000, guid: 43ae581d2689e404d8f9e0dcbcb8a845, type: 3}
+--- !u!1 &1353326066535480989 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1559786612978218, guid: 43ae581d2689e404d8f9e0dcbcb8a845, type: 3}
+  m_PrefabInstance: {fileID: 1351766521342479543}
+  m_PrefabAsset: {fileID: 0}
+--- !u!208 &7752799552517665591
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1353326066535480989}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.5100001, y: 1.5120001, z: 0.029000001}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -1.5100001, y: -1.5120001, z: 0.029000001}
+  m_TimeToStationary: 0.5
 --- !u!4 &1354874261083145825 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4233718861138646, guid: 43ae581d2689e404d8f9e0dcbcb8a845, type: 3}
@@ -5829,6 +5993,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PR_Wall _L
       objectReference: {fileID: 0}
+    - target: {fileID: 1559786612978218, guid: 43ae581d2689e404d8f9e0dcbcb8a845, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4233718861138646, guid: 43ae581d2689e404d8f9e0dcbcb8a845, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.2999998
@@ -5911,10 +6079,34 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4233718861138646, guid: 43ae581d2689e404d8f9e0dcbcb8a845, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3326846765142303996}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1559786612978218, guid: 43ae581d2689e404d8f9e0dcbcb8a845, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7766055901738621465}
   m_SourcePrefab: {fileID: 100100000, guid: 43ae581d2689e404d8f9e0dcbcb8a845, type: 3}
 --- !u!4 &8770514564311871370 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4233718861138646, guid: 43ae581d2689e404d8f9e0dcbcb8a845, type: 3}
   m_PrefabInstance: {fileID: 8770806506741228892}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8772344199405311862 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1559786612978218, guid: 43ae581d2689e404d8f9e0dcbcb8a845, type: 3}
+  m_PrefabInstance: {fileID: 8770806506741228892}
+  m_PrefabAsset: {fileID: 0}
+--- !u!208 &7766055901738621465
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8772344199405311862}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.5100001, y: 1.5120001, z: 0.029000001}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -1.5100001, y: -1.5120001, z: 0.029000001}
+  m_TimeToStationary: 0.5

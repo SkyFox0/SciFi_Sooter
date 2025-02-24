@@ -100,5 +100,11 @@ namespace StarterAssets
             Animator.SetBool("isThrowing", false);
         }
 
+        public void Multishoot(string s)
+        {
+            My_Weapon_Controller.MultyShoot();
+            
+        }
+
     }
 }

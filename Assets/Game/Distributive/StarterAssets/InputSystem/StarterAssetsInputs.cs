@@ -20,6 +20,7 @@ namespace StarterAssets
         public bool grenade;
         public bool light;
 		public bool activate;
+		public bool WeaponMenu;
 
 
         [Header("Movement Settings")]
@@ -32,7 +33,7 @@ namespace StarterAssets
 #if ENABLE_INPUT_SYSTEM
 
 
-    public void OnMove(InputValue value)
+		public void OnMove(InputValue value)
 		{
 			MoveInput(value.Get<Vector2>());
 		}
@@ -126,11 +127,22 @@ namespace StarterAssets
             }*/
 		}
 
+        public void OnWeaponMenuOn(InputValue value)
+        {
+			WeaponMenu = true;
+        }
+
+        public void OnWeaponMenuOff(InputValue value)
+        {
+            WeaponMenu = false;
+        }
+
+
 
 
 #endif
 
-    public void MoveInput(Vector2 newMoveDirection)
+        public void MoveInput(Vector2 newMoveDirection)
 		{
 			move = newMoveDirection;
 		} 

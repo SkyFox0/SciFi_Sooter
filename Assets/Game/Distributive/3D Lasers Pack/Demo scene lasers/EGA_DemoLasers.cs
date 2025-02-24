@@ -78,9 +78,29 @@ public class EGA_DemoLasers : MonoBehaviour
         //Instance = Instantiate(Prefabs[Prefab], FirePoint.transform.position, FirePoint.transform.rotation);
         Instance.transform.parent = transform;
         LaserScript = Instance.GetComponent<EGA_Laser>();
-        Invoke("DestroyLaser", 0.2f);
+        Invoke("DestroyLaser", 0.1f);
         
     }
+
+    public void AutoShoot()
+    {
+        _shootDirection = ShootDirection.transform.rotation;
+
+        //_shootDirection.y = _shootDirection.y + Random.Range ((_bulletSpread * -1), _bulletSpread);
+        //_shootDirection.z = _shootDirection.z + Random.Range ((_bulletSpread * -1), _bulletSpread); 
+
+        //Debug.Log(_shootDirection.ToString());
+        Destroy(Instance);
+        Instance = Instantiate(Prefabs[Prefab], FirePoint.transform.position, FirePoint.transform.rotation); // ._shootDirection);
+        //Instance = Instantiate(Prefabs[Prefab], FirePoint.transform.position, FirePoint.transform.rotation);
+        //Instance = Instantiate(Prefabs[Prefab], FirePoint.transform.position, ShootDirection.transform.rotation);
+        //Instance = Instantiate(Prefabs[Prefab], FirePoint.transform.position, FirePoint.transform.rotation);
+        Instance.transform.parent = transform;
+        LaserScript = Instance.GetComponent<EGA_Laser>();
+        Invoke("DestroyLaser", 0.1f);
+
+    }
+
 
     public void DestroyLaser()
     {

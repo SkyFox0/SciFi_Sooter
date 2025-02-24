@@ -157,6 +157,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "WeaponMenuOn",
+                    "type": "Button",
+                    "id": "583ac4de-8fc2-4c87-bae0-9f163754da57",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "WeaponMenuOff",
+                    "type": "Button",
+                    "id": "ce7a865b-00d8-4584-9d2a-75282fbfdd71",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -472,7 +490,7 @@
                     "name": "",
                     "id": "7e6c9552-6ba3-47ac-bdfc-025ddf1a9c29",
                     "path": "<Keyboard>/r",
-                    "interactions": "Press(pressPoint=0.4)",
+                    "interactions": "Press(pressPoint=0.2)",
                     "processors": "",
                     "groups": ";KeyboardMouse",
                     "action": "Reload",
@@ -527,7 +545,7 @@
                     "name": "",
                     "id": "e9f81a27-587a-43db-80f4-697ccfad2823",
                     "path": "<Keyboard>/r",
-                    "interactions": "Hold(duration=0.8,pressPoint=0.4)",
+                    "interactions": "Hold(duration=0.4,pressPoint=0.2)",
                     "processors": "",
                     "groups": "",
                     "action": "ReloadHold",
@@ -542,6 +560,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Activate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "de1cf7c9-5347-4560-bbbf-e376b07577ea",
+                    "path": "<Keyboard>/q",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": ";KeyboardMouse",
+                    "action": "WeaponMenuOn",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "615c2db4-cd07-47b1-8d34-795600ef1c86",
+                    "path": "<Keyboard>/q",
+                    "interactions": "Press(behavior=1)",
+                    "processors": "",
+                    "groups": ";KeyboardMouse",
+                    "action": "WeaponMenuOff",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

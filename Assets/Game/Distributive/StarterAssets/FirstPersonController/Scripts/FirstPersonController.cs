@@ -153,6 +153,7 @@ namespace StarterAssets
 
 		private void LateUpdate()
 		{
+			if (!My_Weapon_Controller.RadialWeaponMenu)
 			CameraRotation();
 		}
 
@@ -201,7 +202,7 @@ namespace StarterAssets
 
 		private void CameraRotation()
 		{
-			if (!Animator.GetBool("isDead"))
+			if (!Animator.GetBool("isDead"))// && My_Weapon_Controller.RadialWeaponMenu)
 				{
                 // if there is an input
                 if (_input.look.sqrMagnitude >= _threshold)  // _input.look- последнее перемещение мыши
